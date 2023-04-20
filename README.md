@@ -40,7 +40,7 @@
 
 ![KakaoTalk_20230415_140404539.png](output/KakaoTalk_20230415_140404539.png)
 
-![Untitled](/Untitled.png)
+![Untitled](output/Untitled.png)
 
 ![KakaoTalk_20230417_165633241.png](output/KakaoTalk_20230417_165633241.png)
 
