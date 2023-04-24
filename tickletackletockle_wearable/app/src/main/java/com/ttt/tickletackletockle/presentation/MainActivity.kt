@@ -10,10 +10,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,17 +34,22 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun WearApp(greetingName: String) {
     TttTheme {
-        /* If you have enough items in your list, use [ScalingLazyColumn] which is an optimized
-         * version of LazyColumn for wear devices with some added features. For more information,
-         * see d.android.com/wear/compose.
-         */
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background),
             verticalArrangement = Arrangement.Center
         ) {
-            Greeting(greetingName = greetingName)
+            Row(
+                modifier = Modifier.weight(1f)
+            ) {
+                Greeting(greetingName = greetingName)
+            }
+            Row(
+                modifier = Modifier.weight(1f)
+            ) {
+                Greeting(greetingName = greetingName)
+            }
         }
     }
 }
