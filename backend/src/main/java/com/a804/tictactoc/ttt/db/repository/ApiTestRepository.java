@@ -1,4 +1,4 @@
-package com.a804.tictactoc.ttt.repository;
+package com.a804.tictactoc.ttt.db.repository;
 
 import com.a804.tictactoc.ttt.db.entity.ApiTest;
 import org.springframework.data.jpa.repository.JpaRepository;
