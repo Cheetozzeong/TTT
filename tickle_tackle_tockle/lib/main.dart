@@ -7,6 +7,7 @@ import 'package:tickle_tackle_tockle/screen/home/HomeScreen.dart';
 import 'package:tickle_tackle_tockle/screen/login/login_screen.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/MyPageScreen.dart';
 import 'package:tickle_tackle_tockle/screen/reward/RewardScreen.dart';
+import 'const/custom_colors.dart';
 import 'firebase_options.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -25,8 +26,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          primaryColor: TTTPrimary1,
+      ),
       home: LoginScreen(),
     );
   }
@@ -52,35 +56,35 @@ class BottomNavBar extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.home),
           title: ("홈"),
-          activeColorPrimary: Colors.blue,
+          activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.list_alt),
           inactiveIcon: const Icon(Icons.list_alt),
           title: ("습관 목록"),
-          activeColorPrimary: Colors.blue,
+          activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.add, color: Colors.white,),
           inactiveIcon: const Icon(Icons.add, color: Colors.white,),
           title: ("습관 생성"),
-          activeColorPrimary: Colors.blue,
+          activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.star),
           inactiveIcon: const Icon(Icons.star),
           title: ("토끌`s"),
-          activeColorPrimary: Colors.blue,
+          activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.person),
           inactiveIcon: const Icon(Icons.person_outline),
           title: ("마이페이지"),
-          activeColorPrimary: Colors.blue,
+          activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
       ];
