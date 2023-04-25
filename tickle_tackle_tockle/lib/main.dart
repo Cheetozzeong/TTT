@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:tickle_tackle_tockle/screen/habits/HabitsScreen.dart';
+import 'package:tickle_tackle_tockle/screen/home/HomeScreen.dart';
+import 'package:tickle_tackle_tockle/screen/login/login_screen.dart';
+import 'package:tickle_tackle_tockle/screen/mypage/MyPageScreen.dart';
+import 'package:tickle_tackle_tockle/screen/reward/RewardScreen.dart';
 import 'firebase_options.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -21,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BottomNavBar(),
+      home: LoginScreen(),
     );
   }
 }
@@ -33,11 +38,11 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> _buildScreens() {
       return [
-        Screen1(),
-        Screen2(),
+        HomeScreen(),
+        HabitsScreen(),
         Screen3(),
-        Screen4(),
-        Screen5(),
+        RewardScreen(),
+        MyPageScreen(),
       ];
     }
 
@@ -52,7 +57,7 @@ class BottomNavBar extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.list_alt),
           inactiveIcon: const Icon(Icons.list_alt),
-          title: ("습관목록"),
+          title: ("습관 목록"),
           activeColorPrimary: Colors.blue,
           inactiveColorPrimary: Colors.grey,
         ),
@@ -65,15 +70,15 @@ class BottomNavBar extends StatelessWidget {
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.star),
-          inactiveIcon: const Icon(Icons.send_outlined),
-          title: ("send"),
+          inactiveIcon: const Icon(Icons.star),
+          title: ("토끌`s"),
           activeColorPrimary: Colors.blue,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(Icons.settings),
-          inactiveIcon: const Icon(Icons.settings_outlined),
-          title: ("Home"),
+          icon: const Icon(Icons.person),
+          inactiveIcon: const Icon(Icons.person_outline),
+          title: ("마이페이지"),
           activeColorPrimary: Colors.blue,
           inactiveColorPrimary: Colors.grey,
         ),
@@ -115,28 +120,6 @@ class BottomNavBar extends StatelessWidget {
   }
 }
 
-class Screen1 extends StatelessWidget {
-  const Screen1({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Screen1', style: TextStyle(fontSize: 30),)),
-    );
-  }
-}
-
-class Screen2 extends StatelessWidget {
-  const Screen2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Screen2', style: TextStyle(fontSize: 30),)),
-    );
-  }
-}
-
 class Screen3 extends StatelessWidget {
   const Screen3({Key? key}) : super(key: key);
 
@@ -144,28 +127,6 @@ class Screen3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(child: Text('Screen3', style: TextStyle(fontSize: 30),)),
-    );
-  }
-}
-
-class Screen4 extends StatelessWidget {
-  const Screen4({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Screen4', style: TextStyle(fontSize: 30),)),
-    );
-  }
-}
-
-class Screen5 extends StatelessWidget {
-  const Screen5({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Screen5', style: TextStyle(fontSize: 30),)),
     );
   }
 }
