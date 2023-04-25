@@ -17,12 +17,12 @@ internal val wearColor: Colors = Colors(
     secondary = TTTSecondary
 )
 @Composable
-fun TttTheme(
+fun TTTTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
         colors = wearColor,
-        typography = Typography,
+        typography = TTTTypography,
         // For shapes, we generally recommend using the default Material Wear shapes which are
         // optimized for round and non-round devices.
         content = content
