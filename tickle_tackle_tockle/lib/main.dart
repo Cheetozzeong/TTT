@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:tickle_tackle_tockle/screen/habits/CreateScreen.dart';
 import 'package:tickle_tackle_tockle/screen/habits/HabitsScreen.dart';
 import 'package:tickle_tackle_tockle/screen/home/HomeScreen.dart';
 import 'package:tickle_tackle_tockle/screen/login/login_screen.dart';
@@ -40,7 +41,7 @@ class BottomNavBar extends StatelessWidget {
       return [
         HomeScreen(),
         HabitsScreen(),
-        Screen3(),
+        CreateScreen(),
         RewardScreen(),
         MyPageScreen(),
       ];
@@ -116,17 +117,6 @@ class BottomNavBar extends StatelessWidget {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle: NavBarStyle.style15, // Choose the nav bar style with this property.
-    );
-  }
-}
-
-class Screen3 extends StatelessWidget {
-  const Screen3({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Screen3', style: TextStyle(fontSize: 30),)),
     );
   }
 }
