@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primaryColor: TTTPrimary1,
+        primaryColor: TTTPrimary1,
+        fontFamily: "Maplestory",
       ),
       home: LoginScreen(),
     );
@@ -55,35 +56,30 @@ class BottomNavBar extends StatelessWidget {
       return [
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.home),
-          title: ("홈"),
           activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.list_alt),
           inactiveIcon: const Icon(Icons.list_alt),
-          title: ("습관 목록"),
           activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.add, color: Colors.white,),
           inactiveIcon: const Icon(Icons.add, color: Colors.white,),
-          title: ("습관 생성"),
           activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.star),
           inactiveIcon: const Icon(Icons.star),
-          title: ("토끌`s"),
           activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.person),
           inactiveIcon: const Icon(Icons.person_outline),
-          title: ("마이페이지"),
           activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
