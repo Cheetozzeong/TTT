@@ -1,5 +1,6 @@
 package com.a804.tictactoc.ttt.response;
 
+import com.a804.tictactoc.ttt.db.entity.Habit;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -11,7 +12,6 @@ import javax.persistence.*;
 @Schema(name="HabitRes")
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -20,8 +20,8 @@ public class HabitRes {
 	@Schema(hidden = true)
     long id;
 
-	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
-	long userId;
+//	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
+//	long userId;
 
 	@Schema(name = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
 	long categoryId;
@@ -45,4 +45,15 @@ public class HabitRes {
 	@Schema(name = "알람이 울리는 요일 7비트", example = "1011011", defaultValue = "1011011")
 	String repeatDay;
 
+	@Builder
+	public HabitRes(Habit habit){
+		this.id = habit.getId();
+		this.categoryId = habit.getCategoryId();
+		this.name = habit.getName();
+		this.emoji = habit.getEmoji();
+		this.startTime = habit.getStartTime();
+		this.endTime = habit.getEndTime();
+		this.term = habit.getTerm();
+		this.repeatDay = habit.getRepeatDay();
+	}
 }

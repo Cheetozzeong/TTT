@@ -1,7 +1,18 @@
 package com.a804.tictactoc.ttt.controller;
 
 import com.a804.tictactoc.ttt.db.entity.Category;
+import com.a804.tictactoc.ttt.db.entity.Habit;
+import com.a804.tictactoc.ttt.request.HabitReq;
+import com.a804.tictactoc.ttt.response.HabitRes;
 import com.a804.tictactoc.ttt.service.CategoryService;
+import com.a804.tictactoc.ttt.service.HabitService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -9,10 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -28,16 +36,70 @@ public class HabitController {
 	private static final Logger logger = LoggerFactory.getLogger(HabitController.class);
 
 	@Autowired
-	CategoryService cService;
+	HabitService hService;
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Sorry: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-//	@GetMapping(value = "")
-//	public ResponseEntity<?> getAllCategories(){
-//
-//	}
+	@Operation(summary = "습관 전체 읽기", description = "해당 유저의 전체 습관을 다 가져옵니다.",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
+					@ApiResponse(responseCode = "500", description = "서버 오류") })
+	@GetMapping(value = "")
+	public ResponseEntity<?> readAllHabit(){
+		long userId = 1;//임시
+		try {
+			List<HabitRes> result = hService.readAll(userId);
+			return new ResponseEntity<List<HabitRes>>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 
+	@Operation(summary = "습관 생성", description = "유저가 습관을 생성합니다.",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "습관 변경 성공"),
+					@ApiResponse(responseCode = "500", description = "서버 오류") })
+	@PostMapping(value = "")
+	public ResponseEntity<?> createHabit(HabitReq habitReq){
+		long userId = 1;//임시
+		try {
+			Habit habit = hService.createHabit(habitReq, userId);
+			return new ResponseEntity<HabitRes>(HabitRes.builder().habit(habit).build(), HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+
+	@Operation(summary = "습관 변경", description = "유저가 습관을 변경합니다.",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "습관 생성 성공"),
+					@ApiResponse(responseCode = "500", description = "서버 오류") })
+	@PatchMapping(value = "")
+	public ResponseEntity<?> updateHabit(@RequestBody HabitReq habitReq){
+		long userId = 1;//임시
+		try {
+			Habit habit = hService.updateHabit(habitReq);
+			return new ResponseEntity<HabitRes>(HabitRes.builder().habit(habit).build(), HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+
+//	@Operation(summary = "습관 삭제", description = "유저가 습관을 삭제합니다.",
+//			responses = {
+//					@ApiResponse(responseCode = "200", description = "습관 생성 성공"),
+//					@ApiResponse(responseCode = "500", description = "서버 오류") })
+//	@PatchMapping(value = "")
+//	public ResponseEntity<?> deleteHabit(){
+//		long userId = 1;//임시
+//		try {
+//			Habit habit = null;
+//			return new ResponseEntity<HabitRes>(HabitRes.builder().habit(habit).build(), HttpStatus.OK);
+//		} catch (Exception e) {
+//			return exceptionHandling(e);
+//		}
+//	}
 }
