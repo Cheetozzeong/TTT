@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:tickle_tackle_tockle/screen/habits/CreateScreen.dart';
 import 'package:tickle_tackle_tockle/screen/habits/HabitsScreen.dart';
@@ -8,8 +7,10 @@ import 'package:tickle_tackle_tockle/screen/login/login_screen.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/MyPageScreen.dart';
 import 'package:tickle_tackle_tockle/screen/reward/RewardScreen.dart';
 import 'const/theme.dart';
-import 'firebase_options.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,17 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(
+      GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: '틱택톡',
+        theme: ThemeData(
+          primaryColor: TTTPrimary1,
+          fontFamily: "Maplestory",
+        ),
+        home: const MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,13 +37,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: TTTPrimary1,
-        fontFamily: "Maplestory",
+    return const SafeArea(
+      child: Scaffold(
+        body: LoginScreen(),
       ),
-      home: LoginScreen(),
     );
   }
 }
@@ -42,6 +50,9 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 디바이스 사이즈 크기 정의
+    final Size size = MediaQuery.of(context).size;
+
     List<Widget> _buildScreens() {
       return [
         HomeScreen(),
@@ -55,7 +66,7 @@ class BottomNavBar extends StatelessWidget {
     List<PersistentBottomNavBarItem> _navBarsItems() {
       return [
         PersistentBottomNavBarItem(
-          icon: const Icon(Icons.home),
+          icon: const Icon(Icons.home_outlined),
           activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
         ),
@@ -67,6 +78,7 @@ class BottomNavBar extends StatelessWidget {
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.add, color: Colors.white,),
+          iconSize: size.height * 0.06,
           inactiveIcon: const Icon(Icons.add, color: Colors.white,),
           activeColorPrimary: TTTPrimary1,
           inactiveColorPrimary: Colors.grey,
@@ -104,6 +116,9 @@ class BottomNavBar extends StatelessWidget {
       decoration: NavBarDecoration(
         borderRadius: BorderRadius.circular(10.0),
         colorBehindNavBar: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.grey, blurRadius: 5.0)
+        ],
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
@@ -117,6 +132,7 @@ class BottomNavBar extends StatelessWidget {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle: NavBarStyle.style15, // Choose the nav bar style with this property.
+      navBarHeight: size.height * 0.09,
     );
   }
 }
