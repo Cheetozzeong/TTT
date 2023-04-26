@@ -30,23 +30,23 @@ public class HabitReq {
 	@Parameter(name = "categoryId", example="1")
 	long categoryId;
 
-//	@Schema(name = "name", description = "습관의 이름", example = "물마시기", defaultValue = "물마시기")
-//	String name;
-//
-//	@Schema(name = "emoji", description = "습관을 대표하는 이모지 이름", example="happy", defaultValue = "happy")
-//    String emoji;
-//
-//	@Schema(name = "startTime", description = "알람 시작 시간 HHmm", example = "0930", defaultValue = "0930")
-//	String startTime;
-//
-//	@Schema(name = "endTime", description = "알람 종료 시간 HHmm", example = "1930", defaultValue = "1930")
-//	String endTime;
-//
-//	@Schema(name = "term", description = "알람이 울리는 주기 HHmm", example = "0030", defaultValue = "0030")
-//	String term;
-//
-//	@Schema(name = "repeatDay", description = "알람이 울리는 요일 7비트", example = "1011011", defaultValue = "1011011")
-//	String repeatDay;
+	@Schema(name = "name", description = "습관의 이름", example = "물마시기", defaultValue = "물마시기")
+	String name;
+
+	@Schema(name = "emoji", description = "습관을 대표하는 이모지 이름", example="happy", defaultValue = "happy")
+    String emoji;
+
+	@Schema(name = "startTime", description = "알람 시작 시간 HHmm", example = "0930", defaultValue = "0930")
+	String startTime;
+
+	@Schema(name = "endTime", description = "알람 종료 시간 HHmm", example = "1930", defaultValue = "1930")
+	String endTime;
+
+	@Schema(name = "term", description = "알람이 울리는 주기 HHmm", example = "0030", defaultValue = "0030")
+	String term;
+
+	@Schema(name = "repeatDay", description = "알람이 울리는 요일 7비트", example = "1011011", defaultValue = "1011011")
+	String repeatDay;
 
 	public Habit toEntity() {
 		return Habit.builder()
