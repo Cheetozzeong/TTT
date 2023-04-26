@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "608227876008",
+    "project_id": "tickletockletackle",
+    "storage_bucket": "tickletockletackle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608227876008:android:17b1cb199843147a88369d",
+        "android_client_info": {
+          "package_name": "com.example.tickle_tackle_tockle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608227876008-20r61lm0atnelq72lob6n2kueges8n3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcGTTVzE_6bXepr1EC4buwvqLevxMexcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608227876008-20r61lm0atnelq72lob6n2kueges8n3n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
