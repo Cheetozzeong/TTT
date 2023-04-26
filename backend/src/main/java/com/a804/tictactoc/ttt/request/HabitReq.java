@@ -20,10 +20,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 public class HabitReq {
-	@Schema(hidden = true)
     long id;//생성 req면 0으로 올거고
 
-//	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
+//	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true, required = false)
+//	@Parameter(hidden = true)
 //	long userId;
 
 	@Schema(name = "categoryId", description = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
@@ -52,12 +52,12 @@ public class HabitReq {
 		return Habit.builder()
 				.id(id)
 				.categoryId(categoryId)
-//				.name(name)
-//				.emoji(emoji)
-//				.startTime(startTime)
-//				.endTime(endTime)
-//				.term(term)
-//				.repeatDay(repeatDay)
+				.name(name)
+				.emoji(emoji)
+				.startTime(startTime)
+				.endTime(endTime)
+				.term(term)
+				.repeatDay(repeatDay)
 				.build();
 	}
 }

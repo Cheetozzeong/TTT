@@ -11,5 +11,5 @@ public interface HabitService {
 
     Habit createHabit(HabitReq habit, long userId) throws SQLException;
     Habit updateHabit(HabitReq habit) throws  SQLException;
-    Habit deleteHabit(HabitReq habit) throws SQLException;
+    Habit deleteHabit(long userId, long habitId) throws SQLException;
 }

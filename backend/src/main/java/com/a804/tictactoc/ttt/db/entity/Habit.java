@@ -2,6 +2,8 @@ package com.a804.tictactoc.ttt.db.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -10,6 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="habit")
+@DynamicInsert
+@DynamicUpdate
 @Getter
 @Setter
 @Builder
@@ -24,7 +28,7 @@ public class Habit {
     long id;
 
 	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
-	@Column(name="user_id")
+	@Column(name="user_id", updatable = false)
 	long userId;
 
 	@Schema(name = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
@@ -61,10 +65,10 @@ public class Habit {
 	int deleteYn;
 
 	@Schema(hidden = true)
-	@Column(name="created_date")
+	@Column(name="created_date", updatable = false, insertable = false)
 	String createdDate;
 
 	@Schema(hidden = true)
-	@Column(name="modified_date")
+	@Column(name="modified_date", updatable = false, insertable = false)
 	String modifiedDate;
 }

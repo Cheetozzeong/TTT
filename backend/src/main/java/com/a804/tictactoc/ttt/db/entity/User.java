@@ -13,12 +13,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * 유저 모델 정의.
  */
 @Entity
 @Table(name="user")
+@DynamicInsert
+@DynamicUpdate
 @Getter
 @Setter
 @AllArgsConstructor

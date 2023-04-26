@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +64,7 @@ public class HabitController {
 					@ApiResponse(responseCode = "200", description = "습관 변경 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PostMapping(value = "")
-	public ResponseEntity<?> createHabit(HabitReq habitReq){
+	public ResponseEntity<?> createHabit(@ParameterObject HabitReq habitReq){
 		long userId = 1;//임시
 		try {
 			Habit habit = hService.createHabit(habitReq, userId);
@@ -78,7 +79,7 @@ public class HabitController {
 					@ApiResponse(responseCode = "200", description = "습관 생성 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PatchMapping(value = "")
-	public ResponseEntity<?> updateHabit(@RequestBody HabitReq habitReq){
+	public ResponseEntity<?> updateHabit(@ParameterObject HabitReq habitReq){
 		long userId = 1;//임시
 		try {
 			Habit habit = hService.updateHabit(habitReq);
@@ -88,18 +89,18 @@ public class HabitController {
 		}
 	}
 
-//	@Operation(summary = "습관 삭제", description = "유저가 습관을 삭제합니다.",
-//			responses = {
-//					@ApiResponse(responseCode = "200", description = "습관 생성 성공"),
-//					@ApiResponse(responseCode = "500", description = "서버 오류") })
-//	@PatchMapping(value = "")
-//	public ResponseEntity<?> deleteHabit(){
-//		long userId = 1;//임시
-//		try {
-//			Habit habit = null;
-//			return new ResponseEntity<HabitRes>(HabitRes.builder().habit(habit).build(), HttpStatus.OK);
-//		} catch (Exception e) {
-//			return exceptionHandling(e);
-//		}
-//	}
+	@Operation(summary = "습관 삭제", description = "유저가 습관을 삭제합니다.",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "습관 생성 성공"),
+					@ApiResponse(responseCode = "500", description = "서버 오류") })
+	@PatchMapping(value = "/quit/{habitId}")
+	public ResponseEntity<?> deleteHabit(@PathVariable long habitId){
+		long userId = 1;//임시
+		try {
+			Habit result = hService.deleteHabit(userId, habitId);
+			return new ResponseEntity<HabitRes>(HabitRes.builder().habit(result).build(), HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 }

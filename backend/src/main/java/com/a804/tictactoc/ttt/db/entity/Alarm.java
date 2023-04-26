@@ -2,6 +2,8 @@ package com.a804.tictactoc.ttt.db.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -10,6 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="alarm")
+@DynamicInsert
+@DynamicUpdate
 @Getter
 @Setter
 @AllArgsConstructor

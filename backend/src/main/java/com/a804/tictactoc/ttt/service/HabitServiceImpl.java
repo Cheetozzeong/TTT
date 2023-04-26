@@ -40,7 +40,9 @@ public class HabitServiceImpl implements HabitService{
     }
 
     @Override
-    public Habit deleteHabit(HabitReq habit) throws SQLException {
-        return null;
+    public Habit deleteHabit(long userId, long habitId) throws SQLException {
+        Habit habit = hRepo.findById(habitId).get();
+        habit.setDeleteYn(1);
+        return hRepo.save(habit);
     }
 }
