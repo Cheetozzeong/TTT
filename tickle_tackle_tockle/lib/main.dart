@@ -7,7 +7,7 @@ import 'package:tickle_tackle_tockle/screen/home/HomeScreen.dart';
 import 'package:tickle_tackle_tockle/screen/login/login_screen.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/MyPageScreen.dart';
 import 'package:tickle_tackle_tockle/screen/reward/RewardScreen.dart';
-import 'const/custom_colors.dart';
+import 'const/theme.dart';
 import 'firebase_options.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
