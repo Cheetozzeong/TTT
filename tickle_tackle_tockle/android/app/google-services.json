@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "608227876008-20r61lm0atnelq72lob6n2kueges8n3n.apps.googleusercontent.com",
+          "client_id": "608227876008-9gvaip9dldu04um3vqtvf0va32obr1db.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tickle_tackle_tockle",
+            "certificate_hash": "4adf63ba1ea7a718731bfa785d93ed32fc447e28"
+          }
+        },
+        {
+          "client_id": "608227876008-uqbbcviulqgee5ak9jnu9sfp077l83jh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -29,6 +37,13 @@
             {
               "client_id": "608227876008-20r61lm0atnelq72lob6n2kueges8n3n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "608227876008-3lhhuli5ebcldoqp6aip5hbkug1doq7d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tickleTackleTockle"
+              }
             }
           ]
         }
