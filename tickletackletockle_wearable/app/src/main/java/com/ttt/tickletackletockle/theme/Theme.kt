@@ -1,4 +1,4 @@
-package com.ttt.tickletackletockle.presentation.theme
+package com.ttt.tickletackletockle.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
