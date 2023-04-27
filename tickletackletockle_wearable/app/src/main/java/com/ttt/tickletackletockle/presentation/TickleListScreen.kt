@@ -129,6 +129,6 @@ fun tickleList(tickles: List<Tickle>) {
     }
 }
 
-fun getEmojiByUnicode(unicode: Int): String {
+public fun getEmojiByUnicode(unicode: Int): String {
     return String(Character.toChars(unicode))
 }
