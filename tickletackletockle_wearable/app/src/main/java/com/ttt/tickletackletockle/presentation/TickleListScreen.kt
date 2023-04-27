@@ -33,6 +33,7 @@ fun tickleListScreen() {
         Tickle(getEmojiByUnicode(0x1F9D7),"미달성"),
         Tickle(getEmojiByUnicode(0x1F9D7),"미달성")
     )
+
     TTTTheme {
         Scaffold(
             modifier = Modifier,
@@ -80,7 +81,7 @@ fun tickleListScreen() {
 }
 
 @Composable
-fun tickleList(tickles: List<Tickle>){
+fun tickleList(tickles: List<Tickle>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(1),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
@@ -127,6 +128,7 @@ fun tickleList(tickles: List<Tickle>){
         }
     }
 }
+
 fun getEmojiByUnicode(unicode: Int): String {
     return String(Character.toChars(unicode))
 }
