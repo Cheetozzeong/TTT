@@ -8,7 +8,7 @@ import javax.persistence.*;
 /**
  * 유저 모델 정의.
  */
-@Schema(name="category")
+@Schema(name="Category")
 @Getter
 @Setter
 @Builder

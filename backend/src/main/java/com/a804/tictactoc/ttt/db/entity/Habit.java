@@ -33,7 +33,7 @@ public class Habit {
 
 	@Schema(name = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
 	@Column(name="category_id")
-	long categoryId;
+	int categoryId;
 
 	@Schema(name = "습관의 이름", example = "물마시기", defaultValue = "물마시기")
 	@Column(name="name")

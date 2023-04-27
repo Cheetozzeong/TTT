@@ -20,6 +20,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 public class HabitReq {
+	@Schema(example = "0", defaultValue = "0")
     long id;//생성 req면 0으로 올거고
 
 //	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true, required = false)
@@ -27,7 +28,7 @@ public class HabitReq {
 //	long userId;
 
 	@Schema(name = "categoryId", description = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
-	long categoryId;
+	int categoryId;
 
 	@Schema(name = "name", description = "습관의 이름", example = "물마시기", defaultValue = "물마시기")
 	String name;

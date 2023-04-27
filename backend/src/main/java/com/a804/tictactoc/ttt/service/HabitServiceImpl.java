@@ -1,6 +1,8 @@
 package com.a804.tictactoc.ttt.service;
 
+import com.a804.tictactoc.ttt.db.entity.Alarm;
 import com.a804.tictactoc.ttt.db.entity.Habit;
+import com.a804.tictactoc.ttt.db.repository.AlarmRepo;
 import com.a804.tictactoc.ttt.db.repository.HabitRepo;
 import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.response.HabitRes;
@@ -15,6 +17,9 @@ public class HabitServiceImpl implements HabitService{
 
     @Autowired
     HabitRepo hRepo;
+
+    @Autowired
+    AlarmRepo aRepo;
 
     @Override
     public List<HabitRes> readAll(long userId) throws SQLException {
@@ -32,6 +37,17 @@ public class HabitServiceImpl implements HabitService{
         Habit habit = habitReq.toEntity();
         habit.setUserId(userId);
         habit = hRepo.save(habit);
+
+        int start = Integer.parseInt(habit.getStartTime().substring(0,2)) * 60 + Integer.parseInt(habit.getStartTime().substring(2,4));
+        int end = Integer.parseInt(habit.getEndTime().substring(0,2)) * 60 + Integer.parseInt(habit.getEndTime().substring(2,4));
+        int term = Integer.parseInt(habit.getTerm().substring(0,2)) * 60 + Integer.parseInt(habit.getTerm().substring(2,4));
+
+        for(int i=start; i<=end; i+=term){
+            String alarmTime = i/60<10 ? 0+""+i/60 : ""+i/60;
+            alarmTime += i%60<10 ? 0+""+i%60 : ""+i%60;
+            aRepo.save(new Alarm(0, habit.getId(), alarmTime));
+        }
+
         return HabitRes.builder().habit(habit).build();
     }
 
