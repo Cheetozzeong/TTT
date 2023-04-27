@@ -31,6 +31,6 @@ public class Tickle {
 	long habitId;
 
 	@Schema(hidden = true)
-	@Column(name="created_date")
+	@Column(name="created_date", updatable = false, insertable = false)
 	String createdDate;
 }

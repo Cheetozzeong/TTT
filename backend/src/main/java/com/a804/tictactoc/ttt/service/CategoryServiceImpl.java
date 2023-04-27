@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public List<CategoryRes> findAllCategory() throws SQLException {
-        List<Category> list = cRepo.findAll();
+        List<Category> list = cRepo.findByDeleteYn(0);
 
         List<CategoryRes> result = new ArrayList<>();
         for(Category c : list)

@@ -9,7 +9,7 @@ public interface HabitService {
     List<HabitRes> readAll(long userId) throws SQLException;
     //HabitRes readOneHabit(long habitId) throws SQLException;
 
-    Habit createHabit(HabitReq habit, long userId) throws SQLException;
-    Habit updateHabit(HabitReq habit) throws  SQLException;
-    Habit deleteHabit(long userId, long habitId) throws SQLException;
+    HabitRes createHabit(HabitReq habit, long userId) throws SQLException;
+    HabitRes updateHabit(HabitReq habit) throws  SQLException;
+    HabitRes deleteHabit(long userId, long habitId) throws SQLException;
 }

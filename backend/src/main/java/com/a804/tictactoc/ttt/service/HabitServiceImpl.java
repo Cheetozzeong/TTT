@@ -28,21 +28,24 @@ public class HabitServiceImpl implements HabitService{
 //    }
 
     @Override
-    public Habit createHabit(HabitReq habitReq, long userId) throws SQLException {
+    public HabitRes createHabit(HabitReq habitReq, long userId) throws SQLException {
         Habit habit = habitReq.toEntity();
         habit.setUserId(userId);
-        return hRepo.save(habit);
+        habit = hRepo.save(habit);
+        return HabitRes.builder().habit(habit).build();
     }
 
     @Override
-    public Habit updateHabit(HabitReq habitReq) throws SQLException {
-        return hRepo.save(habitReq.toEntity());
+    public HabitRes updateHabit(HabitReq habitReq) throws SQLException {
+        Habit habit = hRepo.save(habitReq.toEntity());
+        return HabitRes.builder().habit(habit).build();
     }
 
     @Override
-    public Habit deleteHabit(long userId, long habitId) throws SQLException {
+    public HabitRes deleteHabit(long userId, long habitId) throws SQLException {
         Habit habit = hRepo.findById(habitId).get();
         habit.setDeleteYn(1);
-        return hRepo.save(habit);
+        habit = hRepo.save(habit);
+        return HabitRes.builder().habit(habit).build();
     }
 }

@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepo extends JpaRepository<Category,Integer>{
-
+    List<Category> findByDeleteYn(int deleteYn);
 }

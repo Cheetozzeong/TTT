@@ -35,10 +35,10 @@ public class Category {
 	int deleteYn;
 
 	@Schema(hidden = true)
-	@Column(name="created_date")
+	@Column(name="created_date", updatable = false, insertable = false)
 	String createdDate;
 
 	@Schema(hidden = true)
-	@Column(name="modified_date")
+	@Column(name="modified_date", updatable = false, insertable = false)
 	String modifiedDate;
 }
