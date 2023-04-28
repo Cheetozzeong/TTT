@@ -8,6 +8,6 @@ RUN chmod +x ./gradlew
 RUN ./gradlew bootJar
 
 FROM adoptopenjdk/openjdk11
-COPY --from=builder build/libs/TTT-0.0.1-SNAPSHOT.jar TTT-0.0.1-SNAPSHOT.jar.jar
+COPY --from=builder build/libs/TTT-0.0.1-SNAPSHOT.jar TTT-0.0.1-SNAPSHOT.jar
 
 ENTRYPOINT ["nohup","java","-jar","/TTT-0.0.1-SNAPSHOT.jar","&"]
