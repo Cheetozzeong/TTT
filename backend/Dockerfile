@@ -1,5 +1,4 @@
 FROM adoptopenjdk/openjdk11
-RUN cd /var/jenkins_home/workspace/ttt-staging/backend
 RUN chmod +x gradlew
 RUN gradlew clean build -x test
 
