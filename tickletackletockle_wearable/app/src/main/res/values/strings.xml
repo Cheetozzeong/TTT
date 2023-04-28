@@ -6,4 +6,5 @@
     -->
     <string name="hello_world">From the Square world,\nHello, %1$s!</string>
     <string name="TickleListTitle">오늘의 티끌</string>
+    <string name="CheckOnAlarm">확인!</string>
 </resources>
