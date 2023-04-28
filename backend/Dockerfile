@@ -1,9 +1,11 @@
-FROM adoptopenjdk/openjdk11
+FROM adoptopenjdk/openjdk11 AS builder
 COPY . .
-RUN cd /home/jenkins/workspace/ttt-staging/backend/
 RUN chmod +x gradlew
 RUN ./gradlew clean build -x test
 
-ARG JAR_FILE=build/libs/TTT-0.0.1-SNAPSHOT.jar
+FROM adoptopenjdk/openjdk11
+COPY --from=builder build/libs/*.jar TTT.jar
+
+ARG JAR_FILE=build/libs/TTT.jar
 COPY ${JAR_FILE} TTT.jar
 ENTRYPOINT ["nohup","java","-jar","/TTT.jar", "&"]
