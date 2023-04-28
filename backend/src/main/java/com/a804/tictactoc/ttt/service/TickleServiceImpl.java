@@ -45,10 +45,12 @@ public class TickleServiceImpl implements TickleService{
         LocalDate date = LocalDate.of(Integer.parseInt(day.substring(0,4)),
                 Integer.parseInt(day.substring(4,6)),Integer.parseInt(day.substring(6,8)));
 
+        //오늘이 무슨 요일인지
         int yoil = date.getDayOfWeek().getValue();
         if(yoil == 7)
             yoil = 0;
 
+        //카테고리 숫자에 맞춰 카테고리별 티끌을 정리한 리스트를 만듬
         List<CategoryRes> categoryList = cService.findAllCategory();
         List<TickleCategoryRes> result = new ArrayList<>();
         for(CategoryRes categoryRes : categoryList){
@@ -59,6 +61,7 @@ public class TickleServiceImpl implements TickleService{
             result.add(tickleCategoryRes);
         }
 
+        //각 오늘 실행해야할 습관들을 티끌로 만들고, 수행 여부도 확인한다
         List<HabitRes> habitList = hRepo.findByUserIdAndDeleteYnOrderByCategoryId(userId, 0);
         for(HabitRes habit : habitList){
             if(habit.getRepeatDay().charAt(yoil) == '0')
@@ -68,7 +71,7 @@ public class TickleServiceImpl implements TickleService{
                                                     filter(tcRes -> tcRes.getCategoryId() == habit.getCategoryId())
                                                     .findFirst().get();
 
-            List<TickleAchieveRes> tickleAchieveReses = tRepo.findTickleAchieve(habit.getId());//여기서 값을 받아오고 -> 곧 만들 조인쿼리
+            List<TickleAchieveRes> tickleAchieveReses = tRepo.findTickleAchieve(habit.getId(), day);//여기서 값을 받아오고 -> 곧 만들 조인쿼리
 
             for(TickleAchieveRes tickleAchieveRes : tickleAchieveReses){
                 TickleTodayRes tickleTodayRes = new TickleTodayRes();
@@ -85,6 +88,7 @@ public class TickleServiceImpl implements TickleService{
             }
         }
 
+        //시간순으로 정렬
         for(TickleCategoryRes tickleCategoryRes : result){
             Collections.sort(tickleCategoryRes.getTickles());
         }

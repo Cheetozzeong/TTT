@@ -13,7 +13,9 @@ import java.util.List;
 @Repository
 public interface TickleRepo extends JpaRepository<Tickle,Long>{
     @Query(value = "select alarm_time as alarmTime, execution_time as executionTime\n" +
-            "from alarm left outer join tickle on alarm_time = execution_time\n" +
+            "from alarm left outer join \n" +
+            "(select execution_day, execution_time from tickle where execution_day = ?2) as tickle\n" +
+            "on alarm_time = execution_time\n" +
             "where alarm.habit_id = ?1", nativeQuery = true)
-    List<TickleAchieveRes> findTickleAchieve(long habitId);
+    List<TickleAchieveRes> findTickleAchieve(long habitId, String executionDay);
 }
