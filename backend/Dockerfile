@@ -1,4 +1,5 @@
 FROM adoptopenjdk/openjdk11
+COPY . .
 RUN chmod +x gradlew
 RUN ./gradlew clean build -x test
 
