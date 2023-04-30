@@ -39,6 +39,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+  sendIdToken() async {
+    String str = await FirebaseAuth.instance.currentUser!.getIdToken();
+    //print(str);
+  }
+
   @override
   Widget build(BuildContext context) {
     LoadingController loadingController = Get.put(LoadingController());
@@ -51,6 +56,9 @@ class _MyAppState extends State<MyApp> {
                   stream: FirebaseAuth.instance.authStateChanges(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
+                      // ID Token 확인
+                      sendIdToken();
+
                       return const MainFrame();
                     }
 

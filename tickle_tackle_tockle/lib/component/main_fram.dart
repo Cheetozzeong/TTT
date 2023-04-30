@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../const/theme.dart';
-import '../screen/habits/create_screen.dart';
+import '../screen/create/category_screen.dart';
+import '../screen/create/create_screen.dart';
 import '../screen/habits/habits_screen.dart';
 import '../screen/home/home_screen.dart';
 import '../screen/mypage/mypage_screen.dart';
@@ -65,47 +66,69 @@ class MainFrame extends StatelessWidget {
     PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text(
-          '틱택톡 - 티끌!태끌!토끌!',
-          style: TextStyle(
-            color: TTTPrimary1,
+      body: Stack(
+        children: [
+          PersistentTabView(
+            context,
+            controller: _controller,
+            screens: _buildScreens(),
+            items: _navBarsItems(),
+            confineInSafeArea: true,
+            backgroundColor: Colors.white, // Default is Colors.white.
+            handleAndroidBackButtonPress: true, // Default is true.
+            resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+            stateManagement: true, // Default is true.
+            hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+            decoration: NavBarDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              colorBehindNavBar: Colors.white,
+              boxShadow: [
+                BoxShadow(color: Colors.grey, blurRadius: 5.0)
+              ],
+            ),
+            popAllScreensOnTapOfSelectedTab: true,
+            popActionScreens: PopActionScreensType.all,
+            itemAnimationProperties: const ItemAnimationProperties( // Navigation Bar's items animation properties.
+                duration: Duration(milliseconds: 10),
+                curve: Curves.bounceIn
+            ),
+            screenTransitionAnimation: const ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
+              animateTabTransition: true,
+              curve: Curves.bounceIn,
+              duration: Duration(milliseconds: 10),
+            ),
+            navBarStyle: NavBarStyle.style2, // Choose the nav bar style with this property.
+            navBarHeight: size.height * 0.09,
           ),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      body: PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        backgroundColor: Colors.white, // Default is Colors.white.
-        handleAndroidBackButtonPress: true, // Default is true.
-        resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-        stateManagement: true, // Default is true.
-        hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.white,
-          boxShadow: [
-            BoxShadow(color: Colors.grey, blurRadius: 5.0)
-          ],
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties( // Navigation Bar's items animation properties.
-            duration: Duration(milliseconds: 10),
-            curve: Curves.bounceIn
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          curve: Curves.bounceIn,
-          duration: Duration(milliseconds: 10),
-        ),
-        navBarStyle: NavBarStyle.style15, // Choose the nav bar style with this property.
-        navBarHeight: size.height * 0.09,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.only(bottom: deviceHeight * 0.04),
+              child: SizedBox(
+                width: deviceHeight * 0.09,
+                height: deviceHeight * 0.09,
+                child: FittedBox(
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      PersistentNavBarNavigator.pushNewScreen(
+                        context,
+                        screen: const CategoryScreen(),
+                        withNavBar: false,
+                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                      );
+                    },
+                    backgroundColor: TTTPrimary1,
+                    elevation: 2,
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
