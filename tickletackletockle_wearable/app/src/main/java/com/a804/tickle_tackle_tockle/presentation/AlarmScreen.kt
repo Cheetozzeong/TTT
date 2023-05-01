@@ -1,5 +1,6 @@
 package com.a804.tickle_tackle_tockle.presentation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -9,12 +10,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.*
+import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.a804.tickle_tackle_tockle.R
 import com.a804.tickle_tackle_tockle.complication.Tickle
 import com.a804.tickle_tackle_tockle.theme.TTTTheme
 
 @Composable
-fun AlarmScreen(){
+fun AlarmScreen(
+    onButtonClick: () -> Unit
+){
     //dummyData
     val tickle = Tickle(getEmojiByUnicode(0x1F95B),"물 한잔 마시기!")
 
@@ -69,7 +73,7 @@ fun AlarmScreen(){
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = { onButtonClick() },
                         Modifier
                             .background(
                                 MaterialTheme.colors.primary,
