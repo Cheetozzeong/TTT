@@ -2,10 +2,7 @@ package com.a804.tictactoc.ttt.controller;
 
 import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.request.TickleReq;
-import com.a804.tictactoc.ttt.response.HabitRes;
-import com.a804.tictactoc.ttt.response.TickleCategoryRes;
-import com.a804.tictactoc.ttt.response.TickleCountRes;
-import com.a804.tictactoc.ttt.response.TickleRes;
+import com.a804.tictactoc.ttt.response.*;
 import com.a804.tictactoc.ttt.service.HabitService;
 import com.a804.tictactoc.ttt.service.TickleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -85,7 +82,19 @@ public class TickleController {
 		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
 	}
 
-
+//	@Operation(summary = "test", description = "test",
+//			responses = {
+//					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
+//					@ApiResponse(responseCode = "500", description = "서버 오류") })
+//	@GetMapping(value = "/test")
+//	public ResponseEntity<?> test() throws Exception{
+//		long userId = 1;//임시
+//		long start = System.currentTimeMillis();
+//		List<TickleCountRes> result = tService.test();
+//		long end = System.currentTimeMillis();
+//		System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초");
+//		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
+//	}
 
 	@ExceptionHandler(SQLException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "유효하지 않은 입력 값")
