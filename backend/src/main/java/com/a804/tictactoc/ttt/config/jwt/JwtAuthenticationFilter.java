@@ -54,25 +54,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         여기서 프론트가 준 ID TOKEN을 가지고
         구글에 유저 정보를 요청한다(userid)
         */
+        /*
+        1. id token 받는다.
+        2. 그거 기반 uid를 갖고와서 유저 이메일을 갖고와
+        3. 그거 토대로 select, null이면 insert
+
+        1. 로그인 api
+        * */
+
 
         String idToken = "idToken";
-
-        //여기서 for문을 돌리면서 유저 정보를 가져온다. (여기서 테스트)
-        try {
-            List<UserFirebaseRes> a = getUsers();
-            System.out.println(a);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         //request에 있는 username과 password를 java Object로 받기
         ObjectMapper om = new ObjectMapper();
-
         UserFirebaseRes user = null;
         try {
-        user = om.readValue(request.getInputStream(), UserFirebaseRes.class);
+            user = om.readValue(request.getInputStream(), UserFirebaseRes.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,17 +106,5 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String jwtToken = JwtProperties.TOKEN_PREFIX+accessToken + "_AND_" + JwtProperties.TOKEN_PREFIX+refreshToken;
 
         response.addHeader(JwtProperties.HEADER_STRING, jwtToken);
-    }
-
-    //여기서 유저 정보를 가져온다
-    public List<UserFirebaseRes> getUsers() throws ExecutionException, InterruptedException {
-        List<UserFirebaseRes> list = new ArrayList<>();
-        Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<QuerySnapshot> future = db.collection(COLLECTION_NAME).get();
-        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-        for (QueryDocumentSnapshot document : documents) {
-            list.add(document.toObject(UserFirebaseRes.class));
-        }
-        return list;
     }
 }
