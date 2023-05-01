@@ -4,6 +4,7 @@ import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.request.TickleReq;
 import com.a804.tictactoc.ttt.response.HabitRes;
 import com.a804.tictactoc.ttt.response.TickleCategoryRes;
+import com.a804.tictactoc.ttt.response.TickleCountRes;
 import com.a804.tictactoc.ttt.response.TickleRes;
 import com.a804.tictactoc.ttt.service.HabitService;
 import com.a804.tictactoc.ttt.service.TickleService;
@@ -71,6 +72,17 @@ public class TickleController {
 		long userId = 1;//임시
 		List<TickleCategoryRes> result = tService.todayTickle(userId, targetDate);
 		return new ResponseEntity<List<TickleCategoryRes>>(result, HttpStatus.OK);
+	}
+
+	@Operation(summary = "카테고리별 티끌 개수", description = "각 카테고리별 티끌의 개수를 가져온다",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
+					@ApiResponse(responseCode = "500", description = "서버 오류") })
+	@GetMapping(value = "/count")
+	public ResponseEntity<?> countTickleByCategory() throws Exception{
+		long userId = 1;//임시
+		List<TickleCountRes> result = tService.countTickle();
+		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
 	}
 
 
