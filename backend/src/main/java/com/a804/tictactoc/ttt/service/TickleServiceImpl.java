@@ -95,4 +95,9 @@ public class TickleServiceImpl implements TickleService{
 
         return result;
     }
+
+    @Override
+    public List<TickleCountRes> countTickle() throws SQLException {
+        return tRepo.countByTickle();
+    }
 }
