@@ -11,6 +11,7 @@ import '../../main.dart';
 import 'menual_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 //import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -25,14 +26,54 @@ class SettingScreen extends StatelessWidget {
     final deviceHeight = size.height;
     final menuFontSize = deviceHeight * 0.023;
 
-    Future<void> clearApplicationData() async {
+    Future<void> clearAppData() async {
+      // 앱 데이터 경로 가져오기
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('googleSignInAccount:AC0D4D07B72CE69A567AE2BD12F3F6FC');
+      
+      
+      //final appDir = await getApplicationSupportDirectory();
+
+      // shared_prefs 디렉토리 경로 가져오기
+      //final spDir = Directory('${appDir.path}/shared_prefs');
+      //await spDir.delete(recursive: true);
+      // shared_prefs 디렉토리가 존재하는 경우
+      /*if (await spDir.exists()) {
+        // shared_prefs 디렉토리 안의 모든 파일을 삭제합니다.
+        await spDir.delete(recursive: true);
+      }*/
+    }
+
+    /*Future<void> clearAppData() async {
+      // Android에서는 READ_EXTERNAL_STORAGE 및 WRITE_EXTERNAL_STORAGE 권한을 요청합니다.
+      // iOS에서는 nothing required.
+      //if (await Permission.storage.request().isGranted) {
+        // 앱 데이터 경로 가져오기
+        final appDir = await getApplicationSupportDirectory();
+
+        // 앱 데이터 경로와 그 하위 경로의 모든 항목 삭제
+        await appDir.delete(recursive: true);
+
+        // 캐시 경로 가져오기
+        final cacheDir = await getTemporaryDirectory();
+
+        // 캐시 경로와 그 하위 경로의 모든 항목 삭제
+        await cacheDir.delete(recursive: true);
+
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+      //}
+    }*/
+
+    /*Future<void> clearApplicationData() async {
       Directory appDir = await getApplicationSupportDirectory();
 
       if (appDir.existsSync()) {
         // 앱 내부 데이터 경로에 있는 모든 파일 삭제
         appDir.deleteSync(recursive: true);
       }
-    }
+    }*/
 
     /*void clearSqliteDatabase() async {
       String databasesPath = await getDatabasesPath();
@@ -70,7 +111,7 @@ class SettingScreen extends StatelessWidget {
       return await dir.delete();
     }*/
 
-    Future<void> clearAppData() async {
+    /*Future<void> clearAppData() async {
       Directory appDir = await getApplicationSupportDirectory();
       if (await appDir.exists()) {
         List<FileSystemEntity> children = appDir.listSync(recursive: true);
@@ -88,30 +129,12 @@ class SettingScreen extends StatelessWidget {
       }
 
       //clearSqliteDatabase();
-    }
+    }*/
 
     Future<void> signOutGoogle() async {
-      FirebaseAuth.instance.signOut().then((value) {
-        FirebaseAuth.instance.authStateChanges().listen((User? user) { }).cancel();
-      });
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.clear();
-
-      Directory appDocDir = await getApplicationSupportDirectory();
-
-      if (await appDocDir.exists()) {
-        await appDocDir.delete(recursive: true);
-      }
-
-
-      await clearApplicationData();
-
       await FirebaseAuth.instance.signOut();
-
       await clearAppData();
-
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()),);
+      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()),);
     }
 
     /*Future<void> _resetApp(BuildContext context) async {
@@ -139,6 +162,8 @@ class SettingScreen extends StatelessWidget {
       final directory = await getApplicationSupportDirectory();
       await directory.delete(recursive: true).whenComplete(() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()),));
     }*/
+
+
 
 
 
@@ -237,16 +262,8 @@ class SettingScreen extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      /*signOutGoogle();
-                      final storage = FlutterSecureStorage();
-                      await storage.deleteAll();
-                      await FlutterSecureStorage().deleteAll();*/
-                      //await signOutGoogle();
-                      //await _resetApp(context);
-                      //signOut();
-                      //clearAppData();
-                      signOutGoogle();
+                    onTap: () async {
+                      await signOutGoogle();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,

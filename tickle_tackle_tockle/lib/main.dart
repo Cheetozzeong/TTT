@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
                     return const LoginScreen();
                   }
               ),
-              GetBuilder<LoadingController>(
+              /*GetBuilder<LoadingController>(
                   builder: (_) {
                     return Offstage(
                         offstage: !loadingController.isLoadingFlag,
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                         ),
                     );
                   }
-              ),
+              ),*/
             ],
           ),
         ),

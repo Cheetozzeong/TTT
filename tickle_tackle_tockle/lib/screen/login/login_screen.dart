@@ -41,6 +41,7 @@ class LoginScreen extends StatelessWidget {
     final double deviceHeight = size.height;
 
     LoadingController loadingController = Get.put(LoadingController());
+    loadingController.setIsLoadingFlag(false);
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +58,10 @@ class LoginScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {
             loadingController.setIsLoadingFlag(true);
-            googleAuthSignIn().then((value) => loadingController.setIsLoadingFlag(false));
+            googleAuthSignIn()
+                .then((value) => loadingController.setIsLoadingFlag(false));
+                //.whenComplete(() => loadingController.setIsLoadingFlag(false))
+                //.onError((error, stackTrace) => loadingController.setIsLoadingFlag(false));
           },
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
