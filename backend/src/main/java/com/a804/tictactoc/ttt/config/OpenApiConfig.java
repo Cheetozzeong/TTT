@@ -19,8 +19,15 @@ import java.util.List;
 @Configuration
 @OpenAPIDefinition(
         servers = {
-                @Server(url = "https://k8a804.p.ssafy.io/api", description = "server"),
-                @Server(url = "http://localhost:8428", description = "local")
+
+                @Server(url = "http://localhost:8428", description = "local"),
+                @Server(url = "http://k8a804.p.ssafy.io:8428", description = "staging-server"),
+                @Server(url = "http://k8a804.p.ssafy.io:8430", description = "standby-server"),
+                @Server(url = "http://k8a804.p.ssafy.io:8432", description = "server")
+//                @Server(url = "https://k8a804.p.ssafy.io/api", description = "server"),
+//                @Server(url = "https://k8a804.p.ssafy.io/standby-api", description = "server"),
+//                @Server(url = "https://k8a804.p.ssafy.io/staging-api", description = "server"),
+
         }
 )
 public class OpenApiConfig {
