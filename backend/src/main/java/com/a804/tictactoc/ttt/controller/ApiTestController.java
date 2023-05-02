@@ -23,10 +23,10 @@ public class ApiTestController {
 
     private final ApiTestService apiTestService;
 
-    @CrossOrigin
+
     @GetMapping(value = "")
     public ResponseEntity<?> getApiTests(){
-        System.out.println("시발");
+
         Map resultmap = new HashMap<>();
         HttpStatus status;
 

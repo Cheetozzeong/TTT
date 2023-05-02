@@ -32,6 +32,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
+
         String header = request.getHeader(JwtProperties.HEADER_STRING);
         if(header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
@@ -50,7 +51,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         //유저네임 수정해야됨
         if(username != null) {
-            User user = userRepository.findByUserEmail(username);
+            User user = userRepository.findByEmail(username);
             PrincipalDetails principalDetails = new PrincipalDetails(user);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(

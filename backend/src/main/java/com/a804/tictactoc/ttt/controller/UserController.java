@@ -3,7 +3,7 @@ import com.a804.tictactoc.ttt.config.jwt.JwtProperties;
 import com.a804.tictactoc.ttt.db.entity.User;
 import com.a804.tictactoc.ttt.request.LoginReq;
 import com.a804.tictactoc.ttt.response.TokenRes;
-import com.a804.tictactoc.ttt.service.UserService;
+import com.a804.tictactoc.ttt.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,12 +15,13 @@ import java.util.Map;
 
 @Tag(name = "테스트", description = "테스트 api 입니다.")
 @RestController
-@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
-    @GetMapping("/login")
+    private final UserServiceImpl userService;
+    @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginReq loginReq) throws Exception {
+        System.out.println("이건 됨? 컨트롤러");
+
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
 

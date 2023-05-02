@@ -2,6 +2,8 @@ package com.a804.tictactoc.ttt.config.jwt;
 
 import com.a804.tictactoc.ttt.request.LoginReq;
 import com.a804.tictactoc.ttt.response.UserFirebaseRes;
+import com.a804.tictactoc.ttt.service.UserService;
+import com.a804.tictactoc.ttt.service.UserServiceImpl;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,9 +12,15 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.internal.FirebaseService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,12 +53,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     //스프링과 레디스 사이에서 쓰레드 세이프한 브리지를 제공해 주는 역할
     private final RedisTemplate<String, Object> redisTemplate;
 
+    private  FirebaseAuth firebaseAuth;
+
+    private  UserService userService;
+
+
+
     /**
         인증 요청 시 실행되는 함수 (/login)
     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException {
+
         /*
         여기서 프론트가 준 ID TOKEN을 가지고
         구글에 유저 정보를 요청한다(userid)
@@ -63,15 +78,30 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         1. 로그인 api
         * */
         // request에 있는 username과 password를 java Object로 받기
+
         ObjectMapper om = new ObjectMapper();
         LoginReq loginReq = null;
+       
         try {
             loginReq = om.readValue(request.getInputStream(), LoginReq.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        loginReq.getIdToken();
+        String tokenId = loginReq.getIdToken();
+        //여기서 유저 uid를 받는다.
+        FirebaseToken decodedToken = null;
+        try {
+            decodedToken = firebaseAuth.getInstance().verifyIdToken(tokenId);
+        } catch (FirebaseAuthException e) {
+            throw new RuntimeException(e);
+        }
+        String uid = decodedToken.getUid();
+        System.out.println(uid+" ㅋ 유아이디 시발");
+        userService.login(uid);
+
+
         //request에 있는 username과 password를 java Object로 받기
+
 
         //여기서 파이어베이스에 접근해서 유저 아이디를 가져와야됨
 
@@ -96,6 +126,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = JWT.create()
                 .withSubject(principalDetailis.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME))
+                .withClaim("uid", principalDetailis.getUsername())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
         String refreshToken = JWT.create()
