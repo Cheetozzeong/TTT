@@ -1,5 +1,6 @@
 package com.a804.tictactoc.ttt.config.jwt;
 
+import com.a804.tictactoc.ttt.request.LoginReq;
 import com.a804.tictactoc.ttt.response.UserFirebaseRes;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -61,17 +62,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         1. 로그인 api
         * */
-
-
-        String idToken = "idToken";
-        //request에 있는 username과 password를 java Object로 받기
+        // request에 있는 username과 password를 java Object로 받기
         ObjectMapper om = new ObjectMapper();
-        UserFirebaseRes user = null;
+        LoginReq loginReq = null;
         try {
-            user = om.readValue(request.getInputStream(), UserFirebaseRes.class);
+            loginReq = om.readValue(request.getInputStream(), LoginReq.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        loginReq.getIdToken();
+        //request에 있는 username과 password를 java Object로 받기
+
+        //여기서 파이어베이스에 접근해서 유저 아이디를 가져와야됨
 
         String userid = "test"; //구글에서 받은 유저 아이디
         //유저네임패스워드 토큰 생성

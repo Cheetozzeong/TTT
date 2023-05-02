@@ -30,7 +30,7 @@ public class UserService {
     private final RedisTemplate redisTemplate;
 
     @Autowired
-    public UserService(UserRepository userRepository, FirebaseAuth firebaseAuth, RedisTemplate redisTemplate) {
+    public UserService(UserRepository userRepository,FirebaseAuth firebaseAuth, RedisTemplate redisTemplate) {
         this.userRepository = userRepository;
         this.firebaseAuth = firebaseAuth;
         this.redisTemplate = redisTemplate;
@@ -39,7 +39,6 @@ public class UserService {
 
     @Transactional
     public void login(String tokenId) throws Exception{
-
 
         FirebaseToken decodedToken = firebaseAuth.getInstance().verifyIdToken(tokenId);
         String uid = decodedToken.getUid();

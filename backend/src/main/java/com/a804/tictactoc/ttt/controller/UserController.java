@@ -1,6 +1,7 @@
 package com.a804.tictactoc.ttt.controller;
 import com.a804.tictactoc.ttt.config.jwt.JwtProperties;
 import com.a804.tictactoc.ttt.db.entity.User;
+import com.a804.tictactoc.ttt.request.LoginReq;
 import com.a804.tictactoc.ttt.response.TokenRes;
 import com.a804.tictactoc.ttt.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,9 +20,8 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
     @GetMapping("/login")
-    public ResponseEntity<Object> login (String idToken) throws Exception {
-        userService.login(idToken);
-        return ResponseEntity.ok().body(idToken);
+    public ResponseEntity<Object> login(@RequestBody LoginReq loginReq) throws Exception {
+        return ResponseEntity.ok().body(HttpStatus.OK);
     }
 
     @PostMapping("/reissue")

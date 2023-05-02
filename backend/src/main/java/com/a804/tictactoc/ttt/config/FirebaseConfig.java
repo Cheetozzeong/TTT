@@ -29,16 +29,7 @@ public class FirebaseConfig {
     }
 
     @Bean
-    public FirebaseAuth firebaseAuth() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("path/to/serviceAccountKey.json");
-
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
-
-        FirebaseApp.initializeApp(options);
-
+    public FirebaseAuth firebaseAuth() {
         return FirebaseAuth.getInstance();
     }
 }
