@@ -28,7 +28,8 @@ public interface TickleRepo extends JpaRepository<Tickle,Long>{
 
 
     @Query(value = "select category.id as categoryId, category.name as categoryName, count(distinct habit_id, execution_day) as count\n" +
-            "from habit join tickle on habit.id = habit_id right outer join category on habit.category_id = category.id\n" +
+            "from habit join tickle on habit.id = habit_id\n" +
+            "right outer join category on habit.category_id = category.id\n" +
             "group by category.id", nativeQuery = true)
     List<TickleCountRes> countByTickle();
 }
