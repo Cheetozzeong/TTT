@@ -38,10 +38,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Transactional
-    public void login(String uid) {
-
-
-        
+    public String login(String uid) {
 
         System.out.println(uid+" 와따시한 이메일");
 //        User user = userRepository.findByEmail(email);
@@ -50,6 +47,7 @@ public class UserServiceImpl implements UserService {
 //            user.setNickname("손정훈");
 //            userRepository.save(user);
 //        }
+        return uid;
     }
 
     @Transactional

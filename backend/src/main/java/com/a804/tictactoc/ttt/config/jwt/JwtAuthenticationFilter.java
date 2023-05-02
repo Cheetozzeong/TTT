@@ -21,12 +21,14 @@ import com.google.firebase.internal.FirebaseService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -53,18 +55,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     //스프링과 레디스 사이에서 쓰레드 세이프한 브리지를 제공해 주는 역할
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private  FirebaseAuth firebaseAuth;
+    private final FirebaseAuth firebaseAuth;
 
-    private  UserService userService;
-
+    private final UserService userService;
 
 
     /**
-        인증 요청 시 실행되는 함수 (/login)
-    */
+     인증 요청 시 실행되는 함수 (/login)
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-        throws AuthenticationException {
+            throws AuthenticationException {
 
         /*
         여기서 프론트가 준 ID TOKEN을 가지고
@@ -81,12 +82,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         ObjectMapper om = new ObjectMapper();
         LoginReq loginReq = null;
-       
-        try {
-            loginReq = om.readValue(request.getInputStream(), LoginReq.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+/*
         String tokenId = loginReq.getIdToken();
         //여기서 유저 uid를 받는다.
         FirebaseToken decodedToken = null;
@@ -96,31 +93,45 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throw new RuntimeException(e);
         }
         String uid = decodedToken.getUid();
-        System.out.println(uid+" ㅋ 유아이디 시발");
+        System.out.println(uid);
+        
+
+        //idToken 기반으로 유저 uid를 가져온다.        
+        FirebaseToken decodedToken = firebaseAuth.verifyIdToken(idToken);
+        String uid = decodedToken.getUid();
+        
+        //uid를 기반으로 유저 정보를 가져온다.
+        UserRecord userRecord = firebaseAuth.getUser(uid);
+        String email = userRecord.getEmail();
+        String displayName = userRecord.getDisplayName();
+*/
+        
+        //idtoken 만료 이슈 때문에 uid를 test로 받아놓음
+        String uid = "fk9AqAXtRjXyBJIPD6wFDqcXlHs1";
         userService.login(uid);
+
 
 
         //request에 있는 username과 password를 java Object로 받기
 
-
         //여기서 파이어베이스에 접근해서 유저 아이디를 가져와야됨
-
-        String userid = "test"; //구글에서 받은 유저 아이디
+        System.out.println("여기는 되냐? first");
         //유저네임패스워드 토큰 생성
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(
-                        userid,null);
+                new UsernamePasswordAuthenticationToken(uid,null);
 
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
         return authentication;
     }
     /**
-        Authentication 객체가 성공적으로 만들어지면 JWT Token 생성해서 response에 담기
+     Authentication 객체가 성공적으로 만들어지면 JWT Token 생성해서 response에 담기
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
+
+        System.out.println("테스트 해보자 이거 되냐? 싑라 second");
         PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
 
         String accessToken = JWT.create()

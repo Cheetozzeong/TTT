@@ -4,10 +4,13 @@ import com.a804.tictactoc.ttt.config.jwt.JwtAuthenticationFilter;
 import com.a804.tictactoc.ttt.config.jwt.JwtAuthorizationFilter;
 import com.a804.tictactoc.ttt.db.repository.UserRepository;
 
+import com.a804.tictactoc.ttt.service.UserService;
+import com.google.firebase.auth.FirebaseAuth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -16,19 +19,20 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
+@Configuration
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //사용자 인증이 필요한 웹 사이트에 연결하기 위한 구성 정보를 제공합니다.
     private final AuthenticationConfiguration authenticationConfiguration;
-
+    private final UserRepository userRepository;
     private final RedisTemplate<String, Object> redisTemplate;
-
-    @Autowired
-    private UserRepository userRepository;
+    private final UserService userService;
+    private final FirebaseAuth firebaseAuth;
 
 
     //authenticationManager authenticate이라는 하나의 메소드만 가진다.
@@ -37,6 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManager() throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     public AuthenticationManager customAuthenticationManager() throws Exception {
         return authenticationManager();
@@ -48,18 +57,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("시크리티 ㅋ");
-                 http
+        http
                 .cors().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), redisTemplate))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), redisTemplate, firebaseAuth, userService))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
                 .authorizeRequests()
-                 .antMatchers("/*").permitAll()
+                .antMatchers("/*").permitAll()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**", "/api-docs/**").permitAll()
                 .anyRequest().authenticated();
 
@@ -70,5 +78,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //스프링 시큐리티(Spring Seurity) 프레임워크에서 제공하는 클래스 중 하나로 비밀번호를 암호화하는 데 사용할 수 있는 메서드를 가진 클래스입니다.
 
 }
-
-

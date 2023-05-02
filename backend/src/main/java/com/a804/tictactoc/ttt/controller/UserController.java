@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-@Tag(name = "테스트", description = "테스트 api 입니다.")
+@Tag(name = "유저", description = "유저 api 입니다.")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
@@ -45,4 +46,5 @@ public class UserController {
         Map<String, String> response = userService.logout(user, accessToken);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }
