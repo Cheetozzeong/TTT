@@ -115,13 +115,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //request에 있는 username과 password를 java Object로 받기
 
         //여기서 파이어베이스에 접근해서 유저 아이디를 가져와야됨
-        System.out.println("여기는 되냐? first");
         //유저네임패스워드 토큰 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(uid,null);
 
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        System.out.println("토큰 생성 완료");
 
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
         return authentication;
     }
     /**

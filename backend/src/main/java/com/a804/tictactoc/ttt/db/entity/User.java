@@ -74,5 +74,9 @@ public class User{
 	@Schema(hidden = true)
 	@Column(name="modified_date")
 	String modifiedDate;
+
+	@Schema(hidden = true)
+	@Column(name="uid")
+	String uid;
 }
 

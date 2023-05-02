@@ -41,17 +41,17 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         String token = request.getHeader(JwtProperties.HEADER_STRING)
                 .replace(JwtProperties.TOKEN_PREFIX, "");
-        String username = null;
+        String uid = null;
         try {
             DecodedJWT userJwt = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token);
-            username = userJwt.getClaim("username").asString();
+            uid = userJwt.getClaim("uid").asString();
         } catch (TokenExpiredException expiredException) {
             response.sendError(401);  //토큰 만료되었으면 401 반환
             return;
         }
         //유저네임 수정해야됨
-        if(username != null) {
-            User user = userRepository.findByEmail(username);
+        if(uid != null) {
+            User user = userRepository.findByUid(uid);
             PrincipalDetails principalDetails = new PrincipalDetails(user);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(

@@ -14,6 +14,7 @@ public class PrincipalDetails implements UserDetails {
     private User user;
 
     public PrincipalDetails(User user){
+
         this.user = user;
     }
 
@@ -27,7 +28,8 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        System.out.println("=================유저 유아이디====");
+        return user.getUid();
     }
 
     @Override

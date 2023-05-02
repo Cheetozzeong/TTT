@@ -41,13 +41,20 @@ public class UserServiceImpl implements UserService {
     public String login(String uid) {
 
         System.out.println(uid+" 와따시한 이메일");
-//        User user = userRepository.findByEmail(email);
-//        if(user==null){
-//            user.setEmail(email);
-//            user.setNickname("손정훈");
-//            userRepository.save(user);
-//        }
-        return uid;
+        User user = userRepository.findByUid(uid);
+        if(user==null){
+            user = new User();
+            user.setUid(uid);
+            user.setEmail("손정훈@박한샘.박홍빈");
+            user.setPassword("");
+            user.setNickname("");
+            user.setName("");
+            user.setProfile("");
+            userRepository.save(user);
+        }
+        String msg = "null";
+        return msg;
+
     }
 
     @Transactional
@@ -60,7 +67,7 @@ public class UserServiceImpl implements UserService {
             response.put("message", "리프레시 토큰 만료");
         }
         // 레디스에서 리프레시 토큰 찾기
-        User user = userRepository.findByEmail(tokenRes.getUserEmail());
+        User user = userRepository.findByUid(tokenRes.getUserEmail());
         String refreshToken = "";
         try {
             refreshToken = (String)redisTemplate.opsForValue().get("RT:" + tokenRes.getUserEmail());
