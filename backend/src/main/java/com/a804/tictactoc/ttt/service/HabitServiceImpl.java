@@ -45,7 +45,10 @@ public class HabitServiceImpl implements HabitService{
         for(int i=start; i<=end; i+=term){
             String alarmTime = i/60<10 ? 0+""+i/60 : ""+i/60;
             alarmTime += i%60<10 ? 0+""+i%60 : ""+i%60;
-            aRepo.save(new Alarm(0, habit.getId(), alarmTime));
+            Alarm alarm = new Alarm();
+            alarm.setHabit(new Habit(habit.getId()));
+            alarm.setAlarmTime(alarmTime);
+            aRepo.save(alarm);
         }
 
         return HabitRes.builder().habit(habit).build();

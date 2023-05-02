@@ -1,5 +1,6 @@
 package com.a804.tictactoc.ttt.request;
 
+import com.a804.tictactoc.ttt.db.entity.Category;
 import com.a804.tictactoc.ttt.db.entity.Habit;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -51,7 +52,8 @@ public class HabitReq {
 	public Habit toEntity() {
 		return Habit.builder()
 				.id(id)
-				.categoryId(categoryId)
+				//.categoryId(categoryId)
+				.category(new Category(categoryId))
 				.name(name)
 				.emoji(emoji)
 				.startTime(startTime)

@@ -1,11 +1,17 @@
 package com.a804.tictactoc.ttt.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 유저 모델 정의.
@@ -31,9 +37,9 @@ public class Habit {
 	@Column(name="user_id", updatable = false)
 	long userId;
 
-	@Schema(name = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
-	@Column(name="category_id")
-	int categoryId;
+//	@Schema(name = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
+//	@Column(name="category_id")
+//	int categoryId;
 
 	@Schema(name = "습관의 이름", example = "물마시기", defaultValue = "물마시기")
 	@Column(name="name")
@@ -71,4 +77,18 @@ public class Habit {
 	@Schema(hidden = true)
 	@Column(name="modified_date", updatable = false, insertable = false)
 	String modifiedDate;
+
+	@OneToMany(mappedBy = "habit", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	List<Tickle> tickles = new ArrayList<>();
+
+	@OneToMany(mappedBy = "habit", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	List<Alarm> alarms  = new ArrayList<>();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	Category category;
+
+	public Habit(long id){
+		this.id = id;
+	}
 }

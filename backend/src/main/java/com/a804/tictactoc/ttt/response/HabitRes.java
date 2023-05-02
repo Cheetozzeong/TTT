@@ -48,7 +48,7 @@ public class HabitRes {
 	@Builder
 	public HabitRes(Habit habit){
 		this.id = habit.getId();
-		this.categoryId = habit.getCategoryId();
+		this.categoryId = habit.getCategory().getId();
 		this.name = habit.getName();
 		this.emoji = habit.getEmoji();
 		this.startTime = habit.getStartTime();

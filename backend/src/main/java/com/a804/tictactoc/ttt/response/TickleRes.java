@@ -33,7 +33,7 @@ public class TickleRes {
 	@Builder
 	public TickleRes(Tickle tickle){
 		this.id = tickle.getId();
-		this.habitId = tickle.getHabitId();
+		this.habitId = tickle.getHabit().getId();
 		this.executionDay = tickle.getExecutionDay();
 		this.executionTime = tickle.getExecutionTime();
 	}
