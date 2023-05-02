@@ -38,10 +38,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Transactional
-    public String login(String uid) {
+    public void login(String uid) {
 
-        System.out.println(uid+" 와따시한 이메일");
+
         User user = userRepository.findByUid(uid);
+
         if(user==null){
             user = new User();
             user.setUid(uid);
@@ -52,10 +53,12 @@ public class UserServiceImpl implements UserService {
             user.setProfile("");
             userRepository.save(user);
         }
-        String msg = "null";
-        return msg;
+
+
 
     }
+
+
 
     @Transactional
     public Map<String, String> reissue(TokenRes tokenRes) {

@@ -1,5 +1,7 @@
 package com.a804.tictactoc.ttt.config.jwt;
 
+import com.a804.tictactoc.ttt.config.FirebaseAuthenticationToken;
+import com.a804.tictactoc.ttt.db.repository.UserRepository;
 import com.a804.tictactoc.ttt.request.LoginReq;
 import com.a804.tictactoc.ttt.response.UserFirebaseRes;
 import com.a804.tictactoc.ttt.service.UserService;
@@ -27,9 +29,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+
 
 
 
@@ -58,6 +63,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final FirebaseAuth firebaseAuth;
 
     private final UserService userService;
+
+    private final PrincipalDetailsService principalDetailsService;
+
 
 
     /**
@@ -116,13 +124,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         //여기서 파이어베이스에 접근해서 유저 아이디를 가져와야됨
         //유저네임패스워드 토큰 생성
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(uid,null);
 
-        System.out.println("토큰 생성 완료");
-
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        return authentication;
+        FirebaseAuthenticationToken authenticationToken = new FirebaseAuthenticationToken(principalDetailsService.loadUserByUsername(uid));
+        return authenticationToken;
     }
     /**
      Authentication 객체가 성공적으로 만들어지면 JWT Token 생성해서 response에 담기
@@ -131,7 +135,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
-        System.out.println("테스트 해보자 이거 되냐? 싑라 second");
+
         PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
 
         String accessToken = JWT.create()

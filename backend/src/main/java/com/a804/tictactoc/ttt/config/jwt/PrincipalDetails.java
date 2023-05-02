@@ -24,11 +24,10 @@ public class PrincipalDetails implements UserDetails {
     }
 
     @Override
-    public String getPassword(){ return null; } //UserDetails을 상속받은 클래스이기 때문에 전부 구현해야함
+    public String getPassword(){ return user.getPassword(); } //UserDetails을 상속받은 클래스이기 때문에 전부 구현해야함
 
     @Override
     public String getUsername() {
-        System.out.println("=================유저 유아이디====");
         return user.getUid();
     }
 

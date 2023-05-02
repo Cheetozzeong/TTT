@@ -2,6 +2,7 @@ package com.a804.tictactoc.ttt.config;
 
 import com.a804.tictactoc.ttt.config.jwt.JwtAuthenticationFilter;
 import com.a804.tictactoc.ttt.config.jwt.JwtAuthorizationFilter;
+import com.a804.tictactoc.ttt.config.jwt.PrincipalDetailsService;
 import com.a804.tictactoc.ttt.db.repository.UserRepository;
 
 import com.a804.tictactoc.ttt.service.UserService;
@@ -19,6 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -33,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final RedisTemplate<String, Object> redisTemplate;
     private final UserService userService;
     private final FirebaseAuth firebaseAuth;
+
+    private final PrincipalDetailsService principalDetailsService;
 
 
     //authenticationManager authenticate이라는 하나의 메소드만 가진다.
@@ -57,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
                 .cors().disable()
                 .csrf().disable()
@@ -64,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), redisTemplate, firebaseAuth, userService))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), redisTemplate, firebaseAuth, userService,principalDetailsService ))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
                 .authorizeRequests()
                 .antMatchers("/*").permitAll()

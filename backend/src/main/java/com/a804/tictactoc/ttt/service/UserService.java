@@ -9,7 +9,8 @@ import java.util.Map;
 
 public interface UserService {
 
-     String login(String tokenId);
+     void login(String tokenId);
+
 
      Map<String, String> reissue(TokenRes tokenRes);
 
