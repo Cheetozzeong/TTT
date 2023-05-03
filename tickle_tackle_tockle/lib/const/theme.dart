@@ -2,9 +2,9 @@ import 'dart:ui';
 
 const Color TTTPrimary1 = const Color(0xFFFF5555);
 const Color TTTPrimary2 = const Color(0xFFFF8CB5);
-const Color TTTPrimary3 = const Color(0xFF000101);
-const Color TTTPrimary4 = const Color(0xFFFFFF79);
-const Color TTTPrimary5 = const Color(0xFF98BC9E);
+const Color TTTPrimary3 = const Color(0xFF6599D4);
+const Color TTTPrimary4 = const Color(0xFF98BC9E);
+const Color TTTPrimary5 = const Color(0xFF000101);
 const Color TTTSecondary1 = const Color(0xFFFFC187);
 const Color TTTSecondary2 = const Color(0xFFFFDCEB);
 const Color TTTSecondary3 = const Color(0xFFD3EBF1);
