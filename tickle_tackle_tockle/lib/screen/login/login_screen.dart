@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-
-//Const
 import '../../const/theme.dart';
-
-//Controller
 import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
-
-//Firebase
 import 'package:firebase_auth/firebase_auth.dart';
-
-//Widget
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
 
@@ -47,33 +39,37 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            loadingController.setIsLoadingFlag(true);
-            googleAuthSignIn().then((value) => loadingController.setIsLoadingFlag(false));
-          },
-          style: ElevatedButton.styleFrom(
+        child: SizedBox(
+          height: deviceHeight * 0.07,
+          width: deviceWidth * 0.8,
+          child: ElevatedButton(
+            onPressed: () {
+              loadingController.setIsLoadingFlag(true);
+              googleAuthSignIn().whenComplete(() => loadingController.setIsLoadingFlag(false));
+            },
+            style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              side: const BorderSide(
-                  width: 2, color: Color.fromARGB(255, 100, 92, 170))),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Image.asset(
-                'assets/images/google_logo.png',
-                width: size.width * 0.06,
-              ),
-              Text(
-                '구글로 로그인하기',
-                style: TextStyle(
-                    fontFamily: 'bmjua',
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 80, 78, 91),
-                    fontSize: 20),
-              ),
-            ],
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+              side: const BorderSide(width: 2,),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  'assets/images/google_logo.png',
+                  width: size.width * 0.06,
+                ),
+                SizedBox(
+                  width: deviceWidth * 0.1,
+                ),
+                const Text(
+                  '구글로 로그인하기',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

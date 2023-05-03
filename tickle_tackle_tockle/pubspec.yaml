@@ -43,6 +43,8 @@ dependencies:
   google_sign_in: ^6.1.0
   flutter_spinkit: ^5.1.0
   ionicons: ^0.2.2
+  shared_preferences: ^2.1.0
+  material_dialogs: ^1.1.4
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +76,15 @@ flutter:
     - family: Maplestory
       fonts:
         - asset: assets/fonts/Maplestory-Bold.ttf
+    - family: NotoSansKr
+      fonts:
+        - asset: assets/fonts/NotoSansKr-Regular.otf
+        - asset: assets/fonts/NotoSansKr-Medium.otf
+          weight: 500
+        - asset: assets/fonts/NotoSansKr-Bold.otf
+          weight: 700
+        - asset: assets/fonts/NotoSansKr-Black.otf
+          weight: 900
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

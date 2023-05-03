@@ -6,9 +6,8 @@ import 'package:tickle_tackle_tockle/screen/login/login_screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +38,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+  sendIdToken() async {
+    String str = await FirebaseAuth.instance.currentUser!.getIdToken();
+    //print(str);
+  }
+
   @override
   Widget build(BuildContext context) {
     LoadingController loadingController = Get.put(LoadingController());
@@ -51,6 +55,9 @@ class _MyAppState extends State<MyApp> {
                   stream: FirebaseAuth.instance.authStateChanges(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
+                      // ID Token 확인
+                      sendIdToken();
+
                       return const MainFrame();
                     }
 

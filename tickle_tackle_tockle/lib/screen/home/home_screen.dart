@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:tickle_tackle_tockle/component/common_appbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -82,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '틱택톡'),
       body: Column(
         children: [
           TableCalendar<Event>(
