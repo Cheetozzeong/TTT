@@ -2,6 +2,7 @@ package com.a804.tictactoc.ttt.service;
 import com.a804.tictactoc.ttt.db.entity.Tickle;
 import com.a804.tictactoc.ttt.request.TickleReq;
 import com.a804.tictactoc.ttt.response.TickleCategoryRes;
+import com.a804.tictactoc.ttt.response.TickleCountNameRes;
 import com.a804.tictactoc.ttt.response.TickleCountRes;
 import com.a804.tictactoc.ttt.response.TickleRes;
 
@@ -13,4 +14,5 @@ public interface TickleService {
 
     List<TickleCategoryRes> todayTickle(long userId, String day) throws SQLException;
     List<TickleCountRes> countTickle() throws SQLException;
+    //List<TickleCountNameRes> test() throws SQLException;
 }

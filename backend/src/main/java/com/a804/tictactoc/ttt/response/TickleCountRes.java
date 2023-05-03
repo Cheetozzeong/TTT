@@ -7,7 +7,7 @@ import lombok.*;
 /**
  * 유저 모델 정의.
  */
-@Schema(name="TickleRes")
+@Schema(name="TickleCountRes")
 //@Getter
 //@Setter
 //@AllArgsConstructor
