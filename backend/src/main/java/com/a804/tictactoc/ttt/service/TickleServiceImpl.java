@@ -97,31 +97,7 @@ public class TickleServiceImpl implements TickleService{
     }
 
     @Override
-    public List<TickleCountRes> countTickle() throws SQLException {
-        return tRepo.countByTickle();
+    public List<TickleCountRes> countTickle(long userId) throws SQLException {
+        return tRepo.countByTickle(userId);
     }
-
-    //성능테스트 -> 삼중조인쪽이 확실히 빠른듯
-//    @Override
-//    public List<TickleCountNameRes> test() throws SQLException {
-//        List<CategoryRes> categoryList = cService.findAllCategory();
-//        List<TickleCountNameRes> result = new ArrayList<>();
-//
-//        for(CategoryRes categoryRes : categoryList){
-//            TickleCountNameRes tickleCountNameRes = new TickleCountNameRes();
-//            tickleCountNameRes.setCategoryId(categoryRes.getId());
-//            tickleCountNameRes.setCategoryName(categoryRes.getName());
-//            result.add(tickleCountNameRes);
-//        }
-//
-//        List<TickleCountRes> tickleCountResList = tRepo.countByTickle();
-//        for(TickleCountRes tickleCountRes : tickleCountResList){
-//            TickleCountNameRes tickleCountNameRes =   result.stream().
-//                    filter(tcnRes -> tcnRes.getCategoryId() == tickleCountRes.getCategoryId())
-//                    .findFirst().get();
-//
-//            tickleCountNameRes.setCount(tickleCountRes.getCount());
-//        }
-//        return result;
-//    }
 }
