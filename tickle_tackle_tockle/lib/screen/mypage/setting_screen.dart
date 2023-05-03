@@ -142,7 +142,7 @@ class SettingScreen extends StatelessWidget {
                   InkWell(
                     onTap: () async {
                       Dialogs.materialDialog(
-                        msg: '가지마세요 ㅠㅠ \n 저장된 데이터 모두 날려버릴거에요',
+                        msg: '가지마세요 ㅠㅠ \n저장된 데이터 모두 날려버릴거에요',
                         title: '회원탈퇴',
                         titleStyle: const TextStyle(
                           color: Colors.red,
