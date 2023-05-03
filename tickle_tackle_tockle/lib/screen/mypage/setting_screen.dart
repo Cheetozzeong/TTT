@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:material_dialogs/widgets/buttons/icon_button.dart';
+import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/privacy_screen.dart';
@@ -8,6 +10,7 @@ import 'package:tickle_tackle_tockle/screen/mypage/tos_screen.dart';
 import '../../const/theme.dart';
 import 'menual_screen.dart';
 import 'package:flutter/services.dart';
+import 'package:material_dialogs/material_dialogs.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -138,8 +141,36 @@ class SettingScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () async {
-                      //await FirebaseAuth.instance.currentUser!.delete();
-                      //await _resetApp(context);
+                      Dialogs.materialDialog(
+                        msg: '가지마세요 ㅠㅠ \n 저장된 데이터 모두 날려버릴거에요',
+                        title: '회원탈퇴',
+                        titleStyle: const TextStyle(
+                          color: Colors.red,
+                        ),
+                        color: Colors.white,
+                        context: context,
+                        actions: [
+                          IconsOutlineButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            text: '취소',
+                            textStyle: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          IconsButton(
+                            onPressed: () {
+                              signOutGoogle().then((value) => Navigator.of(context).popUntil((route) => route.isFirst));
+                            },
+                            text: '탈퇴하기',
+                            color: Colors.red,
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
