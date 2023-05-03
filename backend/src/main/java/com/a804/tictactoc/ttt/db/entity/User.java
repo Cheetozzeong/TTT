@@ -29,31 +29,15 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @ToString
 public class User{
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Schema(hidden = true)
-    long id;
+	long id;
 
-	@Schema(name = "유저의 이메일", example="ssafy@ssafy.com", defaultValue = "ssafy@ssafy.com")
-	@Column(name="email")
-    String email;
-	
-	@Schema(name = "유저의 비밀번호", example = "1234", defaultValue = "1234")
-	@Column(name="password")
-	String password;
-
-	@Schema(name = "유저의 이름", example = "손정훈", defaultValue = "손정훈")
-	@Column(name="name")
-	String name;
-
-	@Schema(name = "유저의 닉네임", example = "바간삼", defaultValue = "바간삼")
-	@Column(name="nickname")
-	String nickname;
-
-	@Schema(name = "유저 프로필 사진의 경로", example = "/image/aaabbbsss", defaultValue = "/image/aaabbbsss")
-	@Column(name="profile")
-	String profile;
+	@Schema(name = "유저의 uid", example = "fk9AqAXtRjXyBJIPD6wFDqcXlHs1", defaultValue = "fk9AqAXtRjXyBJIPD6wFDqcXlHs1")
+	@Column(name="uid")
+	String uid;
 
 	@Schema(name = "방해금지 시작 시간 HHmm", example = "2330", defaultValue = "2330")
 	@Column(name="sleep_start_time")
