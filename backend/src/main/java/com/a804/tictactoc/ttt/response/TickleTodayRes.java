@@ -24,7 +24,6 @@ public class TickleTodayRes implements Comparable<TickleTodayRes>{
 
 	@Override
 	public int compareTo(TickleTodayRes o) {
-		return Integer.parseInt(this.executionTime.substring(0,2))*60 + Integer.parseInt(this.executionTime.substring(2,4))
-				- Integer.parseInt(o.executionTime.substring(0,2))*60 - Integer.parseInt(o.executionTime.substring(2,4));
+		return Integer.parseInt(this.executionTime) - Integer.parseInt(o.executionTime);
 	}
 }

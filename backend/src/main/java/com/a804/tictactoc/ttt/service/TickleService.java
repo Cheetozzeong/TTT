@@ -13,6 +13,5 @@ public interface TickleService {
     TickleRes createTickle(TickleReq tickleReq) throws SQLException;
 
     List<TickleCategoryRes> todayTickle(long userId, String day) throws SQLException;
-    List<TickleCountRes> countTickle() throws SQLException;
-    //List<TickleCountNameRes> test() throws SQLException;
+    List<TickleCountRes> countTickle(long userId) throws SQLException;
 }
