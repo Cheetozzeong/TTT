@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../const/theme.dart';
 import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +15,12 @@ class LoginScreen extends StatelessWidget {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth =
     await googleUser?.authentication;
+
+    final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    String? token = await firebaseMessaging.getToken();
+
+    SharedPreferences hsaredPreferences = await SharedPreferences.getInstance();
+    hsaredPreferences.setString('token', token!);
 
     final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'const/theme.dart';
 import 'component/main_fram.dart';
 import 'controller/loading_controller.dart';
@@ -40,7 +41,8 @@ class _MyAppState extends State<MyApp> {
 
   sendIdToken() async {
     String str = await FirebaseAuth.instance.currentUser!.getIdToken();
-    //print(str);
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('idToken', str!);
   }
 
   @override

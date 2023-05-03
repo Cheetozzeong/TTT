@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.1.0
   material_dialogs: ^1.1.4
   cached_network_image: ^3.2.3
+  firebase_messaging: ^14.4.1
 
 dev_dependencies:
   flutter_test:
