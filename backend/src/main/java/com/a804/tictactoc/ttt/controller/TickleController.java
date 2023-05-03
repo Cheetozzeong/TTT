@@ -78,23 +78,9 @@ public class TickleController {
 	@GetMapping(value = "/count")
 	public ResponseEntity<?> countTickleByCategory() throws Exception{
 		long userId = 1;//임시
-		List<TickleCountRes> result = tService.countTickle();
+		List<TickleCountRes> result = tService.countTickle(userId);
 		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
 	}
-
-//	@Operation(summary = "test", description = "test",
-//			responses = {
-//					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
-//					@ApiResponse(responseCode = "500", description = "서버 오류") })
-//	@GetMapping(value = "/test")
-//	public ResponseEntity<?> test() throws Exception{
-//		long userId = 1;//임시
-//		long start = System.currentTimeMillis();
-//		List<TickleCountRes> result = tService.test();
-//		long end = System.currentTimeMillis();
-//		System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초");
-//		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
-//	}
 
 	@ExceptionHandler(SQLException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "유효하지 않은 입력 값")
