@@ -1,20 +1,13 @@
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/privacy_screen.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/tos_screen.dart';
 import '../../const/theme.dart';
-import '../../main.dart';
 import 'menual_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-
-//import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -26,146 +19,11 @@ class SettingScreen extends StatelessWidget {
     final deviceHeight = size.height;
     final menuFontSize = deviceHeight * 0.023;
 
-    Future<void> clearAppData() async {
-      // 앱 데이터 경로 가져오기
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.remove('googleSignInAccount:AC0D4D07B72CE69A567AE2BD12F3F6FC');
-      
-      
-      //final appDir = await getApplicationSupportDirectory();
-
-      // shared_prefs 디렉토리 경로 가져오기
-      //final spDir = Directory('${appDir.path}/shared_prefs');
-      //await spDir.delete(recursive: true);
-      // shared_prefs 디렉토리가 존재하는 경우
-      /*if (await spDir.exists()) {
-        // shared_prefs 디렉토리 안의 모든 파일을 삭제합니다.
-        await spDir.delete(recursive: true);
-      }*/
-    }
-
-    /*Future<void> clearAppData() async {
-      // Android에서는 READ_EXTERNAL_STORAGE 및 WRITE_EXTERNAL_STORAGE 권한을 요청합니다.
-      // iOS에서는 nothing required.
-      //if (await Permission.storage.request().isGranted) {
-        // 앱 데이터 경로 가져오기
-        final appDir = await getApplicationSupportDirectory();
-
-        // 앱 데이터 경로와 그 하위 경로의 모든 항목 삭제
-        await appDir.delete(recursive: true);
-
-        // 캐시 경로 가져오기
-        final cacheDir = await getTemporaryDirectory();
-
-        // 캐시 경로와 그 하위 경로의 모든 항목 삭제
-        await cacheDir.delete(recursive: true);
-
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        await preferences.clear();
-      //}
-    }*/
-
-    /*Future<void> clearApplicationData() async {
-      Directory appDir = await getApplicationSupportDirectory();
-
-      if (appDir.existsSync()) {
-        // 앱 내부 데이터 경로에 있는 모든 파일 삭제
-        appDir.deleteSync(recursive: true);
-      }
-    }*/
-
-    /*void clearSqliteDatabase() async {
-      String databasesPath = await getDatabasesPath();
-      String path = join(databasesPath, 'database_name.db');
-      await deleteDatabase(path);
-    }*/
-
-
-    /*Future<void> clearAppData() async {
-      final cache = await getTemporaryDirectory(); // 캐시 폴더 호출
-      final appDir = await cache.parent; // App Data 삭제를 위해 캐시 폴더의 부모 폴더 호출
-      if (await appDir.exists()) {
-        final children = await appDir.list().toList();
-        for (final s in children) {
-          // App Data 폴더의 리스트를 deleteDir 를 통해 하위 디렉토리 삭제
-          await deleteDir(s);
-        }
-      }
-    }
-
-    Future<bool> deleteDir(FileSystemEntity dir) async {
-      if (dir is Directory) {
-        final children = await dir.list().toList();
-
-        // 파일 리스트를 반복문으로 호출
-        for (final child in children) {
-          final success = await deleteDir(child);
-          if (!success) {
-            return false;
-          }
-        }
-      }
-
-      // 디렉토리가 비어있거나 파일이므로 삭제 처리
-      return await dir.delete();
-    }*/
-
-    /*Future<void> clearAppData() async {
-      Directory appDir = await getApplicationSupportDirectory();
-      if (await appDir.exists()) {
-        List<FileSystemEntity> children = appDir.listSync(recursive: true);
-        for (FileSystemEntity child in children) {
-          await child.delete(recursive: true);
-        }
-      }
-
-      Directory cacheDir = await getTemporaryDirectory();
-      if (await cacheDir.exists()) {
-        List<FileSystemEntity> children = cacheDir.listSync(recursive: true);
-        for (FileSystemEntity child in children) {
-          await child.delete(recursive: true);
-        }
-      }
-
-      //clearSqliteDatabase();
-    }*/
-
     Future<void> signOutGoogle() async {
       await FirebaseAuth.instance.signOut();
-      await clearAppData();
-      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()),);
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      await googleSignIn.disconnect();
     }
-
-    /*Future<void> _resetApp(BuildContext context) async {
-
-      //SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()),);
-    }*/
-
-    /*final _auth = FirebaseAuth.instance;
-
-    void signOut() async {
-      await _auth.signOut().whenComplete(() => print('로그아웃 완료'));
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()),);
-    }*/
-
-    /*final _auth = FirebaseAuth.instance;
-
-    Future<void> clearAppData() async {
-      await _auth.currentUser!.delete();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.clear();
-
-      await _auth.signOut().whenComplete(() => print('로그아웃 완료'));
-      await GoogleSignIn().
-      final directory = await getApplicationSupportDirectory();
-      await directory.delete(recursive: true).whenComplete(() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()),));
-    }*/
-
-
-
-
 
     return SafeArea(
       child: Scaffold(
@@ -262,8 +120,8 @@ class SettingScreen extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () async {
-                      await signOutGoogle();
+                    onTap: () {
+                      signOutGoogle().then((value) => Navigator.pop(context));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,

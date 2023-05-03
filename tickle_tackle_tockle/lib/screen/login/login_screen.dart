@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-//Const
 import '../../const/theme.dart';
-
-//Controller
 import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
-
-//Firebase
 import 'package:firebase_auth/firebase_auth.dart';
-
-//Widget
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
 
@@ -18,13 +9,7 @@ import 'package:get/get.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  Future<void> clearPreferences() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-  }
-
   Future<UserCredential> googleAuthSignIn() async {
-    //await clearPreferences();
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth =
     await googleUser?.authentication;
@@ -65,10 +50,9 @@ class LoginScreen extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              side: const BorderSide(
-                  width: 2, color: Color.fromARGB(255, 100, 92, 170))),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+              side: const BorderSide(width: 2, color: Color.fromARGB(255, 100, 92, 170),),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -76,14 +60,7 @@ class LoginScreen extends StatelessWidget {
                 'assets/images/google_logo.png',
                 width: size.width * 0.06,
               ),
-              Text(
-                '구글로 로그인하기',
-                style: TextStyle(
-                    fontFamily: 'bmjua',
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 80, 78, 91),
-                    fontSize: 20),
-              ),
+              const Text('구글로 로그인하기',),
             ],
           ),
         ),
