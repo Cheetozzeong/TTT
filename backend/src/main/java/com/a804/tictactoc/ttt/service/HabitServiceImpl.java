@@ -23,6 +23,9 @@ public class HabitServiceImpl implements HabitService{
 
     @Override
     public List<HabitRes> readAll(long userId) throws SQLException {
+        List<Habit> habit = hRepo.test((long)5);
+        System.out.println(habit.get(0));
+
         return hRepo.findByUserIdAndDeleteYnOrderByCategoryId(userId, 0);
     }
 
