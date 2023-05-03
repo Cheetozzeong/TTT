@@ -7,7 +7,7 @@ import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
                     return const LoginScreen();
                   }
               ),
-              /*GetBuilder<LoadingController>(
+              GetBuilder<LoadingController>(
                   builder: (_) {
                     return Offstage(
                         offstage: !loadingController.isLoadingFlag,
@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
                         ),
                     );
                   }
-              ),*/
+              ),
             ],
           ),
         ),
