@@ -3,10 +3,7 @@ package com.a804.tictactoc.ttt.controller;
 import com.a804.tictactoc.ttt.db.entity.User;
 import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.request.TickleReq;
-import com.a804.tictactoc.ttt.response.HabitRes;
-import com.a804.tictactoc.ttt.response.TickleCategoryRes;
-import com.a804.tictactoc.ttt.response.TickleCountRes;
-import com.a804.tictactoc.ttt.response.TickleRes;
+import com.a804.tictactoc.ttt.response.*;
 import com.a804.tictactoc.ttt.service.HabitService;
 import com.a804.tictactoc.ttt.service.TickleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -84,14 +81,13 @@ public class TickleController {
 					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@GetMapping(value = "/count")
+
 	public ResponseEntity<?> countTickleByCategory(HttpServletRequest request) throws Exception{
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();
-		List<TickleCountRes> result = tService.countTickle();
+		List<TickleCountRes> result = tService.countTickle(userId);
 		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
 	}
-
-
 
 	@ExceptionHandler(SQLException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "유효하지 않은 입력 값")

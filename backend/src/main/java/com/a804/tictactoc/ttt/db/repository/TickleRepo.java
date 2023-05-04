@@ -21,8 +21,10 @@ public interface TickleRepo extends JpaRepository<Tickle,Long>{
             "where alarm.habit_id = ?1", nativeQuery = true)
     List<TickleAchieveRes> findTickleAchieve(long habitId, String executionDay);
 
-    @Query(value = "select category_id as categoryId, category.name as categoryName, count(distinct habit_id, execution_day) as count\n" +
-            "from habit join tickle on habit.id = habit_id join category on habit.category_id = category.id\n" +
-            "group by category_id", nativeQuery = true)
-    List<TickleCountRes> countByTickle();
+    @Query(value = "select category.id as categoryId, category.name as categoryName, count(distinct habit_id, execution_day) as count\n" +
+            "from category left outer join\n" +
+            "(habit join tickle on habit.id = habit_id and habit.user_id = ?1)\n" +
+            "on habit.category_id = category.id\n" +
+            "group by category.id;", nativeQuery = true)
+    List<TickleCountRes> countByTickle(long userId);
 }
