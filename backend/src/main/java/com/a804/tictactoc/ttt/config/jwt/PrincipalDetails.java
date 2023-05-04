@@ -17,14 +17,16 @@ public class PrincipalDetails implements UserDetails {
 
         this.user = user;
     }
-
+    public User getUser() {
+        return user;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
     @Override
-    public String getPassword(){ return user.getPassword(); } //UserDetails을 상속받은 클래스이기 때문에 전부 구현해야함
+    public String getPassword(){ return null; } //UserDetails을 상속받은 클래스이기 때문에 전부 구현해야함
 
     @Override
     public String getUsername() {

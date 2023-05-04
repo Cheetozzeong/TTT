@@ -1,5 +1,6 @@
 package com.a804.tictactoc.ttt.controller;
 
+import com.a804.tictactoc.ttt.db.entity.User;
 import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.request.TickleReq;
 import com.a804.tictactoc.ttt.response.HabitRes;
@@ -20,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -46,8 +48,9 @@ public class TickleController {
 					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@GetMapping(value = "/{tickleId}")
-	public ResponseEntity<?> readTickle(@PathVariable long tickleId) throws Exception{
-		long userId = 1;//임시
+	public ResponseEntity<?> readTickle(@PathVariable long tickleId, HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();//임시
 		TickleRes result = tService.readTickle(tickleId);
 		return new ResponseEntity<TickleRes>(result, HttpStatus.OK);
 	}
@@ -57,8 +60,9 @@ public class TickleController {
 					@ApiResponse(responseCode = "200", description = "습관 변경 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PostMapping(value = "")
-	public ResponseEntity<?> createTickle(@ParameterObject TickleReq tickleReq) throws Exception{
-		long userId = 1;//임시
+	public ResponseEntity<?> createTickle(@ParameterObject TickleReq tickleReq, HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();//임시
 		TickleRes tickleRes = tService.createTickle(tickleReq);
 		return new ResponseEntity<TickleRes>(tickleRes, HttpStatus.OK);
 	}
@@ -68,8 +72,9 @@ public class TickleController {
 					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@GetMapping(value = "")
-	public ResponseEntity<?> readTodayTickle(String targetDate) throws Exception{
-		long userId = 1;//임시
+	public ResponseEntity<?> readTodayTickle(String targetDate, HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();
 		List<TickleCategoryRes> result = tService.todayTickle(userId, targetDate);
 		return new ResponseEntity<List<TickleCategoryRes>>(result, HttpStatus.OK);
 	}
@@ -79,8 +84,9 @@ public class TickleController {
 					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@GetMapping(value = "/count")
-	public ResponseEntity<?> countTickleByCategory() throws Exception{
-		long userId = 1;//임시
+	public ResponseEntity<?> countTickleByCategory(HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();
 		List<TickleCountRes> result = tService.countTickle();
 		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
 	}

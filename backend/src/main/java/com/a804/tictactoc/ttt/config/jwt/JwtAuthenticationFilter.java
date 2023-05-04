@@ -45,8 +45,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-
-
+import static com.a804.tictactoc.ttt.config.jwt.JwtProperties.ACCESS_HEADER;
+import static com.a804.tictactoc.ttt.config.jwt.JwtProperties.REFRESH_HEADER;
 
 
 @RequiredArgsConstructor
@@ -90,8 +90,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         ObjectMapper om = new ObjectMapper();
         LoginReq loginReq = null;
+        try{
+            loginReq = om.readValue(request.getInputStream(), LoginReq.class);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
-/*
         String tokenId = loginReq.getIdToken();
         //여기서 유저 uid를 받는다.
         FirebaseToken decodedToken = null;
@@ -102,25 +106,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
         String uid = decodedToken.getUid();
         System.out.println(uid);
-        
 
-        //idToken 기반으로 유저 uid를 가져온다.        
-        FirebaseToken decodedToken = firebaseAuth.verifyIdToken(idToken);
-        String uid = decodedToken.getUid();
-        
-        //uid를 기반으로 유저 정보를 가져온다.
+        /*
+        //uid를 기반으로 유저 정보를 가져온다. 필요시 사용
         UserRecord userRecord = firebaseAuth.getUser(uid);
         String email = userRecord.getEmail();
         String displayName = userRecord.getDisplayName();
-*/
-        
+        */
         //idtoken 만료 이슈 때문에 uid를 test로 받아놓음
-        String uid = "fk9AqAXtRjXyBJIPD6wFDqcXlHs1";
+        //String uid = "fk9AqAXtRjXyBJIPD6wFDqcXlHs1";
         userService.login(uid);
-
-
-
-        //request에 있는 username과 password를 java Object로 받기
 
         //여기서 파이어베이스에 접근해서 유저 아이디를 가져와야됨
         //유저네임패스워드 토큰 생성
@@ -141,11 +136,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = JWT.create()
                 .withSubject(principalDetailis.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME))
-                .withClaim("uid", principalDetailis.getUsername())
+                .withClaim("uid", principalDetailis.getUser().getUid())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
 
         String refreshToken = JWT.create()
+                .withSubject(principalDetailis.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME))
+                .withClaim("uid", principalDetailis.getUser().getUid())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
         //RefreshToken을 Redis에 저장 (expirationTime 설정을 통해 자동 삭제 처리)
         redisTemplate.opsForValue()
@@ -153,6 +150,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String jwtToken = JwtProperties.TOKEN_PREFIX+accessToken + "_AND_" + JwtProperties.TOKEN_PREFIX+refreshToken;
 
-        response.addHeader(JwtProperties.HEADER_STRING, jwtToken);
+        String access = JwtProperties.TOKEN_PREFIX+accessToken;
+        String refresh = JwtProperties.TOKEN_PREFIX+refreshToken;
+        response.setHeader(JwtProperties.ACCESS_HEADER, access);
+        response.setHeader(JwtProperties.REFRESH_HEADER, refresh);
+
+
+
     }
 }

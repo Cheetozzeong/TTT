@@ -70,12 +70,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), redisTemplate, firebaseAuth, userService,principalDetailsService ))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository, userService ))
                 .authorizeRequests()
+                .antMatchers("/reissue").permitAll()
                 .antMatchers("/*").permitAll()
-                .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**", "/api-docs/**").permitAll()
+                .antMatchers("/swagger-ui","/**", "/swagger-resources/**", "/v3/api-docs/**", "/api-docs/**").permitAll()
                 .anyRequest().authenticated();
-
 
     }
 
