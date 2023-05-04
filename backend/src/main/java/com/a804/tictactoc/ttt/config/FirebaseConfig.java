@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
@@ -17,10 +18,12 @@ public class FirebaseConfig {
     @PostConstruct
     public void init(){
         try{
+            ClassPathResource resource = new ClassPathResource("serviceAccountKey.json");
             FileInputStream serviceAccount =
                     new FileInputStream("src/main/resources/serviceAccountKey.json");
+
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setCredentials(GoogleCredentials.fromStream(resource.getInputStream()))
                     .build();
             FirebaseApp.initializeApp(options);
         }catch (Exception e){
