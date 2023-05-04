@@ -2,6 +2,7 @@ package com.a804.tictactoc.ttt.controller;
 
 import com.a804.tictactoc.ttt.db.entity.Category;
 import com.a804.tictactoc.ttt.db.entity.Habit;
+import com.a804.tictactoc.ttt.db.entity.User;
 import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.response.HabitRes;
 import com.a804.tictactoc.ttt.service.CategoryService;
@@ -21,8 +22,10 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -50,8 +53,9 @@ public class HabitController {
 					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@GetMapping(value = "")
-	public ResponseEntity<?> readAllHabit() throws Exception{
-		long userId = 1;//임시
+	public ResponseEntity<?> readAllHabit(HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();
 		List<HabitRes> result = hService.readAll(userId);
 		return new ResponseEntity<List<HabitRes>>(result, HttpStatus.OK);
 	}
@@ -61,8 +65,9 @@ public class HabitController {
 					@ApiResponse(responseCode = "200", description = "습관 변경 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PostMapping(value = "")
-	public ResponseEntity<?> createHabit(@ParameterObject HabitReq habitReq) throws Exception{
-		long userId = 1;//임시
+	public ResponseEntity<?> createHabit(@ParameterObject HabitReq habitReq,HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();
 		HabitRes habitRes = hService.createHabit(habitReq, userId);
 		return new ResponseEntity<HabitRes>(habitRes, HttpStatus.OK);
 	}
@@ -72,8 +77,9 @@ public class HabitController {
 					@ApiResponse(responseCode = "200", description = "습관 생성 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PatchMapping(value = "")
-	public ResponseEntity<?> updateHabit(@ParameterObject HabitReq habitReq) throws Exception{
-		long userId = 1;//임시
+	public ResponseEntity<?> updateHabit(@ParameterObject HabitReq habitReq, HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();
 		HabitRes habitRes = hService.updateHabit(habitReq);
 		return new ResponseEntity<HabitRes>(habitRes, HttpStatus.OK);
 	}
@@ -83,8 +89,9 @@ public class HabitController {
 					@ApiResponse(responseCode = "200", description = "습관 생성 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PatchMapping(value = "/quit/{habitId}")
-	public ResponseEntity<?> deleteHabit(@PathVariable long habitId) throws Exception{
-		long userId = 1;//임시
+	public ResponseEntity<?> deleteHabit(@PathVariable long habitId , HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();
 		HabitRes habitRes = hService.deleteHabit(userId, habitId);
 		return new ResponseEntity<HabitRes>(habitRes, HttpStatus.OK);
 	}
