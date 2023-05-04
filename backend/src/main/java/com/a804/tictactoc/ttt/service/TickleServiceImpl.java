@@ -1,5 +1,6 @@
 package com.a804.tictactoc.ttt.service;
 
+import com.a804.tictactoc.ttt.db.entity.Habit;
 import com.a804.tictactoc.ttt.db.entity.Tickle;
 import com.a804.tictactoc.ttt.db.repository.CategoryRepo;
 import com.a804.tictactoc.ttt.db.repository.HabitRepo;
@@ -97,7 +98,7 @@ public class TickleServiceImpl implements TickleService{
     }
 
     @Override
-    public List<TickleCountRes> countTickle() throws SQLException {
-        return tRepo.countByTickle();
+    public List<TickleCountRes> countTickle(long userId) throws SQLException {
+        return tRepo.countByTickle(userId);
     }
 }

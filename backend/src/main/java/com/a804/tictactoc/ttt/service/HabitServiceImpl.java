@@ -2,6 +2,7 @@ package com.a804.tictactoc.ttt.service;
 
 import com.a804.tictactoc.ttt.db.entity.Alarm;
 import com.a804.tictactoc.ttt.db.entity.Habit;
+import com.a804.tictactoc.ttt.db.entity.User;
 import com.a804.tictactoc.ttt.db.repository.AlarmRepo;
 import com.a804.tictactoc.ttt.db.repository.HabitRepo;
 import com.a804.tictactoc.ttt.request.HabitReq;
@@ -23,9 +24,6 @@ public class HabitServiceImpl implements HabitService{
 
     @Override
     public List<HabitRes> readAll(long userId) throws SQLException {
-        List<Habit> habit = hRepo.test((long)5);
-        System.out.println(habit.get(0));
-
         return hRepo.findByUserIdAndDeleteYnOrderByCategoryId(userId, 0);
     }
 
@@ -38,7 +36,7 @@ public class HabitServiceImpl implements HabitService{
     @Override
     public HabitRes createHabit(HabitReq habitReq, long userId) throws SQLException {
         Habit habit = habitReq.toEntity();
-        habit.setUserId(userId);
+        habit.setUser(new User(userId));
         habit = hRepo.save(habit);
 
         int start = Integer.parseInt(habit.getStartTime().substring(0,2)) * 60 + Integer.parseInt(habit.getStartTime().substring(2,4));

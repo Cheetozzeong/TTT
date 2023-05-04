@@ -6,6 +6,7 @@ import com.a804.tictactoc.ttt.response.TickleAchieveRes;
 import com.a804.tictactoc.ttt.response.TickleCountRes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,7 +24,10 @@ public interface TickleRepo extends JpaRepository<Tickle,Long>{
 
 
     @Query(value = "select category.id as categoryId, category.name as categoryName, count(distinct habit_id, execution_day) as count\n" +
-            "from habit join tickle on habit.id = habit_id right outer join category on habit.category_id = category.id\n" +
+            "from category left outer join\n" +
+            "(habit join tickle on habit.id = habit_id and habit.user_id = ?1)\n" +
+            "on habit.category_id = category.id\n" +
             "group by category.id", nativeQuery = true)
-    List<TickleCountRes> countByTickle();
+    List<TickleCountRes> countByTickle(long userId);
+
 }

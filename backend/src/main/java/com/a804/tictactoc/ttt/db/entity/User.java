@@ -1,11 +1,6 @@
 package com.a804.tictactoc.ttt.db.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -15,6 +10,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 유저 모델 정의.
@@ -35,7 +33,7 @@ public class User{
 	@Schema(hidden = true)
     long id;
 
-	@Schema(name = "유저의 uid", example = "fk9AqAXtRjXyBJIPD6wFDqcXlHs1", defaultValue = "fk9AqAXtRjXyBJIPD6wFDqcXlHs1")
+	@Schema(name = "유저의 uid", example = "aaaa", defaultValue = "aaaa")
 	@Column(name="uid")
 	String uid;
 
@@ -58,4 +56,11 @@ public class User{
 	@Schema(hidden = true)
 	@Column(name="modified_date")
 	String modifiedDate;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	List<Habit> habits = new ArrayList<>();
+
+	public User(long id){
+		this.id = id;
+	}
 }

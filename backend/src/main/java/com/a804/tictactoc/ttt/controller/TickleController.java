@@ -78,10 +78,9 @@ public class TickleController {
 	@GetMapping(value = "/count")
 	public ResponseEntity<?> countTickleByCategory() throws Exception{
 		long userId = 1;//임시
-		List<TickleCountRes> result = tService.countTickle();
+		List<TickleCountRes> result = tService.countTickle(userId);
 		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
 	}
-
 
 	@ExceptionHandler(SQLException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "유효하지 않은 입력 값")

@@ -33,9 +33,9 @@ public class Habit {
 	@Schema(hidden = true)
     long id;
 
-	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
-	@Column(name="user_id", updatable = false)
-	long userId;
+//	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
+//	@Column(name="user_id", updatable = false)
+//	long userId;
 
 //	@Schema(name = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
 //	@Column(name="category_id")
@@ -83,6 +83,10 @@ public class Habit {
 
 	@OneToMany(mappedBy = "habit", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	List<Alarm> alarms  = new ArrayList<>();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
