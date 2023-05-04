@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable/expandable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:switcher_button/switcher_button.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
+import 'package:tickle_tackle_tockle/component/custom_switch.dart';
 import 'package:tickle_tackle_tockle/const/theme.dart';
+import 'package:tickle_tackle_tockle/controller/disturb_alarm_controller.dart';
 import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +26,92 @@ class MyPageScreen extends StatelessWidget {
     final deviceHeight = size.height;
 
     ThemeController themeController = Get.put(ThemeController());
+    DisturbAlarmController disturbAlarmController = Get.put(DisturbAlarmController());
+
+    buildButtonWidget(BuildContext buildContext, ExpandableController ec) {
+      return Builder(
+        builder: (buildContext) {
+          return GetBuilder<ThemeController>(
+            builder: (_) {
+              return GetBuilder<DisturbAlarmController>(
+                builder: (_) {
+                  return CustomSwitch(
+                    value: disturbAlarmController.isDisturbAlarm,
+                    disableColor: disturbAlarmController.stateColor,
+                    enableColor: disturbAlarmController.stateColor,
+                    switchHeight: 20,
+                    switchWidth: deviceWidth * 0.15,
+                    onChanged: (_) {
+                      ec.toggle();
+                      disturbAlarmController.setIsDisturbAlarmFlag(!disturbAlarmController.isDisturbAlarm, themeController.selectedPrimaryColor);
+                    },
+                  );
+                }
+              );
+            }
+          );
+        },
+      );
+    }
+
+    buildCollapsedAlarm(BuildContext buildContext, ExpandableController ec) {
+      return Container(
+        height: deviceHeight * 0.08,
+        width: deviceWidth * 0.9,
+        child: Padding(
+          padding: EdgeInsets.all(deviceHeight * 0.022),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '방해 금지 시간대 설정',
+                style: TextStyle(
+                  fontSize: deviceWidth * 0.055,
+                ),
+              ),
+              SizedBox(
+                width: deviceWidth * 0.14,
+              ),
+              Container(
+                height: deviceHeight * 0.03,
+                child: buildButtonWidget(buildContext, ec),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    buildExpandedAlarm(BuildContext buildContext, ExpandableController ec) {
+      return Container(
+        height: deviceHeight * 0.2,
+        width: deviceWidth * 0.9,
+        child: Padding(
+          padding: EdgeInsets.all(deviceHeight * 0.022),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '방해 금지 시간대 설정',
+                style: TextStyle(
+                  fontSize: deviceWidth * 0.055,
+                ),
+              ),
+              SizedBox(
+                width: deviceWidth * 0.14,
+              ),
+              Container(
+                height: deviceHeight * 0.03,
+                child: buildButtonWidget(buildContext, ec),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
 
     return Scaffold(
       appBar: CommonAppBar(appBarType: AppBarType.myPageAppBar, title: '마이 페이지',),
@@ -249,6 +339,39 @@ class MyPageScreen extends StatelessWidget {
                       ],
                     )
                   ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: deviceHeight * 0.02,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.7),
+                    blurRadius: 5.0,
+                    spreadRadius: 0.0,
+                    offset: const Offset(0, 7),
+                  ),
+                ],
+              ),
+              child: ExpandableNotifier(
+                child: Expandable(
+                  collapsed: Builder(
+                    builder: (context) {
+                      var exController = ExpandableController.of(context, required: true)!;
+                      return buildCollapsedAlarm(context, exController);
+                    },
+                  ),
+                  expanded: Builder(
+                    builder: (context) {
+                      var exController = ExpandableController.of(context, required: true)!;
+                      return buildExpandedAlarm(context, exController);
+                    },
+                  ),
                 ),
               ),
             ),
