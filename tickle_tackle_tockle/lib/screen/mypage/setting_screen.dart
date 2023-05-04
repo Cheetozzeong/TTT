@@ -5,12 +5,14 @@ import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
+import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/privacy_screen.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/tos_screen.dart';
 import '../../const/theme.dart';
 import 'menual_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:material_dialogs/material_dialogs.dart';
+import 'package:get/get.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -21,6 +23,8 @@ class SettingScreen extends StatelessWidget {
     final deviceWidth = size.width;
     final deviceHeight = size.height;
     final menuFontSize = deviceHeight * 0.023;
+
+    LoadingController loadingController = Get.put(LoadingController());
 
     Future<void> signOutGoogle() async {
       await FirebaseAuth.instance.signOut();
@@ -124,7 +128,11 @@ class SettingScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      signOutGoogle().then((value) => Navigator.pop(context));
+                      loadingController.setIsLoadingFlag(true);
+                      signOutGoogle().then((value) {
+                        loadingController.setIsLoadingFlag(false);
+                        Navigator.of(context).popUntil((route) => route.isFirst);
+                      });
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,

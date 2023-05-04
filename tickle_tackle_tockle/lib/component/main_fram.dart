@@ -16,17 +16,11 @@ import 'package:get/get.dart';
 class MainFrame extends StatelessWidget {
   const MainFrame({Key? key}) : super(key: key);
 
-  getSharedPreferenceTheme() async {
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-  }
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double deviceWidth = size.width;
     final double deviceHeight = size.height;
-
-
 
     ThemeController themeController = Get.put(ThemeController());
 

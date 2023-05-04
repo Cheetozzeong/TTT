@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import 'const/theme.dart';
 import 'component/main_fram.dart';
 import 'controller/loading_controller.dart';
@@ -45,9 +46,22 @@ class _MyAppState extends State<MyApp> {
     sharedPreferences.setString('idToken', str!);
   }
 
+  getSharedPreferenceThemeData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    ThemeController themeController = Get.put(ThemeController());
+    themeController.selectedPrimaryColor = Color(prefs.getInt('themeColor') ?? TTTPrimary1.value);
+    prefs.setInt('themeColor', themeController.selectedPrimaryColor.value);
+
+    themeController.refreshTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
     LoadingController loadingController = Get.put(LoadingController());
+    ThemeController themeController = Get.put(ThemeController());
+
+    getSharedPreferenceThemeData();
 
     return SafeArea(
         child: Scaffold(
@@ -82,8 +96,8 @@ class _MyAppState extends State<MyApp> {
                             Center(
                               child: SpinKitCubeGrid(
                                 itemBuilder: (context, index) {
-                                  return const DecoratedBox(
-                                    decoration: BoxDecoration(color: TTTPrimary1),
+                                  return DecoratedBox(
+                                    decoration: BoxDecoration(color: themeController.selectedPrimaryColor),
                                   );
                                 },
                               ),

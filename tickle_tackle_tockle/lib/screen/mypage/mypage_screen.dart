@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
 import 'package:tickle_tackle_tockle/const/theme.dart';
 import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
@@ -8,6 +9,11 @@ import 'package:get/get.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({Key? key}) : super(key: key);
+
+  setSharedPreferenceTheme(Color selectedColor) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('themeColor', selectedColor.value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +125,7 @@ class MyPageScreen extends StatelessWidget {
                           onTap: () {
                             themeController.selectedPrimaryColor = TTTPrimary1;
                             themeController.refreshTheme();
+                            setSharedPreferenceTheme(TTTPrimary1);
                           },
                           child: GetBuilder<ThemeController>(
                             builder: (_) {
@@ -143,6 +150,7 @@ class MyPageScreen extends StatelessWidget {
                           onTap: () {
                             themeController.selectedPrimaryColor = TTTPrimary2;
                             themeController.refreshTheme();
+                            setSharedPreferenceTheme(TTTPrimary2);
                           },
                           child: GetBuilder<ThemeController>(
                               builder: (_) {
@@ -167,6 +175,7 @@ class MyPageScreen extends StatelessWidget {
                           onTap: () {
                             themeController.selectedPrimaryColor = TTTPrimary3;
                             themeController.refreshTheme();
+                            setSharedPreferenceTheme(TTTPrimary3);
                           },
                           child: GetBuilder<ThemeController>(
                               builder: (_) {
@@ -191,6 +200,7 @@ class MyPageScreen extends StatelessWidget {
                           onTap: () {
                             themeController.selectedPrimaryColor = TTTPrimary4;
                             themeController.refreshTheme();
+                            setSharedPreferenceTheme(TTTPrimary4);
                           },
                           child: GetBuilder<ThemeController>(
                               builder: (_) {
@@ -215,6 +225,7 @@ class MyPageScreen extends StatelessWidget {
                           onTap: () {
                             themeController.selectedPrimaryColor = TTTPrimary5;
                             themeController.refreshTheme();
+                            setSharedPreferenceTheme(TTTPrimary5);
                           },
                           child: GetBuilder<ThemeController>(
                               builder: (_) {

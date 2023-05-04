@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import '../../const/theme.dart';
 import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,53 +35,58 @@ class LoginScreen extends StatelessWidget {
     final double deviceHeight = size.height;
 
     LoadingController loadingController = Get.put(LoadingController());
+    ThemeController themeController = Get.put(ThemeController());
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text(
-          '로그인 하기',
-          style: TextStyle(
-            color: TTTPrimary1,
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      body: Center(
-        child: SizedBox(
-          height: deviceHeight * 0.07,
-          width: deviceWidth * 0.8,
-          child: ElevatedButton(
-            onPressed: () {
-              loadingController.setIsLoadingFlag(true);
-              googleAuthSignIn().whenComplete(() => loadingController.setIsLoadingFlag(false));
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
-              side: const BorderSide(width: 2,),
+    return GetBuilder<ThemeController>(
+      builder: (_) {
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: true,
+            title: Text(
+              '로그인 하기',
+              style: TextStyle(
+                color: themeController.selectedPrimaryColor,
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/google_logo.png',
-                  width: size.width * 0.06,
+            backgroundColor: Colors.white,
+          ),
+          body: Center(
+            child: SizedBox(
+              height: deviceHeight * 0.07,
+              width: deviceWidth * 0.8,
+              child: ElevatedButton(
+                onPressed: () {
+                  loadingController.setIsLoadingFlag(true);
+                  googleAuthSignIn().whenComplete(() => loadingController.setIsLoadingFlag(false));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+                  side: const BorderSide(width: 2,),
                 ),
-                SizedBox(
-                  width: deviceWidth * 0.1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      'assets/images/google_logo.png',
+                      width: size.width * 0.06,
+                    ),
+                    SizedBox(
+                      width: deviceWidth * 0.1,
+                    ),
+                    const Text(
+                      '구글로 로그인하기',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
-                const Text(
-                  '구글로 로그인하기',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }
