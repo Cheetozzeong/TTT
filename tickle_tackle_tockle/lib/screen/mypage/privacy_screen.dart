@@ -1,15 +1,26 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../component/common_appbar.dart';
 
+late var strToken = "";
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({Key? key}) : super(key: key);
+
+  checkToken() async {
+    SharedPreferences hsaredPreferences = await SharedPreferences.getInstance();
+    strToken = hsaredPreferences.getString('token')!;
+  }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final deviceWidth = size.width;
     final deviceHeight = size.height;
+
+    checkToken();
 
     return SafeArea(
       child: Scaffold(
@@ -45,14 +56,24 @@ class PrivacyScreen extends StatelessWidget {
                   SizedBox(
                     height: deviceHeight * 0.02,
                   ),
-                  const Row(
+                  Column(
                     children: [
-                      Text(
-                        '호에에에에에에에에에엥',
-                        style: TextStyle(
-                          fontFamily: "NotoSansKr",
+                      Container(
+                        width: deviceWidth * 0.8,
+                        child: Text(
+                          strToken,
+                          style: TextStyle(
+                            fontFamily: "NotoSansKr",
+                          ),
+                          overflow: TextOverflow.visible,
                         ),
                       ),
+                      ElevatedButton(
+                        child: Text("COPY"),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: strToken));
+                        },
+                      )
                     ],
                   ),
                 ],
