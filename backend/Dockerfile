@@ -5,7 +5,7 @@ COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 COPY application.properties src/main/resources/application.properties
-COPY serviceAccountKey.json backend/src/main/resources/serviceAccountKey.json
+COPY serviceAccountKey.json src/main/resources/serviceAccountKey.json
 RUN chmod +x ./gradlew
 RUN ./gradlew bootJar
 
