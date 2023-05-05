@@ -46,8 +46,8 @@ class ManualScreen extends StatelessWidget {
                   SizedBox(
                     height: deviceHeight * 0.02,
                   ),
-                  const Row(
-                    children: [
+                  Row(
+                    children: const [
                       Text(
                         '호에에에에에에에에에엥',
                         style: TextStyle(
