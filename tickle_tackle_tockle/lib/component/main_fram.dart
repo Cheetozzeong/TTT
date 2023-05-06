@@ -30,7 +30,7 @@ class MainFrame extends StatelessWidget {
         HabitsScreen(),
         CreateScreen(),
         RewardScreen(),
-        MyPageScreen(),
+        MyPageScreen(mainContext: context,),
       ];
     }
 
