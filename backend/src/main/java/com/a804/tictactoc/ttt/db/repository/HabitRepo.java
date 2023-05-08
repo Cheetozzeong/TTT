@@ -13,4 +13,5 @@ import java.util.List;
 public interface HabitRepo extends JpaRepository<Habit,Long>{
     //List<Habit> findByCategoryId(int categoryId);
     List<HabitRes> findByUserIdAndDeleteYnOrderByCategoryId(long userId, int deleteYn);
+    List<HabitRes> findByUserIdAndDeleteYnAndRepeatDayLikeOrderByCategoryId(long userId, int deleteYn, String repeatDayLike);
 }
