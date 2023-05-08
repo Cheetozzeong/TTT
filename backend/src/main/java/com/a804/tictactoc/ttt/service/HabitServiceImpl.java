@@ -36,7 +36,6 @@ public class HabitServiceImpl implements HabitService{
     @Override
     public HabitRes createHabit(HabitReq habitReq, long userId) throws SQLException {
         Habit habit = habitReq.toEntity();
-        habit.setUser(new User(userId));
         habit = hRepo.save(habit);
 
         int start = Integer.parseInt(habit.getStartTime().substring(0,2)) * 60 + Integer.parseInt(habit.getStartTime().substring(2,4));
@@ -47,7 +46,7 @@ public class HabitServiceImpl implements HabitService{
             String alarmTime = i/60<10 ? 0+""+i/60 : ""+i/60;
             alarmTime += i%60<10 ? 0+""+i%60 : ""+i%60;
             Alarm alarm = new Alarm();
-            alarm.setHabit(new Habit(habit.getId()));
+            alarm.setHabitId(habit.getId());
             alarm.setAlarmTime(alarmTime);
             aRepo.save(alarm);
         }

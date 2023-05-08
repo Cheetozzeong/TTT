@@ -47,10 +47,6 @@ public class Category {
 	@Column(name="modified_date", updatable = false, insertable = false)
 	String modifiedDate;
 
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "categoryId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	List<Habit> habits = new ArrayList<>();
-
-	public Category(int id){
-		this.id = id;
-	}
 }

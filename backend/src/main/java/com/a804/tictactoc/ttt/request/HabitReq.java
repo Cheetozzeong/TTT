@@ -52,8 +52,7 @@ public class HabitReq {
 	public Habit toEntity() {
 		return Habit.builder()
 				.id(id)
-				//.categoryId(categoryId)
-				.category(new Category(categoryId))
+				.categoryId(categoryId)
 				.name(name)
 				.emoji(emoji)
 				.startTime(startTime)

@@ -31,8 +31,7 @@ public class TickleReq {
 
 	public Tickle toEntity() {
 		return Tickle.builder()
-				//.habitId(habitId)
-				.habit(new Habit(habitId))
+				.habitId(habitId)
 				.executionDay(executionDay)
 				.executionTime(executionTime)
 				.build();

@@ -28,9 +28,9 @@ public class Tickle {
 	@Schema(hidden = true)
     long id;
 	
-//	@Schema(name = "어떤 습관의 티끌인지", example = "1", defaultValue = "1")
-//	@Column(name="habit_id")
-//	long habitId;
+	@Schema(name = "어떤 습관의 티끌인지", example = "1", defaultValue = "1")
+	@Column(name="habit_id")
+	long habitId;
 
 	@Schema(name = "이 티끌이 만들어진 날짜", example = "20230427", defaultValue = "YYYYMMDD")
 	@Column(name="execution_day")
@@ -40,12 +40,7 @@ public class Tickle {
 	@Column(name="execution_time")
 	String executionTime;
 
-
 	@Schema(hidden = true)
 	@Column(name="created_date", updatable = false, insertable = false)
 	String createdDate;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "habit_id")
-	Habit habit;
 }

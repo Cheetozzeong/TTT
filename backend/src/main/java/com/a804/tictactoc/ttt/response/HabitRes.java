@@ -20,8 +20,8 @@ public class HabitRes {
 	@Schema(hidden = true)
     long id;
 
-//	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
-//	long userId;
+	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
+	long userId;
 
 	@Schema(name = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
 	int categoryId;
@@ -48,7 +48,7 @@ public class HabitRes {
 	@Builder
 	public HabitRes(Habit habit){
 		this.id = habit.getId();
-		this.categoryId = habit.getCategory().getId();
+		this.categoryId = habit.getCategoryId();
 		this.name = habit.getName();
 		this.emoji = habit.getEmoji();
 		this.startTime = habit.getStartTime();
