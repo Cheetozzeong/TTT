@@ -94,7 +94,7 @@ class RewardScreen extends StatelessWidget {
           isZero = false;
         }
 
-        if(tockleCondition.exerciseCnt > 0) {
+        if(tockleCondition.etcCnt > 0) {
           if(!isZero) {
             strEtcCondition = ' & 기타 ${tockleCondition.etcCnt}티끌';
           } else {
