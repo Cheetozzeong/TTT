@@ -50,6 +50,7 @@ dependencies:
   expandable: ^5.0.1
   switcher_button: ^0.0.4
   time_picker_sheet: ^0.0.2+1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
