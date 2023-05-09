@@ -6,6 +6,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 유저 모델 정의.
@@ -41,4 +43,7 @@ public class Category {
 	@Schema(hidden = true)
 	@Column(name="modified_date", updatable = false, insertable = false)
 	String modifiedDate;
+
+	@OneToMany(mappedBy = "categoryId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	List<Habit> habits = new ArrayList<>();
 }
