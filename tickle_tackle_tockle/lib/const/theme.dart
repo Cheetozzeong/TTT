@@ -17,4 +17,5 @@ const Color TTTTeritary4 = const Color(0xFFD8DB53);
 const Color TTTTeritary5 = const Color(0xFF64785D);
 const Color TTTBlack = const Color(0xFF000000);
 const Color TTTWhite = const Color(0xFFFFFFFF);
+const Color TTTGrey = const Color(0xFF757575);
 
