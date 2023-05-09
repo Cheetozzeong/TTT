@@ -1,11 +1,44 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/const/theme.dart';
+import 'package:tickle_tackle_tockle/model/TickleCountNameRes.dart';
 import '../../component/common_appbar.dart';
 import 'package:tickle_tackle_tockle/const/tockle_list.dart';
+import 'package:http/http.dart' as http;
 
 
 class RewardScreen extends StatelessWidget {
   const RewardScreen({Key? key}) : super(key: key);
+
+  Future<http.Response> sendAccessToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String accessToken = pref.getString('accessToken')!;
+    var url = Uri.parse('http://10.0.2.2:8428/tickle/count');
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'accessToken' :  accessToken,
+      },
+    );
+    return response;
+  }
+
+  Future<List<TickleCountNameRes>> checkAccessToken() async {
+    final response = await sendAccessToken();
+    List<TickleCountNameRes> retList = [];
+
+    if (response.statusCode == 200) {
+      retList = parseTickleCountNameResList(utf8.decode(response.bodyBytes));
+      print(retList);
+    } else {
+      print('Login failed with status: ${response.statusCode}');
+    }
+
+    return retList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +50,16 @@ class RewardScreen extends StatelessWidget {
     const double tokleImgSizeWidth = 110;
     const double tokleImgSizeHeight = 110;
 
-    List<Widget> buildTocklesRow() {
+    buildTocklesRow() {
       List<Widget> tocklesRowList = [];
       List<Widget> tockleElement = [];
 
-      int testMoney = 10;
-      int testExercise = 10;
-      int testsStudy = 10;
-      int testRelationship = 10;
-      int testLife = 10;
-      int testEtc = 10;
+      int testMoney = 0;
+      int testExercise = 0;
+      int testsStudy = 0;
+      int testRelationship = 0;
+      int testLife = 0;
+      int testEtc = 0;
 
       for(int i = 1; i < tockleImgList.length; i++) {
         TockleCondition tockleCondition = tockleConditionList[i - 1];
@@ -168,10 +201,28 @@ class RewardScreen extends StatelessWidget {
       return tocklesRowList;
     }
 
+    Future<String> _fetch() async {
+      return 'Call';
+    }
+
     buildTocklesColumn() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: buildTocklesRow(),
+        children: [
+          FutureBuilder(
+            future: checkAccessToken(),
+            builder: (context, snaoshot) {
+              if(snaoshot.hasData == false) {
+
+              } else if(snaoshot.hasError) {
+
+              } else {
+
+              }
+              return Text('data');
+            },
+          ),
+        ],
       );
     }
 

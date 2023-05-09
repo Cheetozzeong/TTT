@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,6 +9,9 @@ import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+import '../../model/LoginReq.dart';
 
 
 class LoginScreen extends StatelessWidget {
@@ -26,6 +31,46 @@ class LoginScreen extends StatelessWidget {
     final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<void> saveIdToken() async {
+    String str = await FirebaseAuth.instance.currentUser!.getIdToken();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('idToken', str!);
+  }
+
+  Future<http.Response> sendIdToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String idToken = pref.getString('idToken')!;
+    var url = Uri.parse('http://10.0.2.2:8428/login');
+    var loginReq = LoginReq(idToken: idToken);
+    var body = json.encode(loginReq.toJson());
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    );
+    return response;
+  }
+
+  void checkIdToken() async {
+
+    final response = await sendIdToken();
+    if (response.statusCode == 200) {
+      final headers = response.headers;
+      final accessToken = headers['accesstoken'];
+      final refreshToken = headers['refreshtoken'];
+      print('Access Token: $accessToken');
+      print('Refresh Token: $refreshToken');
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      sharedPreferences.setString('accessToken', accessToken!);
+      sharedPreferences.setString('refreshToken', refreshToken!);
+
+    } else {
+      print('Login failed with status: ${response.statusCode}');
+    }
   }
 
   @override
@@ -55,9 +100,17 @@ class LoginScreen extends StatelessWidget {
               height: deviceHeight * 0.07,
               width: deviceWidth * 0.8,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   loadingController.setIsLoadingFlag(true);
-                  googleAuthSignIn().whenComplete(() => loadingController.setIsLoadingFlag(false));
+                  googleAuthSignIn().then((value) {
+                    if(value != null) {
+                      print('로그인 성공!!');
+                      saveIdToken().then((value) => checkIdToken());
+
+                    } else {
+                      print('로그인실패!!!!!!');
+                    }
+                  }).whenComplete(() => loadingController.setIsLoadingFlag(false));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
