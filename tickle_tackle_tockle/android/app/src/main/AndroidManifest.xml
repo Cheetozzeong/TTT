@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tickle_tackle_tockle">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="틱!택!톡!"
         android:name="${applicationName}"
