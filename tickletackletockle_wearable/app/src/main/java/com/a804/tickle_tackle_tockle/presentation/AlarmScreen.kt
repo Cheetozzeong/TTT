@@ -1,8 +1,5 @@
 package com.a804.tickle_tackle_tockle.presentation
 
-import android.app.Activity
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothSocket
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,13 +10,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.*
-import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.a804.tickle_tackle_tockle.R
 import com.a804.tickle_tackle_tockle.complication.Tickle
 import com.a804.tickle_tackle_tockle.theme.TTTTheme
-import com.google.android.gms.wearable.DataMap
-import com.google.android.gms.wearable.PutDataMapRequest
-import com.google.android.gms.wearable.Wearable
 
 @Composable
 fun AlarmScreen(
@@ -79,7 +72,11 @@ fun AlarmScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Button(
-                        onClick = { onButtonClick() },
+                        onClick = {
+                            Log.d("Bluetooth123", "ClickedButton3333333")
+                            onButtonClick()
+                            Log.d("Bluetooth123", "ClickedButton3333333444444444")
+                        },
                         Modifier
                             .background(
                                 MaterialTheme.colors.primary,
