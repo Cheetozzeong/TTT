@@ -268,16 +268,12 @@ class RewardScreen extends StatelessWidget {
         future: checkAccessToken(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) {
-            loadingController.setIsLoadingFlag(true);
             return Container();
           }
 
           if(snapshot.hasError) {
-            loadingController.setIsLoadingFlag(false);
             return Container();
           }
-
-          loadingController.setIsLoadingFlag(false);
 
           List<TickleCountNameRes>? tickleCntList = snapshot.data;
 
