@@ -61,12 +61,17 @@ public class TickleServiceImpl implements TickleService{
             result.add(tickleCategoryRes);
         }
 
-        //각 오늘 실행해야할 습관들을 티끌로 만들고, 수행 여부도 확인한다
-        List<HabitRes> habitList = hRepo.findByUserIdAndDeleteYnOrderByCategoryId(userId, 0);
-        for(HabitRes habit : habitList){
-            if(habit.getRepeatDay().charAt(yoil) == '0')
-                continue;
+        StringBuilder repeatDayLike = new StringBuilder();
+        for(int i=0; i<yoil; i++)
+            repeatDayLike.append("_");
+        repeatDayLike.append("1");
+        for(int i=yoil+1; i<7; i++)
+            repeatDayLike.append("_");
 
+        //각 오늘 실행해야할 습관들을 티끌로 만들고, 수행 여부도 확인한다
+        List<HabitRes> habitList = hRepo.findByUserIdAndDeleteYnAndRepeatDayLikeOrderByCategoryId(userId, 0, repeatDayLike.toString());
+
+        for(HabitRes habit : habitList){
             TickleCategoryRes tickleCategoryRes =   result.stream().
                                                     filter(tcRes -> tcRes.getCategoryId() == habit.getCategoryId())
                                                     .findFirst().get();
@@ -97,31 +102,7 @@ public class TickleServiceImpl implements TickleService{
     }
 
     @Override
-    public List<TickleCountRes> countTickle() throws SQLException {
-        return tRepo.countByTickle();
+    public List<TickleCountRes> countTickle(long userId) throws SQLException {
+        return tRepo.countByTickle(userId);
     }
-
-    //성능테스트 -> 삼중조인쪽이 확실히 빠른듯
-//    @Override
-//    public List<TickleCountNameRes> test() throws SQLException {
-//        List<CategoryRes> categoryList = cService.findAllCategory();
-//        List<TickleCountNameRes> result = new ArrayList<>();
-//
-//        for(CategoryRes categoryRes : categoryList){
-//            TickleCountNameRes tickleCountNameRes = new TickleCountNameRes();
-//            tickleCountNameRes.setCategoryId(categoryRes.getId());
-//            tickleCountNameRes.setCategoryName(categoryRes.getName());
-//            result.add(tickleCountNameRes);
-//        }
-//
-//        List<TickleCountRes> tickleCountResList = tRepo.countByTickle();
-//        for(TickleCountRes tickleCountRes : tickleCountResList){
-//            TickleCountNameRes tickleCountNameRes =   result.stream().
-//                    filter(tcnRes -> tcnRes.getCategoryId() == tickleCountRes.getCategoryId())
-//                    .findFirst().get();
-//
-//            tickleCountNameRes.setCount(tickleCountRes.getCount());
-//        }
-//        return result;
-//    }
 }
