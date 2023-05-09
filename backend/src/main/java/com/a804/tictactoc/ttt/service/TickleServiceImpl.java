@@ -63,11 +63,9 @@ public class TickleServiceImpl implements TickleService{
         }
 
         StringBuilder repeatDayLike = new StringBuilder();
-        for(int i=0; i<yoil; i++)
-            repeatDayLike.append("_");
+        repeatDayLike.append("_".repeat(yoil));
         repeatDayLike.append("1");
-        for(int i=yoil+1; i<7; i++)
-            repeatDayLike.append("_");
+        repeatDayLike.append("_".repeat(6-yoil));
 
         //각 오늘 실행해야할 습관들을 티끌로 만들고, 수행 여부도 확인한다
         List<HabitRes> habitList = hRepo.findByUserIdAndDeleteYnAndRepeatDayLikeOrderByCategoryId(userId, 0, repeatDayLike.toString());
