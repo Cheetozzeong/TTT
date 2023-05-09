@@ -7,6 +7,10 @@ import 'package:tickle_tackle_tockle/model/TickleCountNameRes.dart';
 import '../../component/common_appbar.dart';
 import 'package:tickle_tackle_tockle/const/tockle_list.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
+
+import '../../controller/loading_controller.dart';
+import '../../controller/theme_controller.dart';
 
 
 class RewardScreen extends StatelessWidget {
@@ -46,31 +50,32 @@ class RewardScreen extends StatelessWidget {
     final double deviceWidth = size.width;
     final double deviceHeight = size.height;
 
-
     const double tokleImgSizeWidth = 110;
     const double tokleImgSizeHeight = 110;
 
-    buildTocklesRow() {
+    LoadingController loadingController = Get.put(LoadingController());
+
+    buildTocklesRow({
+      required int tickleCntMoney,
+      required int tickleCntExercise,
+      required int tickleCntStudy,
+      required int tickleCntRelationship,
+      required int tickleCntLife,
+      required int tickleCntEtc,
+    }) {
       List<Widget> tocklesRowList = [];
       List<Widget> tockleElement = [];
-
-      int testMoney = 0;
-      int testExercise = 0;
-      int testsStudy = 0;
-      int testRelationship = 0;
-      int testLife = 0;
-      int testEtc = 0;
 
       for(int i = 1; i < tockleImgList.length; i++) {
         TockleCondition tockleCondition = tockleConditionList[i - 1];
         bool isClearTockle = true;
 
-        if(testMoney < tockleCondition.moneyCnt) isClearTockle = false;
-        if(testExercise < tockleCondition.exerciseCnt) isClearTockle = false;
-        if(testsStudy < tockleCondition.studyCnt) isClearTockle = false;
-        if(testRelationship < tockleCondition.relationshipCnt) isClearTockle = false;
-        if(testLife < tockleCondition.lifeCnt) isClearTockle = false;
-        if(testEtc < tockleCondition.etcCnt) isClearTockle = false;
+        if(tickleCntMoney < tockleCondition.moneyCnt) isClearTockle = false;
+        if(tickleCntExercise < tockleCondition.exerciseCnt) isClearTockle = false;
+        if(tickleCntStudy < tockleCondition.studyCnt) isClearTockle = false;
+        if(tickleCntRelationship < tockleCondition.relationshipCnt) isClearTockle = false;
+        if(tickleCntLife < tockleCondition.lifeCnt) isClearTockle = false;
+        if(tickleCntEtc < tockleCondition.etcCnt) isClearTockle = false;
 
         Widget widgetTockle = isClearTockle ? tockleImgList[i] : tockleImgList[0];
         int tockleNumber = i - 1;
@@ -198,31 +203,113 @@ class RewardScreen extends StatelessWidget {
         ));
       }
 
-      return tocklesRowList;
-    }
-
-    Future<String> _fetch() async {
-      return 'Call';
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  const Text('금전', style: TextStyle(color: TTTPrimary4,),),
+                  Image.asset('assets/images/money_cnt.png', width: deviceWidth * 0.1,),
+                  Text('$tickleCntMoney',),
+                ],
+              ),
+              Column(
+                children: [
+                  const Text('운동', style: TextStyle(color: TTTSecondary1,),),
+                  Image.asset('assets/images/exercise_cnt.png', width: deviceWidth * 0.1,),
+                  Text('$tickleCntExercise',),
+                ],
+              ),
+              Column(
+                children: [
+                  const Text('학습', style: TextStyle(color: TTTPrimary5,),),
+                  Image.asset('assets/images/study_cnt.png', width: deviceWidth * 0.1,),
+                  Text('$tickleCntStudy',),
+                ],
+              ),
+              Column(
+                children: [
+                  const Text('관계', style: TextStyle(color: TTTPrimary2,),),
+                  Image.asset('assets/images/relationship_cnt.png', width: deviceWidth * 0.1,),
+                  Text('$tickleCntRelationship',),
+                ],
+              ),
+              Column(
+                children: [
+                  const Text('생활', style: TextStyle(color: TTTTeritary1,),),
+                  Image.asset('assets/images/life_cnt.png', width: deviceWidth * 0.1,),
+                  Text('$tickleCntLife',),
+                ],
+              ),
+              Column(
+                children: [
+                  const Text('기타', style: TextStyle(color: TTTBrown,),),
+                  Image.asset('assets/images/etcetera_cnt.png', width: deviceWidth * 0.1,),
+                  Text('$tickleCntEtc',),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: deviceHeight * 0.05,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: tocklesRowList,
+          ),
+        ],
+      );
     }
 
     buildTocklesColumn() {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          FutureBuilder(
-            future: checkAccessToken(),
-            builder: (context, snaoshot) {
-              if(snaoshot.hasData == false) {
+      return FutureBuilder<List<TickleCountNameRes>>(
+        future: checkAccessToken(),
+        builder: (context, snapshot) {
+          if(!snapshot.hasData) {
+            loadingController.setIsLoadingFlag(true);
+            return Container();
+          }
 
-              } else if(snaoshot.hasError) {
+          if(snapshot.hasError) {
+            loadingController.setIsLoadingFlag(false);
+            return Container();
+          }
 
-              } else {
+          loadingController.setIsLoadingFlag(false);
 
+          List<TickleCountNameRes>? tickleCntList = snapshot.data;
+
+          int tickleCntMoney = 0;
+          int tickleCntExercise = 0;
+          int tickleCntStudy = 0;
+          int tickleCntRelationship = 0;
+          int tickleCntLife = 0;
+          int tickleCntEtc = 0;
+
+          if(tickleCntList != null) {
+            for(TickleCountNameRes tickleCountNameRes in tickleCntList) {
+              switch(tickleCountNameRes.categoryName) {
+                case '금전': tickleCntMoney = tickleCountNameRes.count; break;
+                case '운동': tickleCntExercise = tickleCountNameRes.count; break;
+                case '학습': tickleCntStudy = tickleCountNameRes.count; break;
+                case '관계': tickleCntRelationship = tickleCountNameRes.count; break;
+                case '생활': tickleCntLife = tickleCountNameRes.count; break;
+                case '기타': tickleCntEtc = tickleCountNameRes.count; break;
               }
-              return Text('data');
-            },
-          ),
-        ],
+            }
+          }
+
+          return buildTocklesRow(
+            tickleCntMoney: tickleCntMoney,
+            tickleCntExercise: tickleCntExercise,
+            tickleCntStudy: tickleCntStudy,
+            tickleCntRelationship: tickleCntRelationship,
+            tickleCntLife: tickleCntLife,
+            tickleCntEtc: tickleCntEtc,
+          );
+        },
       );
     }
 
@@ -233,116 +320,6 @@ class RewardScreen extends StatelessWidget {
           children: [
             SizedBox(
               height: deviceHeight * 0.02,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      '금전',
-                      style: TextStyle(
-                        color: TTTPrimary4,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/images/money_cnt.png',
-                      width: deviceWidth * 0.1,
-                    ),
-                    Text(
-                      '100',
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      '운동',
-                      style: TextStyle(
-                        color: TTTSecondary1,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/images/exercise_cnt.png',
-                      width: deviceWidth * 0.1,
-                    ),
-                    Text(
-                      '100',
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      '학습',
-                      style: TextStyle(
-                        color: TTTPrimary5,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/images/study_cnt.png',
-                      width: deviceWidth * 0.1,
-                    ),
-                    Text(
-                      '100',
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      '관계',
-                      style: TextStyle(
-                        color: TTTPrimary2,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/images/relationship_cnt.png',
-                      width: deviceWidth * 0.1,
-                    ),
-                    Text(
-                      '100',
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      '생활',
-                      style: TextStyle(
-                        color: TTTTeritary1,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/images/life_cnt.png',
-                      width: deviceWidth * 0.1,
-                    ),
-                    Text(
-                      '100',
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      '기타',
-                      style: TextStyle(
-                        color: TTTBrown,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/images/etcetera_cnt.png',
-                      width: deviceWidth * 0.1,
-                    ),
-                    Text(
-                      '100',
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: deviceHeight * 0.05,
             ),
             buildTocklesColumn(),
           ],
