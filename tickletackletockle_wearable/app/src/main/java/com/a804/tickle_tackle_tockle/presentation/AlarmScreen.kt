@@ -1,4 +1,4 @@
-package com.a804.tickle_tackle_tockle.presentation
+package com.example.tickle_tackle_tockle.presentation
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -10,9 +10,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.*
-import com.a804.tickle_tackle_tockle.R
-import com.a804.tickle_tackle_tockle.complication.Tickle
-import com.a804.tickle_tackle_tockle.theme.TTTTheme
+import com.example.tickle_tackle_tockle.R
+import com.example.tickle_tackle_tockle.complication.Tickle
+import com.example.tickle_tackle_tockle.theme.TTTTheme
 
 @Composable
 fun AlarmScreen(

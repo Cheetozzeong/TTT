@@ -1,8 +1,9 @@
-package com.a804.tickle_tackle_tockle
+package com.example.tickle_tackle_tockle
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.*
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -10,20 +11,19 @@ import android.os.ParcelUuid
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.Text
-import com.a804.tickle_tackle_tockle.navigation.TTTNavHost
-import com.a804.tickle_tackle_tockle.theme.TTTTheme
+import com.example.tickle_tackle_tockle.navigation.TTTNavHost
+import com.example.tickle_tackle_tockle.theme.TTTTheme
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 
 class MainActivity : ComponentActivity() {
-
     private var _socket: BluetoothSocket? = null
-
+    private lateinit var firebaseMessaging: FirebaseMessaging
     // 추가: Bluetooth 권한 및 요청에 대한 변수 정의
+
+
     private val PERMISSION_REQUEST_CODE = 1
     private val REQUIRED_PERMISSIONS = arrayOf(
         Manifest.permission.BLUETOOTH,
@@ -33,7 +33,20 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseMessaging = FirebaseMessaging.getInstance()
+        val deviceToken = firebaseMessaging.token
 
+        deviceToken.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Log.d("FCM TOKEN", token)
+        })
         // 추가: Bluetooth 권한 확인 및 요청
         if (!hasPermissions(this, REQUIRED_PERMISSIONS)) {
             Log.d("Bluetooth123", "HasPerMission")
@@ -52,15 +65,14 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             Log.d("Bluetooth123","setConetnt")
-//            TTTTheme {
-//                TTTNavHost(
-//                    onButtonClick = {
-//                        Log.d("Bluetooth123","isclicked")
-//                        send("Button Clicked")
-//                    }
-//                )
-//            }
-            Button(onClick = {send("motherFucker")}, Modifier.fillMaxWidth()){}
+            TTTTheme {
+                TTTNavHost(
+                    onButtonClick = {
+                        send("Button Clicked")
+                    }
+                )
+            }
+//            Button(onClick = {send("motherFucker")}, Modifier.fillMaxWidth()){}
             Log.d("Bluetooth123","setConetntend")
         }
     }
@@ -80,7 +92,6 @@ class MainActivity : ComponentActivity() {
     private fun initializeBluetooth() {
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         val bluetoothAdapter = bluetoothManager.adapter
-        val devices : Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
         val device: BluetoothDevice? = bluetoothAdapter?.bondedDevices?.first()
 
         val parcelUuidArray: Array<out ParcelUuid>? = device?.uuids

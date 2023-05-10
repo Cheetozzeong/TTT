@@ -1,4 +1,4 @@
-package com.a804.tickle_tackle_tockle.navigation
+package com.example.tickle_tackle_tockle.navigation
 
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -6,8 +6,8 @@ import androidx.navigation.NavOptions
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.a804.tickle_tackle_tockle.presentation.AlarmScreen
-import com.a804.tickle_tackle_tockle.presentation.TickleListScreen
+import com.example.tickle_tackle_tockle.presentation.AlarmScreen
+import com.example.tickle_tackle_tockle.presentation.TickleListScreen
 
 
 @Composable

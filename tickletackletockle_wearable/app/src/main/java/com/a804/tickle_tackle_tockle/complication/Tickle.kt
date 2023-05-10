@@ -1,4 +1,4 @@
-package com.a804.tickle_tackle_tockle.complication
+package com.example.tickle_tackle_tockle.complication
 
 data class Tickle(
     val emoji: String,
