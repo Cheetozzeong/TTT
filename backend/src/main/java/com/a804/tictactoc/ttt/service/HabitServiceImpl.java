@@ -38,23 +38,41 @@ public class HabitServiceImpl implements HabitService{
         habit.setUserId(userId);
         habit = hRepo.save(habit);
 
-        int start = Integer.parseInt(habit.getStartTime().substring(0,2)) * 60 + Integer.parseInt(habit.getStartTime().substring(2,4));
-        int end = Integer.parseInt(habit.getEndTime().substring(0,2)) * 60 + Integer.parseInt(habit.getEndTime().substring(2,4));
-        int term = Integer.parseInt(habit.getTerm().substring(0,2)) * 60 + Integer.parseInt(habit.getTerm().substring(2,4));
-
-        for(int i=start; i<=end; i+=term){
-            String alarmTime = i/60<10 ? 0+""+i/60 : ""+i/60;
-            alarmTime += i%60<10 ? 0+""+i%60 : ""+i%60;
-            aRepo.save(new Alarm(0, habit.getId(), alarmTime));
-        }
+        createAlarm(habit.getStartTime(), habit.getEndTime(), habit.getTerm(), habit.getId());
 
         return HabitRes.builder().habit(habit).build();
     }
 
     @Override
     public HabitRes updateHabit(HabitReq habitReq) throws SQLException {
-        Habit habit = hRepo.save(habitReq.toEntity());
+        Habit habit = hRepo.findById(habitReq.getId()).get();
+        habit.setCategoryId(habitReq.getCategoryId());
+        habit.setName(habitReq.getName());
+        habit.setEmoji(habitReq.getEmoji());
+        habit.setRepeatDay(habitReq.getRepeatDay());
+
+        if(habit.getStartTime() != habitReq.getStartTime() || habit.getEndTime() != habitReq.getEndTime() ||
+                habit.getTerm() != habitReq.getTerm()){ //알람 시간이 변경됐다면
+            aRepo.deleteByHabitId(habit.getId());//삭제 후
+            createAlarm(habitReq.getStartTime(), habitReq.getEndTime(), habitReq.getTerm(), habitReq.getId());//재생성
+        }
+        habit.setStartTime(habitReq.getStartTime());
+        habit.setEndTime((habitReq.getEndTime()));
+        habit.setTerm(habitReq.getTerm());
+
         return HabitRes.builder().habit(habit).build();
+    }
+
+    void createAlarm(String startTime, String endTime, String terms, long habitId){
+        int start = Integer.parseInt(startTime.substring(0,2)) * 60 + Integer.parseInt(startTime.substring(2,4));
+        int end = Integer.parseInt(endTime.substring(0,2)) * 60 + Integer.parseInt(endTime.substring(2,4));
+        int term = Integer.parseInt(terms.substring(0,2)) * 60 + Integer.parseInt(terms.substring(2,4));
+
+        for(int i=start; i<=end; i+=term){
+            String alarmTime = i/60<10 ? 0+""+i/60 : ""+i/60;
+            alarmTime += i%60<10 ? 0+""+i%60 : ""+i%60;
+            aRepo.save(new Alarm(0, habitId, alarmTime));
+        }
     }
 
     @Override
