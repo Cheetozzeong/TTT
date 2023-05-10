@@ -11,9 +11,7 @@ import com.example.tickle_tackle_tockle.presentation.TickleListScreen
 
 
 @Composable
-fun TTTNavHost(
-    onButtonClick: () -> Unit
-) {
+fun TTTNavHost() {
     val navController = rememberSwipeDismissableNavController()
 
     SwipeDismissableNavHost(
@@ -22,15 +20,12 @@ fun TTTNavHost(
     ) {
         composable("alarm_screen") {
             AlarmScreen(onButtonClick = {
-                Log.d("Bluetooth123", "ClickedButton1212")
-                onButtonClick
-                Log.d("Bluetooth123", "ClickedButton3434")
-//                navController.navigate(
-//                    "ticklelist_screen",
-//                    NavOptions.Builder()
-//                        .setPopUpTo("alarm_screen", true)
-//                        .build()
-//                )
+                navController.navigate(
+                    "ticklelist_screen",
+                    NavOptions.Builder()
+                        .setPopUpTo("alarm_screen", true)
+                        .build()
+                )
             })
         }
         composable("ticklelist_screen") {
