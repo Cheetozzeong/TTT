@@ -133,6 +133,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .build();
             Message message = Message
                     .builder()
+                    .putData("score","이치헌머하삼?ㅋㅋㅋㅋㅋ푸하하하")
                     .setNotification(notification)
                     .setToken(deviceToken)
                     .build();
