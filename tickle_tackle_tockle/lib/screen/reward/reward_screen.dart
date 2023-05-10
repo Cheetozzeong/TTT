@@ -9,6 +9,7 @@ import 'package:tickle_tackle_tockle/const/tockle_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
+import '../../const/serveraddress.dart';
 import '../../controller/loading_controller.dart';
 import '../../controller/theme_controller.dart';
 
@@ -19,12 +20,12 @@ class RewardScreen extends StatelessWidget {
   Future<http.Response> sendAccessToken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String accessToken = pref.getString('accessToken')!;
-    var url = Uri.parse('http://10.0.2.2:8428/tickle/count');
+    var url = Uri.parse('${ServerUrl}/tickle/count');
     var response = await http.get(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'accessToken' :  accessToken,
+        'Authorization' :  accessToken,
       },
     );
     return response;
@@ -268,16 +269,13 @@ class RewardScreen extends StatelessWidget {
         future: checkAccessToken(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) {
-            loadingController.setIsLoadingFlag(true);
             return Container();
           }
 
           if(snapshot.hasError) {
-            loadingController.setIsLoadingFlag(false);
             return Container();
           }
 
-          loadingController.setIsLoadingFlag(false);
 
           List<TickleCountNameRes>? tickleCntList = snapshot.data;
 

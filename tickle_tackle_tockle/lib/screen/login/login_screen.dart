@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
+import '../../const/serveraddress.dart';
 import '../../const/theme.dart';
 import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,7 +43,7 @@ class LoginScreen extends StatelessWidget {
   Future<http.Response> sendIdToken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String idToken = pref.getString('idToken')!;
-    var url = Uri.parse('http://10.0.2.2:8428/login');
+    var url = Uri.parse('${StagingServer}/login');
     var loginReq = LoginReq(idToken: idToken);
     var body = json.encode(loginReq.toJson());
     var response = await http.post(
@@ -65,10 +66,11 @@ class LoginScreen extends StatelessWidget {
       print('Access Token: $accessToken');
       print('Refresh Token: $refreshToken');
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString('accessToken', accessToken!);
-      sharedPreferences.setString('refreshToken', refreshToken!);
+      sharedPreferences.setString('accesstoken', accessToken!);
+      sharedPreferences.setString('refreshtoken', refreshToken!);
 
     } else {
+      print('${ServerUrl}/login');
       print('Login failed with status: ${response.statusCode}');
     }
   }
