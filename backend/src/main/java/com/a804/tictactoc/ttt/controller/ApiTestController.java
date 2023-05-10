@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,25 @@ public class ApiTestController {
                 resultmap.put("data", recvList);
                 status = HttpStatus.OK;
             }
+
+        } catch (Exception e) {
+            resultmap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<Map>(resultmap, status);
+    }
+
+    @GetMapping(value = "/now")
+    public ResponseEntity<?> getNow(){
+
+        Map resultmap = new HashMap<>();
+        HttpStatus status;
+
+        try {
+
+            resultmap.put("now", LocalDateTime.now().toString());
+            status = HttpStatus.OK;
 
         } catch (Exception e) {
             resultmap.put("message", e.getMessage());

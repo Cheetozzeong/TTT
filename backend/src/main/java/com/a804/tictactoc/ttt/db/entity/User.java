@@ -50,6 +50,14 @@ public class User{
 	int deleteYn;
 
 	@Schema(hidden = true)
+	@Column(name="phone_device_token")
+	String phoneDeviceToken;
+
+	@Schema(hidden = true)
+	@Column(name="watch_device_token")
+	String watchDeviceToken;
+
+	@Schema(hidden = true)
 	@Column(name="created_date")
 	String createdDate;
 
