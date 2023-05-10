@@ -88,6 +88,19 @@ public class TickleController {
 		return new ResponseEntity<List<TickleCountRes>>(result, HttpStatus.OK);
 	}
 
+	@Operation(summary = "티끌 삭제", description = "해당 번호의 티끌을 삭제한다",
+			responses = {
+					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
+					@ApiResponse(responseCode = "500", description = "서버 오류") })
+	@GetMapping(value = "/delete/{tickleId}")
+	public ResponseEntity<?> deleteTickle(@PathVariable long tickleId, HttpServletRequest request) throws Exception{
+		User user = (User) request.getAttribute("USER");
+		long userId = user.getId();
+		tService.deleteTickle(userId, tickleId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+
 	@ExceptionHandler(SQLException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "유효하지 않은 입력 값")
 	public void sqlException() {

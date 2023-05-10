@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PatchMapping("/user/quit")
-    public ResponseEntity<?> quit(HttpServletRequest request) throws SQLException {
+    public ResponseEntity<?> quit(HttpServletRequest request) throws Exception {
         User user = (User) request.getAttribute("USER");
         long userId = user.getId();
         userService.quit(userId);
@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @PatchMapping("/user/sleep")
-    public ResponseEntity<?> sleepTime(@ParameterObject UserSleepReq userSleepReq, HttpServletRequest request) throws SQLException {
+    public ResponseEntity<?> sleepTime(@ParameterObject UserSleepReq userSleepReq, HttpServletRequest request) throws Exception {
         User user = (User) request.getAttribute("USER");
         long userId = user.getId();
         userService.sleepTime(userId, userSleepReq);
