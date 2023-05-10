@@ -6,14 +6,13 @@ import com.a804.tictactoc.ttt.response.TickleAchieveRes;
 import com.a804.tictactoc.ttt.response.TickleCountRes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 
 @Repository
-public interface TickleRepo extends JpaRepository<Tickle,Long>{
+public interface TickleRepo extends JpaRepository<Tickle,Long>, TickleRepoCustom{
     @Query(value = "select alarm_time as alarmTime, execution_time as executionTime\n" +
             "from alarm left outer join \n" +
             "(select execution_day, execution_time from tickle\n" +
