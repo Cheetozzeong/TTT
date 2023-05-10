@@ -4,15 +4,18 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
 import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/privacy_screen.dart';
 import 'package:tickle_tackle_tockle/screen/mypage/tos_screen.dart';
+import '../../const/serveraddress.dart';
 import '../../const/theme.dart';
 import 'menual_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -30,6 +33,38 @@ class SettingScreen extends StatelessWidget {
       await FirebaseAuth.instance.signOut();
       final GoogleSignIn googleSignIn = GoogleSignIn();
       await googleSignIn.disconnect();
+    }
+    Future<void> deleteAccount() async {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      User user = auth.currentUser!;
+
+      if(user != null) {
+        await user.delete().then((value) async {
+          final GoogleSignIn googleSignIn = GoogleSignIn();
+          await googleSignIn.disconnect();
+        });
+      }
+    }
+    Future<http.Response> sendAccessToken() async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('accessToken')!;
+      var url = Uri.parse('${ServerUrl}/tickle/count');
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accessToken' :  accessToken,
+        },
+      );
+      return response;
+    }
+    Future<void> checkAccessToken() async {
+      final response = await sendAccessToken();
+      if (response.statusCode == 200) {
+        print('회원탈퇴성공');
+      } else {
+        print('YN failed with status: ${response.statusCode}');
+      }
     }
 
     return SafeArea(
@@ -169,7 +204,12 @@ class SettingScreen extends StatelessWidget {
                           ),
                           IconsButton(
                             onPressed: () {
-                              signOutGoogle().then((value) => Navigator.of(context).popUntil((route) => route.isFirst));
+
+                              checkAccessToken();
+                              deleteAccount().then((value) {
+                                Navigator.of(context).popUntil((route) => route.isFirst);
+                              });
+
                             },
                             text: '탈퇴하기',
                             color: Colors.red,
