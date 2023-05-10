@@ -3,6 +3,7 @@ package com.a804.tictactoc.ttt.service;
 import com.a804.tictactoc.ttt.config.jwt.JwtProperties;
 import com.a804.tictactoc.ttt.db.entity.User;
 import com.a804.tictactoc.ttt.db.repository.UserRepository;
+import com.a804.tictactoc.ttt.request.UserSleepReq;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -12,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import com.google.firebase.auth.FirebaseAuth;
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +43,21 @@ public class UserServiceImpl implements UserService {
             user.setUid(uid);
             userRepository.save(user);
         }
+    }
+
+    @Transactional
+    public void quit(long userId) throws SQLException {
+        User user = userRepository.findById(userId).get();
+        user.setDeleteYn(1);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void sleepTime(long userId, UserSleepReq userSleepReq) throws SQLException{
+        User user = userRepository.findById(userId).get();
+        user.setSleepStartTime(userSleepReq.getSleepStartTime());
+        user.setSleepEndTime(userSleepReq.getSleepEndTime());
+        userRepository.save(user);
     }
 
     @Transactional

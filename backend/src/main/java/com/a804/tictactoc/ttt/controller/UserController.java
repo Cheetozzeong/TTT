@@ -1,14 +1,19 @@
 package com.a804.tictactoc.ttt.controller;
 import com.a804.tictactoc.ttt.config.jwt.JwtProperties;
 import com.a804.tictactoc.ttt.db.entity.User;
+import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.request.LoginReq;
+import com.a804.tictactoc.ttt.request.UserSleepReq;
 import com.a804.tictactoc.ttt.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.util.Map;
 
 @Tag(name = "유저", description = "유저 api 입니다.")
@@ -48,4 +53,27 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/user/quit")
+    public ResponseEntity<?> quit(HttpServletRequest request) throws SQLException {
+        User user = (User) request.getAttribute("USER");
+        long userId = user.getId();
+        userService.quit(userId);
+        return ResponseEntity.ok().body(HttpStatus.OK);
+    }
+
+    @PatchMapping("/user/sleep")
+    public ResponseEntity<?> sleepTime(@ParameterObject UserSleepReq userSleepReq, HttpServletRequest request) throws SQLException {
+        User user = (User) request.getAttribute("USER");
+        long userId = user.getId();
+        userService.sleepTime(userId, userSleepReq);
+        return ResponseEntity.ok().body(HttpStatus.OK);
+    }
+
+
+    @ExceptionHandler(SQLException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "유효하지 않은 입력 값")
+    public void sqlException() {
+        System.out.println("SQLException 발생");
+        return;
+    }
 }
