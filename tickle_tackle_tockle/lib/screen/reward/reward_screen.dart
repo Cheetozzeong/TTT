@@ -25,7 +25,7 @@ class RewardScreen extends StatelessWidget {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'Authorization' :  accessToken,
+        'accessToken' :  accessToken,
       },
     );
     return response;
@@ -41,7 +41,6 @@ class RewardScreen extends StatelessWidget {
     } else {
       print('Login failed with status: ${response.statusCode}');
     }
-
     return retList;
   }
 
