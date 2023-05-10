@@ -58,11 +58,11 @@ public class User{
 	String watchDeviceToken;
 
 	@Schema(hidden = true)
-	@Column(name="created_date")
+	@Column(name="created_date", updatable = false, insertable = false)
 	String createdDate;
 
 	@Schema(hidden = true)
-	@Column(name="modified_date")
+	@Column(name="modified_date", updatable = false, insertable = false)
 	String modifiedDate;
 
 	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

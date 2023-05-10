@@ -1,5 +1,6 @@
 package com.a804.tictactoc.ttt.service;
 
+import com.a804.tictactoc.ttt.db.entity.Habit;
 import com.a804.tictactoc.ttt.db.entity.Tickle;
 import com.a804.tictactoc.ttt.db.repository.CategoryRepo;
 import com.a804.tictactoc.ttt.db.repository.HabitRepo;
@@ -102,5 +103,15 @@ public class TickleServiceImpl implements TickleService{
     @Override
     public List<TickleCountRes> countTickle(long userId) throws SQLException {
         return tRepo.countByTickle(userId);
+    }
+
+    @Override
+    public void deleteTickle(long userId, long tickleId) throws SQLException {
+        Tickle tickle = tRepo.findById(tickleId).get();
+        Habit habit = hRepo.findById(tickle.getHabitId()).get();
+        if(habit.getUserId() == userId) {
+            System.out.println("삭제완료");
+            tRepo.deleteById(tickleId);
+        }
     }
 }

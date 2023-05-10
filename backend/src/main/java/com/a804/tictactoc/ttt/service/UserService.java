@@ -1,7 +1,9 @@
 package com.a804.tictactoc.ttt.service;
 
 import com.a804.tictactoc.ttt.db.entity.User;
+import com.a804.tictactoc.ttt.request.UserSleepReq;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 public interface UserService {
@@ -12,5 +14,7 @@ public interface UserService {
 
      Map<String, String> logout(User user, String accessToken);
 
+     void sleepTime(long userId, UserSleepReq userSleepReq) throws SQLException;
 
+     void quit(long userId) throws SQLException;
 }
