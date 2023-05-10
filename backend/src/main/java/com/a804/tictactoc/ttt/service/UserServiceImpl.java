@@ -1,8 +1,14 @@
 package com.a804.tictactoc.ttt.service;
 
+import com.a804.tictactoc.ttt.common.CommonEnum;
+import com.a804.tictactoc.ttt.common.CommonResult;
 import com.a804.tictactoc.ttt.config.jwt.JwtProperties;
+import com.a804.tictactoc.ttt.db.entity.Habit;
 import com.a804.tictactoc.ttt.db.entity.User;
 import com.a804.tictactoc.ttt.db.repository.UserRepository;
+import com.a804.tictactoc.ttt.request.FcmReq;
+import com.a804.tictactoc.ttt.request.WatchFcmReq;
+import com.a804.tictactoc.ttt.response.HabitRes;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -115,5 +121,34 @@ public class UserServiceImpl implements UserService {
             response.put("message", "fail");
             return response;
         }
+    }
+
+    public CommonResult saveFcmToken(FcmReq fcm, User user){
+        CommonResult result = new CommonResult(CommonEnum.Result.SUCCESS,"FCM 토큰 저장에 성공했습니다." ); //userRepository.get
+
+        try{
+            user.setPhoneDeviceToken(fcm.getFcmToken());
+            User selectedUser = userRepository.save(user);
+        }
+        catch (Exception ex){
+            result = new CommonResult(CommonEnum.Result.FAIL,"FCM 토큰 저장에 실패했습니다." );
+        }
+
+        return result;
+    }
+
+
+    public CommonResult saveWatchFcmToken(WatchFcmReq fcm, User user){
+        CommonResult result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." ); //userRepository.get
+
+        try{
+            user.setWatchDeviceToken(fcm.getWatchFcmToken());
+            User selectedUser = userRepository.save(user);
+        }
+        catch (Exception ex){
+            result = new CommonResult(CommonEnum.Result.FAIL,"WATCH FCM 토큰 저장에 실패했습니다." );
+        }
+
+        return result;
     }
 }
