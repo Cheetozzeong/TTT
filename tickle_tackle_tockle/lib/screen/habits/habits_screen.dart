@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tickle_tackle_tockle/const/theme.dart';
 import '../../component/common_appbar.dart';
 import '../../controller/loading_controller.dart';
 import '../../controller/theme_controller.dart';
 import 'package:get/get.dart';
+
+import 'habit_edit_screen.dart';
 
 
 class HabitsScreen extends StatelessWidget {
@@ -118,41 +121,51 @@ class HabitsScreen extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-              Container(
-                padding: EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.7),
-                      blurRadius: 5.0,
-                      spreadRadius: 0.0,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(Icons.ac_unit_outlined),
-                    GetBuilder<ThemeController>(
-                      builder: (_) {
-                        return Column(
-                          children: [
-                            Text('달리기', style: TextStyle(fontSize: 18)),
-                            SizedBox(height: 5,),
-                            buildWeekRow(sun: true, mon: true, fri: true, themeColor: themeController.selectedPrimaryColor),
-                          ],
-                        );
-                      }
-                    ),
-                    GetBuilder<ThemeController>(
-                      builder: (_) {
-                        return Text('12 티끌', style: TextStyle(color: themeController.selectedPrimaryColor),);
-                      }
-                    ),
-                  ],
+              InkWell(
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const HabitEditScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.ac_unit_outlined),
+                      GetBuilder<ThemeController>(
+                        builder: (_) {
+                          return Column(
+                            children: [
+                              Text('달리기', style: TextStyle(fontSize: 18)),
+                              SizedBox(height: 5,),
+                              buildWeekRow(sun: true, mon: true, fri: true, themeColor: themeController.selectedPrimaryColor),
+                            ],
+                          );
+                        }
+                      ),
+                      GetBuilder<ThemeController>(
+                        builder: (_) {
+                          return Text('12 티끌', style: TextStyle(color: themeController.selectedPrimaryColor),);
+                        }
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

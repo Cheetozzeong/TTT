@@ -80,6 +80,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/tockles/
+    - assets/images/buttons/
 
   fonts:
     - family: Maplestory
