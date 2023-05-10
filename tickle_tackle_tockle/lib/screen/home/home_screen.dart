@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final myController = TextEditingController();
 
     return Scaffold(
-      appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '틱택톡'),
+      appBar: CommonAppBar(appBarType: AppBarType.homePageAppBar, title: '틱택톡'),
       body: SingleChildScrollView(
         child: Column(
           children: [
