@@ -18,6 +18,11 @@ public class CommonEnum {
         private final String name;
     }
 
+    @AllArgsConstructor
+    public enum PushType {
+        PHONE, WATCH
+    }
+
 //    @AllArgsConstructor
 //    @Getter
 //    @JsonFormat(shape = JsonFormat.Shape.OBJECT) // api 호출시 Enum 전체 반환
