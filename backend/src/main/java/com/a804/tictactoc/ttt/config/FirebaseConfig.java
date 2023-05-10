@@ -4,6 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -34,5 +35,10 @@ public class FirebaseConfig {
     @Bean
     public FirebaseAuth firebaseAuth() {
         return FirebaseAuth.getInstance();
+    }
+
+    @Bean
+    public FirebaseMessaging firebaseMessaging(){
+        return FirebaseMessaging.getInstance();
     }
 }
