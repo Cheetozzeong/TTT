@@ -8,6 +8,8 @@ import com.a804.tictactoc.ttt.request.LoginReq;
 import com.a804.tictactoc.ttt.request.WatchFcmReq;
 import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.request.UserSleepReq;
+import com.a804.tictactoc.ttt.response.TickleCountRes;
+import com.a804.tictactoc.ttt.response.UserSleepRes;
 import com.a804.tictactoc.ttt.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 @Tag(name = "유저", description = "유저 api 입니다.")
@@ -111,8 +114,16 @@ public class UserController {
         return ResponseEntity.ok().body(HttpStatus.OK);
     }
 
+    @GetMapping("/user/sleep")
+    public ResponseEntity<?> getSleepTime(HttpServletRequest request) throws Exception {
+        User user = (User) request.getAttribute("USER");
+        long userId = user.getId();
+        UserSleepRes userSleepRes = userService.getSleepTime(userId);
+        return new ResponseEntity<UserSleepRes>(userSleepRes, HttpStatus.OK);
+    }
+
     @PatchMapping("/user/sleep")
-    public ResponseEntity<?> sleepTime(@ParameterObject UserSleepReq userSleepReq, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?> setSleepTime(@ParameterObject UserSleepReq userSleepReq, HttpServletRequest request) throws Exception {
         User user = (User) request.getAttribute("USER");
         long userId = user.getId();
         userService.sleepTime(userId, userSleepReq);
