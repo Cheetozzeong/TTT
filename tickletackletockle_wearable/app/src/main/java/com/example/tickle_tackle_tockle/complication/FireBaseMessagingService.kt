@@ -13,10 +13,10 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         sharedPreferences = applicationContext.getSharedPreferences("tttToken", Context.MODE_PRIVATE)
-        val accessToken = remoteMessage.data["accessToken"]
-        val refreshToken = remoteMessage.data["refreshToken"]
-
         if(sharedPreferences.getString("accessToken",null) == null || sharedPreferences.getString("accessToken",null) == null){
+            val accessToken = remoteMessage.data["accessToken"]
+            val refreshToken = remoteMessage.data["refreshToken"]
+
             accessToken?.let { accessToken ->
                 sharedPreferences.edit().putString("accessToken",accessToken).apply()
             }
