@@ -53,6 +53,9 @@ dependencies:
   intl: ^0.18.1
   http: ^0.13.6
   qr_code_scanner: ^1.0.1
+  retrofit: ^4.0.1
+  json_annotation: ^4.4.0
+
 
 
 dev_dependencies:

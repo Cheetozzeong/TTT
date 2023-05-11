@@ -29,7 +29,6 @@ class _CameraScreen extends State<CameraScreen> {
 
   Future<void> setSharedPreferences(String qrCode) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print("여기 오긴 하냐?");
     await checkAccessToken(qrCode);
     sharedPreferences.setString('qrCode', qrCode!);
   }
@@ -37,15 +36,15 @@ class _CameraScreen extends State<CameraScreen> {
   Future<http.Response> sendAccessToken(String qrCode) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String accessToken = pref.getString('accessToken')!;
-    var url = Uri.parse('${ServerUrl}/tickle/count');
+    var url = Uri.parse('${ServerUrl}/watchfcmtoken');
     var response = await http.post(
       url,
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'accessToken': accessToken,
+        'authorization': accessToken,
       },
       body: jsonEncode(<String, String>{
-        'fcmToken': qrCode,
+        'watchFcmToken': qrCode,
       }),
     );
     return response;
@@ -53,7 +52,6 @@ class _CameraScreen extends State<CameraScreen> {
 
   Future<void> checkAccessToken(String qrCode) async {
     final response = await sendAccessToken(qrCode);
-
     if (response.statusCode == 200) {
       print(qrCode+" 디바이스 토큰 보내버렸쥬");
     } else {

@@ -25,7 +25,7 @@ class RewardScreen extends StatelessWidget {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'accessToken' :  accessToken,
+        'authorization' :  accessToken,
       },
     );
     return response;
