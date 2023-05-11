@@ -2,7 +2,6 @@ package com.a804.tictactoc.ttt.service;
 
 import com.a804.tictactoc.ttt.db.entity.Habit;
 import com.a804.tictactoc.ttt.db.entity.Tickle;
-import com.a804.tictactoc.ttt.db.repository.CategoryRepo;
 import com.a804.tictactoc.ttt.db.repository.HabitRepo;
 import com.a804.tictactoc.ttt.db.repository.TickleRepo;
 import com.a804.tictactoc.ttt.request.TickleReq;
@@ -41,15 +40,19 @@ public class TickleServiceImpl implements TickleService{
         return TickleRes.builder().tickle(tickle).build();
     }
 
-    @Override
-    public List<TickleCategoryRes> todayTickle(long userId, String day) throws SQLException {
+    public int getYoil(String day){
         LocalDate date = LocalDate.of(Integer.parseInt(day.substring(0,4)),
                 Integer.parseInt(day.substring(4,6)),Integer.parseInt(day.substring(6,8)));
-
-        //오늘이 무슨 요일인지
         int yoil = date.getDayOfWeek().getValue();
+
         if(yoil == 7)
             yoil = 0;
+        return yoil;
+    }
+
+    @Override
+    public List<TickleCategoryRes> todaySchedule(long userId, String day) throws SQLException {
+        int yoil = getYoil(day);
 
         //카테고리 숫자에 맞춰 카테고리별 티끌을 정리한 리스트를 만듬
         List<CategoryRes> categoryList = cService.findAllCategory();
@@ -104,6 +107,46 @@ public class TickleServiceImpl implements TickleService{
     public List<TickleCountRes> countTickle(long userId) throws SQLException {
         return tRepo.countByTickle(userId);
     }
+
+    @Override
+    public List<TickleCategoryPastRes> pastTickles(long userId, String day) throws SQLException {
+        List<CategoryRes> categoryList = cService.findAllCategory();
+        List<TickleCategoryPastRes> result = new ArrayList<>();
+        for(CategoryRes categoryRes : categoryList){
+            TickleCategoryPastRes tickleCategoryPastRes = new TickleCategoryPastRes();
+            tickleCategoryPastRes.setTickles(new ArrayList<>());
+            tickleCategoryPastRes.setCategoryId(categoryRes.getId());
+            tickleCategoryPastRes.setCategoryName(categoryRes.getName());
+            result.add(tickleCategoryPastRes);
+        }
+
+        List<TicklePastAchieveRes> ticklePastAchieveResList = tRepo.findPastTickles(userId, day);
+        for(TicklePastAchieveRes ticklePastAchieveRes : ticklePastAchieveResList){
+            TickleCategoryPastRes tickleCategoryPastRes =   result.stream().
+                    filter(tcRes -> tcRes.getCategoryId() == ticklePastAchieveRes.getCategoryId())
+                    .findFirst().get();
+
+            TicklePastRes ticklePastRes = new TicklePastRes();
+            ticklePastRes.setEmoji(ticklePastAchieveRes.getEmoji());
+            ticklePastRes.setExecutionTime(ticklePastAchieveRes.getExecutionTime());
+            ticklePastRes.setHabitName(ticklePastAchieveRes.getHabitName());
+
+            tickleCategoryPastRes.getTickles().add(ticklePastRes);
+        }
+
+        for(TickleCategoryPastRes tickleCategoryPastRes : result){
+            Collections.sort(tickleCategoryPastRes.getTickles());
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<String> monthTickleAchieve(long userId, String month) throws SQLException {
+        return tRepo.isMonthAchieve(userId, month+"__");
+    }
+
+
 
     @Override
     public void deleteTickle(long userId, long tickleId) throws SQLException {
