@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
   Future<http.Response> sendIdToken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String idToken = pref.getString('idToken')!;
-    var url = Uri.parse('${StagingServer}/login');
+    var url = Uri.parse('${ServerUrl}/login');
     var loginReq = LoginReq(idToken: idToken);
     var body = json.encode(loginReq.toJson());
     var response = await http.post(
