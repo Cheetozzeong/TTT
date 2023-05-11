@@ -4,6 +4,7 @@ package com.a804.tictactoc.ttt.db.repository;
 import com.a804.tictactoc.ttt.db.entity.Tickle;
 import com.a804.tictactoc.ttt.response.TickleAchieveRes;
 import com.a804.tictactoc.ttt.response.TickleCountRes;
+import com.a804.tictactoc.ttt.response.TicklePastAchieveRes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,4 +28,16 @@ public interface TickleRepo extends JpaRepository<Tickle,Long>{
             "on habit.category_id = category.id\n" +
             "group by category.id;", nativeQuery = true)
     List<TickleCountRes> countByTickle(long userId);
+
+
+    @Query(value = "select category_id as categoryId, habit.name as habitName, execution_time as executionTime, emoji " +
+            "from habit join tickle on habit.id = tickle.habit_id and habit.user_id = ?1 and tickle.execution_day = ?2 " +
+            "", nativeQuery = true)
+    List<TicklePastAchieveRes> findPastTickles(long userId, String day);
+
+    @Query(value = "select distinct execution_day as executionDay " +
+            "from habit join tickle on habit.id = tickle.habit_id " +
+            "and habit.user_id = ?1 " +
+            "and tickle.execution_day like ?2 ", nativeQuery = true)
+    List<String> isMonthAchieve(long userId, String day);
 }
