@@ -22,7 +22,9 @@ import com.example.tickle_tackle_tockle.complication.Tickle
 import com.example.tickle_tackle_tockle.theme.TTTTheme
 
 @Composable
-fun TickleListScreen() {
+fun TickleListScreen(
+    onButtonClick: () -> Unit
+) {
 
     //DummyData
     val tickles = listOf(
@@ -73,7 +75,7 @@ fun TickleListScreen() {
                         .fillMaxWidth()
                         .weight(4.0f)
                 ) {
-                    tickleList(tickles)
+                    tickleList(tickles, onButtonClick)
                 }
             }
         }
@@ -81,7 +83,7 @@ fun TickleListScreen() {
 }
 
 @Composable
-fun tickleList(tickles: List<Tickle>) {
+fun tickleList(tickles: List<Tickle>, onButtonClick: () -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(1),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
@@ -111,7 +113,7 @@ fun tickleList(tickles: List<Tickle>) {
                             .weight(1.5f)
                     ) {
                         Button(
-                            onClick = { /*TODO*/ },
+                            onClick = { onButtonClick },
                             modifier = Modifier
                                 .background(
                                     MaterialTheme.colors.primary,

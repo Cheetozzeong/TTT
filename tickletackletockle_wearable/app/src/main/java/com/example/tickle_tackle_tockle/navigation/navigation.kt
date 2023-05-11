@@ -1,35 +1,47 @@
 package com.example.tickle_tackle_tockle.navigation
 
-import android.util.Log
+import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavOptions
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.example.tickle_tackle_tockle.presentation.AlarmScreen
 import com.example.tickle_tackle_tockle.presentation.TickleListScreen
+import com.example.tickle_tackle_tockle.presentation.WelcomeScreen
 
 
 @Composable
-fun TTTNavHost() {
-    val navController = rememberSwipeDismissableNavController()
+fun TTTNavHost(sharedPreferences: SharedPreferences) {
 
+    val navController = rememberSwipeDismissableNavController()
     SwipeDismissableNavHost(
         navController = navController,
-        startDestination = "alarm_screen"
+        startDestination = "welcome_screen"
     ) {
-        composable("alarm_screen") {
-            AlarmScreen(onButtonClick = {
-                navController.navigate(
-                    "ticklelist_screen",
-                    NavOptions.Builder()
-                        .setPopUpTo("alarm_screen", true)
-                        .build()
-                )
-            })
+        composable("welcome_screen") {
+            WelcomeScreen(
+                onButtonClick = {
+                    navController.navigate(
+                        "ticklelist_screen",
+                        NavOptions.Builder()
+                            .setPopUpTo("welcome_screen", true)
+                            .build()
+                    )
+                },
+                sharedPreferences = sharedPreferences
+            )
         }
         composable("ticklelist_screen") {
-            TickleListScreen()
+            TickleListScreen(
+                onButtonClick = {
+                    navController.navigate(
+                        "welcome_screen",
+                        NavOptions.Builder()
+                            .setPopUpTo("ticklelist_screen", true)
+                            .build()
+                    )
+                }
+            )
         }
         //TickleListScreen(id = it.arguments?.getString("id")!!)
     }
