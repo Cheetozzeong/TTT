@@ -12,4 +12,4 @@ RUN ./gradlew bootJar
 FROM adoptopenjdk/openjdk11
 COPY --from=builder build/libs/TTT-0.0.1-SNAPSHOT.jar TTT.jar
 
-ENTRYPOINT ["java","-jar","/TTT.jar"]
+ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul","/TTT.jar"]
