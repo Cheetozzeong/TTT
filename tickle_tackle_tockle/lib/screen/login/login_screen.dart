@@ -66,11 +66,10 @@ class LoginScreen extends StatelessWidget {
       print('Access Token: $accessToken');
       print('Refresh Token: $refreshToken');
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString('accesstoken', accessToken!);
-      sharedPreferences.setString('refreshtoken', refreshToken!);
+      sharedPreferences.setString('accessToken', accessToken!);
+      sharedPreferences.setString('refreshToken', refreshToken!);
 
     } else {
-      print('${ServerUrl}/login');
       print('Login failed with status: ${response.statusCode}');
     }
   }

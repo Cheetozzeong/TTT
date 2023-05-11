@@ -29,43 +29,63 @@ class SettingScreen extends StatelessWidget {
 
     LoadingController loadingController = Get.put(LoadingController());
 
+    Future<http.Response> sendAccessToken(String strUrl, bool check) async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('accessToken')!;
+      var url = Uri.parse('${ServerUrl}${strUrl}');
+      if(check) {
+        var response = await http.get(
+          url,
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'authorization': accessToken,
+          },
+        );
+        return response;
+      }else{
+        var response = await http.patch(
+          url,
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'authorization': accessToken,
+          },
+        );
+        return response;
+      }
+    }
+    Future<void> checkAccessToken(String strUrl,bool check) async {
+      final response = await sendAccessToken(strUrl, check);
+      if (response.statusCode == 200) {
+        print('api 요청 성공');
+      } else {
+        print('YN failed with status: ${response.statusCode}');
+      }
+    }
+
+
     Future<void> signOutGoogle() async {
       await FirebaseAuth.instance.signOut();
       final GoogleSignIn googleSignIn = GoogleSignIn();
       await googleSignIn.disconnect();
+      //우리 서버 로그아웃
+      String url = '/tttlogout';
+      bool check = true;
+      await checkAccessToken(url,check);
     }
     Future<void> deleteAccount() async {
       FirebaseAuth auth = FirebaseAuth.instance;
       User user = auth.currentUser!;
-
       if(user != null) {
         await user.delete().then((value) async {
           final GoogleSignIn googleSignIn = GoogleSignIn();
           await googleSignIn.disconnect();
         });
       }
+      String url = '/user/quit';
+      bool check = false;
+      await checkAccessToken(url,check);
     }
-    Future<http.Response> sendAccessToken() async {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      String accessToken = pref.getString('accessToken')!;
-      var url = Uri.parse('${ServerUrl}/user/quit');
-      var response = await http.get(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'accessToken' :  accessToken,
-        },
-      );
-      return response;
-    }
-    Future<void> checkAccessToken() async {
-      final response = await sendAccessToken();
-      if (response.statusCode == 200) {
-        print('회원탈퇴성공');
-      } else {
-        print('YN failed with status: ${response.statusCode}');
-      }
-    }
+
 
     return SafeArea(
       child: Scaffold(
@@ -204,8 +224,6 @@ class SettingScreen extends StatelessWidget {
                           ),
                           IconsButton(
                             onPressed: () {
-
-                              checkAccessToken();
                               deleteAccount().then((value) {
                                 Navigator.of(context).popUntil((route) => route.isFirst);
                               });
