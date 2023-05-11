@@ -147,6 +147,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         //RefreshToken을 Redis에 저장 (expirationTime 설정을 통해 자동 삭제 처리)
         redisTemplate.opsForValue()
                 .set("RT:" + principalDetailis.getUsername(), refreshToken, JwtProperties.REFRESH_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue()
+                .set("AT:" + principalDetailis.getUsername(), accessToken, JwtProperties.ACCESS_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
 
         String jwtToken = JwtProperties.TOKEN_PREFIX+accessToken + "_AND_" + JwtProperties.TOKEN_PREFIX+refreshToken;
 

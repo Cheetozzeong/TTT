@@ -31,7 +31,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     UserRepository userRepo;
 
     @Autowired
-    PushLogsRepo pushLogsRepo;
+    PushService pushService;
+
 
     @Override
     @Transactional
@@ -60,6 +61,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                                     && habit.getAlarms().stream().anyMatch(alarm -> alarm.getAlarmTime().equals(targetTime))    // 지금이 알람 울릴 시간인지
                                     && Integer.parseInt(habit.getStartTime()) <= Integer.parseInt(targetTime)   // 시작일 내인지
                                     && Integer.parseInt(habit.getEndTime()) >= Integer.parseInt(targetTime)     // 종료일 내인지
+                                // 테스트용으로 박홍빈 데이터만
+                                && habit.getUserId() == 2
                         )
                         .collect(Collectors.toList());
 
@@ -76,17 +79,24 @@ public class ScheduleServiceImpl implements ScheduleService {
                     if(selectedUser != null
                             && selectedUser.getUid().isEmpty() == false
                             && selectedUser.getPhoneDeviceToken().isEmpty() == false){
-                        if(SendPush(habit.getEmoji(),
+                        if(pushService.SendPush(habit.getEmoji(),
                                 habit.getName() + "할 시간입니다.",
                                 selectedUser.getPhoneDeviceToken()
                                 ,CommonEnum.PushType.PHONE
-                                ,selectedUser.getId())){
+                                ,selectedUser.getId()
+                                ,selectedUser.getUid())){
                             if(selectedUser.getWatchDeviceToken().isEmpty() == false){
                                 //실패
-                                SendPush(habit.getEmoji(),habit.getName() + "할 시간입니다."
+                                if(pushService.SendPush(habit.getEmoji(),habit.getName() + "할 시간입니다."
                                         ,selectedUser.getWatchDeviceToken()
                                         ,CommonEnum.PushType.WATCH
-                                        ,selectedUser.getId());
+                                        ,selectedUser.getId()
+                                        ,selectedUser.getUid())){
+                                    successCount++;
+                                }
+                                else{
+                                    failCount++;
+                                }
                             }
                             successCount++;
                         }
@@ -109,49 +119,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         return result;
     }
 
-    private FirebaseMessaging firebaseMessaging;
-    private FirebaseAuth firebaseAuth;
-
-    public ScheduleServiceImpl(FirebaseMessaging firebaseMessaging,FirebaseAuth firebaseAuth) {
-        this.firebaseMessaging = firebaseMessaging;
-        this.firebaseAuth = firebaseAuth;
-    }
-
-
-    public boolean SendPush(String title, String sendMessage, String deviceToken, CommonEnum.PushType type,long userId){
-        boolean result = true;
-
-        try{
-
-            Notification notification = Notification
-                    .builder()
-                    .setTitle(title)
-                    .setBody(sendMessage)
-                    .build();
-
-            Message message = Message
-                    .builder()
-                    .putData("score","이치헌머하삼?ㅋㅋㅋㅋㅋ푸하하하")
-                    .putData("accessToken","치헌아 accessToken받고싶어??")
-                    .putData("refreshToken","refreshToken줄까?? 받고싶어??")
-                    .putData("happy","✨✨✨✨✨")
-                    .setNotification(notification)
-                    .setToken(deviceToken)
-                    .build();
-
-            String response = firebaseMessaging.send(message);
-
-            pushLogsRepo.save(new PushLogs(0,userId, title, sendMessage, deviceToken, type.toString(), response ));
-
-            System.out.println(response);
-        }
-        catch (Exception ex){
-            result = false;
-            System.out.println(ex.toString());
-        }
-
-        return result;
-    }
 
 
 }
