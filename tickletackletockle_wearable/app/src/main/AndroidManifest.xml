@@ -50,10 +50,10 @@
             android:value="true" />
 
         <activity
-            android:name="com.example.tickle_tackle_tockle.QRActivity"
+            android:name="com.example.tickle_tackle_tockle.FirstActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.DeviceDefault">
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -61,12 +61,13 @@
         </activity>
 
         <activity
-            android:name="com.example.tickle_tackle_tockle.FirstActivity"
+            android:name="com.example.tickle_tackle_tockle.QRActivity"
             android:exported="true">
         </activity>
         <activity
             android:name="com.example.tickle_tackle_tockle.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat">
         </activity>
     </application>
 

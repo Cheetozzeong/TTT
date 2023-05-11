@@ -3,6 +3,7 @@ package com.example.tickle_tackle_tockle
 import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Paint.Align
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
 import com.example.tickle_tackle_tockle.theme.TTTTheme
@@ -22,15 +24,15 @@ import com.simonsickle.compose.barcodes.BarcodeType
 
 class QRActivity : ComponentActivity() {
 
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var firebaseMessaging: FirebaseMessaging
     private lateinit var deviceToken: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = applicationContext.getSharedPreferences("tttToken", Context.MODE_PRIVATE)
         firebaseMessaging = FirebaseMessaging.getInstance()
         val token = firebaseMessaging.token
-        val sharedPreferences = applicationContext.getSharedPreferences("score", Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString("tlqkf","tlqkf").apply()
 
         token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -40,7 +42,7 @@ class QRActivity : ComponentActivity() {
             deviceToken = task.result
             setContent {
                 TTTTheme {
-                    QRCodeScreen(content = deviceToken)
+                    QRCodeScreen(content = deviceToken, sharedPreferences = sharedPreferences)
                 }
             }
         })
@@ -49,8 +51,7 @@ class QRActivity : ComponentActivity() {
 }
 
 @Composable
-fun QRCodeScreen(content: String) {
-
+fun QRCodeScreen(content: String, sharedPreferences: SharedPreferences) {
     Scaffold(
         modifier = Modifier,
     ) {
@@ -71,17 +72,28 @@ fun QRCodeScreen(content: String) {
                 ) {
                     if (BarcodeType.QR_CODE.isValueValid(content)) {
                         Barcode(
-                            modifier = Modifier.width(130.dp).height(130.dp),
+                            modifier = Modifier
+                                .width(130.dp)
+                                .height(130.dp),
                             resolutionFactor = 10,
                             type = BarcodeType.QR_CODE,
                             value = content
                         )
                     }
-
                     if (!BarcodeType.CODE_128.isValueValid(content)) {
                         Text("")
                     }
                 }
+            }
+            Row {
+                Modifier.align(Alignment.CenterVertically)
+               Button(
+                   onClick = {
+                       sharedPreferences.edit().putString("accessToken","test").apply()
+                       sharedPreferences.edit().putString("refreshToken","test").apply()
+                   },
+                   Modifier.fillMaxWidth()
+               ) {}
             }
         }
     }
