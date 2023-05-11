@@ -73,9 +73,7 @@ fun AlarmScreen(
                 ) {
                     Button(
                         onClick = {
-                            Log.d("Bluetooth123", "ClickedButton3333333")
                             onButtonClick()
-                            Log.d("Bluetooth123", "ClickedButton3333333444444444")
                         },
                         Modifier
                             .background(

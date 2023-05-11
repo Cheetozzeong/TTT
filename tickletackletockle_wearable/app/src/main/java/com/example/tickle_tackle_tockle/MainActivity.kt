@@ -9,6 +9,8 @@ import com.example.tickle_tackle_tockle.navigation.TTTNavHost
 import com.example.tickle_tackle_tockle.theme.TTTTheme
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 
 class MainActivity : ComponentActivity() {
     private lateinit var firebaseMessaging: FirebaseMessaging
@@ -31,3 +33,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
+

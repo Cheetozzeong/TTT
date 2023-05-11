@@ -28,6 +28,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
+
+        <service
+            android:name=".complication.FirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />
@@ -41,15 +50,23 @@
             android:value="true" />
 
         <activity
-            android:name="com.example.tickle_tackle_tockle.MainActivity"
+            android:name="com.example.tickle_tackle_tockle.QRActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.DeviceDefault">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.tickle_tackle_tockle.FirstActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.example.tickle_tackle_tockle.MainActivity"
+            android:exported="true">
         </activity>
     </application>
 
