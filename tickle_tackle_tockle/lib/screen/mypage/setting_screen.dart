@@ -48,7 +48,7 @@ class SettingScreen extends StatelessWidget {
     Future<http.Response> sendAccessToken() async {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String accessToken = pref.getString('accessToken')!;
-      var url = Uri.parse('${ServerUrl}/tickle/count');
+      var url = Uri.parse('${ServerUrl}/user/quit');
       var response = await http.get(
         url,
         headers: <String, String>{
