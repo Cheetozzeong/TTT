@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await initializeDateFormatting();
 
   runApp(
       GetMaterialApp(
@@ -39,12 +42,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  sendIdToken() async {
-    String str = await FirebaseAuth.instance.currentUser!.getIdToken();
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('idToken', str!);
-  }
 
   getSharedPreferenceThemeData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -71,9 +68,6 @@ class _MyAppState extends State<MyApp> {
                   stream: FirebaseAuth.instance.authStateChanges(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      // ID Token 확인
-                      sendIdToken();
-
                       return const MainFrame();
                     }
 
