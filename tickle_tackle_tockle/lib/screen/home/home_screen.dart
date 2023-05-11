@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final myController = TextEditingController();
 
     return Scaffold(
-      appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '틱택톡'),
+      appBar: CommonAppBar(appBarType: AppBarType.homePageAppBar, title: '틱택톡'),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -178,6 +178,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               return const Center(child: Text('토', style: TextStyle(color: Colors.red),),);
                             }
                           },
+                          markerBuilder: (context, day, events) {
+                            if(events.isNotEmpty) {
+                              return Positioned(
+                                right: 1,
+                                bottom: 1,
+                                child: SizedBox(
+                                  height: 30,
+                                  width: 30,
+                                  child: Image.asset('assets/images/tockles/toc_00.png'),
+                                ),
+                                /*child: CircleAvatar(
+                                  backgroundColor: TTTPrimary1,
+                                  maxRadius: 10,
+                                  child: Text(events.length.toString(), style: TextStyle(color: TTTWhite)),
+                                ),*/
+                              );
+                            }
+                          },
                         ),
                         firstDay: DateTime.utc(2023, 1, 1),
                         lastDay: DateTime.utc(2100, 12, 31),
@@ -194,11 +212,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: themeController.selectedPrimaryColor,
                           ),
                           selectedDecoration: ShapeDecoration(
-                            shape: const CircleBorder(),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                            ),
                             color: themeController.selectedPrimaryColor,
                           ),
                           todayDecoration: ShapeDecoration(
-                            shape: const CircleBorder(),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                            ),
                             color: themeController.selectedPrimaryColor.withOpacity(0.5),
                           ),
                         ),
@@ -276,6 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class Event {
+  //이모지 산책하기 오전 08:00 달성미달성
   final String title;
 
   const Event(this.title);
@@ -292,16 +315,34 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
   hashCode: getHashCode,
 )..addAll(_kEventSource);
 
-final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-    key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
-    value: (item) => List.generate(
-        item % 4 + 1, (index) => Event('Event $item | ${index + 1}')))
-  ..addAll({
-    kToday: [
-      Event('Today\'s Event 1'),
-      Event('Today\'s Event 2'),
-    ],
-  });
+final _kEventSource = {
+  DateTime(2023, 5, 1) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 2) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 3) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 4) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 5) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 6) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 7) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 8) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 9) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 10) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 11) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 12) : [Event('밥먹기'), Event('저녁먹기')],
+  DateTime(2023, 5, 13) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 14) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 15) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 16) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 17) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 18) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 19) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 20) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 21) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 22) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 23) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 24) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 25) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 26) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+};
 
 int getHashCode(DateTime key) {
   return key.day * 1000000 + key.month * 10000 + key.year;
