@@ -171,7 +171,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public CommonResult registerWatchFcmToken(WatchFcmReq fcm, User user){
+    public CommonResult updateWatchFcmToken(WatchFcmReq fcm, User user){
         CommonResult result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." ); //userRepository.get
 
         try{
@@ -189,7 +189,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public CommonResult updateWatchFcmToken(WatchFcmReq fcm, User user){
+    public CommonResult registerWatchFcmToken(WatchFcmReq fcm, User user){
         CommonResult result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." ); //userRepository.get
 
         try{
