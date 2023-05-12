@@ -6,14 +6,12 @@ import com.a804.tictactoc.ttt.db.entity.User;
 import com.a804.tictactoc.ttt.request.FcmReq;
 import com.a804.tictactoc.ttt.request.LoginReq;
 import com.a804.tictactoc.ttt.request.WatchFcmReq;
-import com.a804.tictactoc.ttt.request.HabitReq;
 import com.a804.tictactoc.ttt.request.UserSleepReq;
 import com.a804.tictactoc.ttt.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Fetch;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,24 +80,41 @@ public class UserController {
     }
 
 
-    @Operation(summary = "WATCH FCM 토큰 저장", description = "유저의 WATCH FCM 토큰을 저장합니다.",
+    @Operation(summary = "WATCH FCM 토큰 저장", description = "유저의 WATCH FCM 토큰을 저장하고 알림을 보냅니다.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "WATCH FCM 토큰 변경 성공"),
                     @ApiResponse(responseCode = "500", description = "서버 오류") })
-    @PostMapping("/watchfcmtoken")
-    public ResponseEntity<?> saveWatchFcmToken(@RequestBody WatchFcmReq fcmReq, HttpServletRequest request) {
+    @PostMapping("/watchfcmtoken/register")
+    public ResponseEntity<?> registerWatchFcmToken(@RequestBody WatchFcmReq fcmReq, HttpServletRequest request) {
         User user = (User) request.getAttribute("USER");
         String accessToken = request.getHeader(JwtProperties.ACCESS_HEADER);
 
-        CommonResult response = userService.saveWatchFcmToken(fcmReq, user);
+        CommonResult response = userService.registerWatchFcmToken(fcmReq, user);
 
         if(response.getCode() == CommonEnum.Result.SUCCESS){
             return new ResponseEntity<CommonResult>(response, HttpStatus.OK);
-
         }
         else{
             return new ResponseEntity<CommonResult>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
+    @Operation(summary = "WATCH FCM 토큰 업데이트", description = "유저의 WATCH FCM 토큰을 저장합니다.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "WATCH FCM 토큰 변경 성공"),
+                    @ApiResponse(responseCode = "500", description = "서버 오류") })
+    @PostMapping("/watchfcmtoken/update")
+    public ResponseEntity<?> updateWatchFcmToken(@RequestBody WatchFcmReq fcmReq, HttpServletRequest request) {
+        User user = (User) request.getAttribute("USER");
+        String accessToken = request.getHeader(JwtProperties.ACCESS_HEADER);
+
+        CommonResult response = userService.updateWatchFcmToken(fcmReq, user);
+
+        if(response.getCode() == CommonEnum.Result.SUCCESS){
+            return new ResponseEntity<CommonResult>(response, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<CommonResult>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

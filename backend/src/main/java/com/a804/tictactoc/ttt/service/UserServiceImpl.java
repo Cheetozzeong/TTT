@@ -161,26 +161,43 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public CommonResult saveWatchFcmToken(WatchFcmReq fcm, User user){
+    public CommonResult registerWatchFcmToken(WatchFcmReq fcm, User user){
         CommonResult result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." ); //userRepository.get
 
         try{
             user.setWatchDeviceToken(fcm.getWatchFcmToken());
             User selectedUser = userRepository.save(user);
 
-            if(selectedUser != null && fcm.isSendPush() == true && selectedUser.getWatchDeviceToken().isEmpty() == false
-            && pushService.SendPush(
+            result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." );
+
+        }
+        catch (Exception ex){
+            result = new CommonResult(CommonEnum.Result.FAIL,"WATCH FCM 토큰 저장에 실패했습니다." );
+        }
+
+        return result;
+    }
+
+
+    public CommonResult updateWatchFcmToken(WatchFcmReq fcm, User user){
+        CommonResult result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." ); //userRepository.get
+
+        try{
+            user.setWatchDeviceToken(fcm.getWatchFcmToken());
+            User selectedUser = userRepository.save(user);
+
+            if(selectedUser != null && selectedUser.getWatchDeviceToken().isEmpty() == false
+                    && pushService.SendPush(
                     "🎃🎃🎃🎃🎃",
                     "로그인 완 ! 료 ! "
                     ,selectedUser.getWatchDeviceToken()
                     ,CommonEnum.PushType.WATCH
                     ,selectedUser.getId()
                     ,selectedUser.getUid())) {
-
+                result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공하고 알림 전송도 성공했습니다." );
             }
             else{
-                result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장는 성공했지만 알림전송은 실패했습니다." );
-
+                result = new CommonResult(CommonEnum.Result.FAIL,"WATCH FCM 토큰 저장에는 성공했지만 알림전송은 실패했습니다." );
             }
         }
         catch (Exception ex){

@@ -62,7 +62,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                                     && Integer.parseInt(habit.getStartTime()) <= Integer.parseInt(targetTime)   // 시작일 내인지
                                     && Integer.parseInt(habit.getEndTime()) >= Integer.parseInt(targetTime)     // 종료일 내인지
                                 // 테스트용으로 박홍빈 데이터만
-                                && habit.getUserId() == 2
+                                // && habit.getUserId() == 2
                         )
                         .collect(Collectors.toList());
 
