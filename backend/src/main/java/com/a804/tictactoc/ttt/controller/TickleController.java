@@ -57,7 +57,7 @@ public class TickleController {
 					@ApiResponse(responseCode = "200", description = "습관 변경 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PostMapping(value = "")
-	public ResponseEntity<?> createTickle(@ParameterObject TickleReq tickleReq, HttpServletRequest request) throws Exception{
+	public ResponseEntity<?> createTickle(@RequestBody TickleReq tickleReq, HttpServletRequest request) throws Exception{
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();//임시
 		TickleRes tickleRes = tService.createTickle(tickleReq);
