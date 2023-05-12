@@ -29,9 +29,9 @@ public class Habit {
 	@Schema(hidden = true)
     long id;
 
-	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
-	@Column(name="user_id", updatable = false)
-	long userId;
+//	@Schema(name = "어떤 유저의 습관인지", example = "1", defaultValue = "1", hidden = true)
+//	@Column(name="user_id", updatable = false)
+//	long userId;
 
 	@Schema(name = "어떤 카테고리의 습관인지", example = "1", defaultValue = "1")
 	@Column(name="category_id")
@@ -73,6 +73,10 @@ public class Habit {
 	@Schema(hidden = true)
 	@Column(name="modified_date", updatable = false, insertable = false)
 	String modifiedDate;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id") // 외래키
+	User user;
 
 	@OneToMany(mappedBy = "habitId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	List<Tickle> tickles = new ArrayList<>();
