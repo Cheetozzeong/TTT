@@ -20,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime? _selectedDay;
 
   List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
     return kEvents[day] ?? [];
   }
 
@@ -188,11 +187,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 30,
                                   child: Image.asset('assets/images/tockles/toc_00.png'),
                                 ),
-                                /*child: CircleAvatar(
-                                  backgroundColor: TTTPrimary1,
-                                  maxRadius: 10,
-                                  child: Text(events.length.toString(), style: TextStyle(color: TTTWhite)),
-                                ),*/
                               );
                             }
                           },
@@ -298,56 +292,40 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class Event {
-  //이모지 산책하기 오전 08:00 달성미달성
+  final String category;
+  final String emoji;
   final String title;
+  final String time;
+  final bool isClear;
 
-  const Event(this.title);
+  const Event({required this.category, required this.emoji, required this.title, required this.time, required this.isClear});
 
   @override
   String toString() => title;
 }
 
-/// Example events.
-///
-/// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
 final kEvents = LinkedHashMap<DateTime, List<Event>>(
   equals: isSameDay,
   hashCode: getHashCode,
 )..addAll(_kEventSource);
 
 final _kEventSource = {
-  DateTime(2023, 5, 1) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 2) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 3) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 4) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 5) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 6) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 7) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 8) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 9) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 10) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 11) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 12) : [Event('밥먹기'), Event('저녁먹기')],
-  DateTime(2023, 5, 13) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 14) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 15) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 16) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 17) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 18) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 19) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 20) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 21) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 22) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 23) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 24) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 25) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
-  DateTime(2023, 5, 26) : [Event('밥먹기'), Event('저녁먹기'), Event('아침먹기')],
+  DateTime(2023, 5, 1) : [Event(category: '운동', emoji: '👏', title: '박수치기', time: '0920', isClear: true)],
+  DateTime(2023, 5, 1) : [Event(category: '운동', emoji: '🥾', title: '걷기', time: '1020', isClear: true)],
+  DateTime(2023, 5, 1) : [Event(category: '금전', emoji: '🛒', title: '쇼핑하기', time: '1320', isClear: true)],
+  DateTime(2023, 5, 1) : [Event(category: '학습', emoji: '✒', title: '공부하기', time: '1420', isClear: true)],
+  DateTime(2023, 5, 1) : [Event(category: '관계', emoji: '😁', title: '웃기', time: '1520', isClear: true)],
+  DateTime(2023, 5, 1) : [Event(category: '생활', emoji: '🎉', title: '파티하기', time: '1620', isClear: true)],
+  DateTime(2023, 5, 1) : [Event(category: '기타', emoji: '🎸', title: '기타치기', time: '1720', isClear: true)],
+  DateTime(2023, 5, 12) : [Event(category: '운동', emoji: '👏', title: '박수치기', time: '0920', isClear: true)],
+  DateTime(2023, 5, 12) : [Event(category: '운동', emoji: '🥾', title: '걷기', time: '1020', isClear: true)],
+  DateTime(2023, 5, 12) : [Event(category: '금전', emoji: '🛒', title: '쇼핑하기', time: '1320', isClear: true)],
+  DateTime(2023, 5, 12) : [Event(category: '학습', emoji: '✒', title: '공부하기', time: '1420', isClear: true)],
+  DateTime(2023, 5, 12) : [Event(category: '관계', emoji: '😁', title: '웃기', time: '1520', isClear: true)],
+  DateTime(2023, 5, 12) : [Event(category: '생활', emoji: '🎉', title: '파티하기', time: '1620', isClear: true)],
+  DateTime(2023, 5, 12) : [Event(category: '기타', emoji: '🎸', title: '기타치기', time: '1720', isClear: true)],
 };
 
 int getHashCode(DateTime key) {
   return key.day * 1000000 + key.month * 10000 + key.year;
 }
-
-final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
