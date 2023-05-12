@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:switcher_button/switcher_button.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
-import 'package:tickle_tackle_tockle/controller/normal_alarm_controller.dart';
 
 import '../../const/theme.dart';
 import '../../controller/loading_controller.dart';
@@ -23,7 +22,6 @@ class HabitEditScreen extends StatelessWidget {
 
     LoadingController loadingController = Get.put(LoadingController());
     ThemeController themeController = Get.put(ThemeController());
-    NormalAlarmController normalAlarmController = Get.put(NormalAlarmController());
 
     return SafeArea(
       child: Scaffold(
@@ -77,49 +75,28 @@ class HabitEditScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('알람', style: TextStyle(fontSize: 20,),),
-                        GetBuilder<NormalAlarmController>(
-                            builder: (_) {
-                              return SizedBox(
-                                height: 50,
-                                width: 150,
-                                child: normalAlarmController.isAlarm ? ElevatedButton(
-                                  onPressed: () {
-                                    PersistentNavBarNavigator.pushNewScreen(
-                                      context,
-                                      screen: const HabitsAlarmScreen(),
-                                      withNavBar: false,
-                                      pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                                    );
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all<Color>(TTTPrimary1),
-                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20),
-                                        )
-                                    ),
-                                  ),
-                                  child: Text('오전 09시 00분\n~\n오후 09시 00분', style: TextStyle(fontSize: 12,), textAlign: TextAlign.center),
-                                ) : Container(),
+                        SizedBox(
+                          height: deviceHeight * 0.05,
+                          width: deviceWidth * 0.5,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: const HabitsAlarmScreen(),
+                                withNavBar: false,
+                                pageTransitionAnimation: PageTransitionAnimation.cupertino,
                               );
-                            }
-                        ),
-                        GetBuilder<ThemeController>(
-                            builder: (_) {
-                              return GetBuilder<NormalAlarmController>(
-                                  builder: (_) {
-                                    return SwitcherButton(
-                                        offColor: TTTGrey,
-                                        onColor: themeController.selectedPrimaryColor,
-                                        size: 50,
-                                        value: normalAlarmController.isAlarm,
-                                        onChange: (_) {
-                                          normalAlarmController.setIsAlarmFlag(!normalAlarmController.isAlarm);
-                                        }
-                                    );
-                                  }
-                              );
-                            }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(TTTPrimary1),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  )
+                              ),
+                            ),
+                            child: Text('시간 설정', style: TextStyle(fontSize: deviceHeight * 0.02,), textAlign: TextAlign.center),
+                          ),
                         ),
                       ],
                     ),
