@@ -6,6 +6,4 @@ import lombok.Getter;
 @Getter
 public class WatchFcmReq {
     String watchFcmToken;
-    @Schema(name="워치에 완료 알람 보내면 true, 안보내면 false")
-    boolean sendPush;
 }
