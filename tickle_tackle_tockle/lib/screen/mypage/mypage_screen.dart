@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +15,10 @@ import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import 'package:get/get.dart';
 import 'package:time_picker_sheet/widget/sheet.dart';
 import 'package:time_picker_sheet/widget/time_picker.dart';
+import 'package:http/http.dart' as http;
+
+import '../../const/serveraddress.dart';
+import '../../model/UserSleepReq.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({
@@ -27,14 +33,82 @@ class MyPageScreen extends StatelessWidget {
     prefs.setInt('themeColor', selectedColor.value);
   }
 
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final deviceWidth = size.width;
     final deviceHeight = size.height;
 
+    String strSleepStartTime = '0000';
+    String strSleepEndTime = '0000';
+
+    DateTime dateTimeSleepStartTime = DateTime(0);
+
     ThemeController themeController = Get.put(ThemeController());
     DisturbAlarmController disturbAlarmController = Get.put(DisturbAlarmController());
+
+    Future<http.Response> sendAccessToken(bool check) async {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String accessToken = pref.getString('accessToken')!;
+      var url = Uri.parse('${ServerUrl}/user/sleep');
+      if(check){
+        var response = await http.get(
+          url,
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'authorization' :  accessToken,
+          },
+        );
+        return response;
+      }else{
+        print(url.toString());
+        print('URL');
+        print(strSleepStartTime+" : "+strSleepEndTime);
+        var response = await http.patch(
+          url,
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'authorization' :  accessToken,
+          },
+          body: jsonEncode(<String, String>{
+            'sleepStartTime': strSleepStartTime,
+            'sleepEndTime': strSleepEndTime,
+          }),
+
+        );
+        return response;
+      }
+    }
+
+    Future<UserSleepReq> checkAccessToken(bool check) async {
+      final response = await sendAccessToken(check);
+
+      UserSleepReq userSleepReq = new UserSleepReq(sleepStartTime: '',sleepEndTime: '');
+
+      if(check){
+        if (response.statusCode == 200) {
+          final decodedJson = json.decode(utf8.decode(response.bodyBytes));
+          userSleepReq.sleepStartTime = decodedJson['sleepStartTime'];
+          userSleepReq.sleepEndTime = decodedJson['sleepEndTime'];
+
+          strSleepStartTime = userSleepReq.sleepStartTime;
+          strSleepEndTime = userSleepReq.sleepEndTime;
+
+          print(userSleepReq.sleepStartTime);
+          print(userSleepReq.sleepEndTime);
+          print('무한루프 멈춰 ;');
+
+          if(strSleepStartTime == strSleepEndTime) disturbAlarmController.setIsDisturbAlarmFlag(false);
+          else disturbAlarmController.setIsDisturbAlarmFlag(true);
+
+        }else print('Login failed with status: ${response.statusCode}');
+      }else{
+        if (response.statusCode == 200) print("저장");
+        else print('Login failed with status: ${response.statusCode}');
+      }
+      return userSleepReq;
+    }
 
     buildCollapsedAlarm() {
       return Container(
@@ -103,6 +177,8 @@ class MyPageScreen extends StatelessWidget {
                             minuteTitle: '분',
                             saveButtonText: '저장',
                             saveButtonColor: themeController.selectedPrimaryColor,
+                            minuteInterval: 1,
+                            initialDateTime: DateTime(0, 0, 0, int.parse(strSleepStartTime.substring(0, 2)), int.parse(strSleepStartTime.substring(2, 4))),
                           ),
                         );
 
@@ -110,11 +186,13 @@ class MyPageScreen extends StatelessWidget {
                           int startHour = result.hour;
                           int startMinute = result.minute;
 
-                          //test
-                          print('확인 : ' + result.toString());
-                          print('확인 : ' + startHour.toString() + " / " + startMinute.toString());
+                          strSleepStartTime = startHour.toString().padLeft(2, '0') + startMinute.toString().padLeft(2, '0');
+
+                          print('시작 시간 저장을 눌렀습니다~ : ${strSleepStartTime}');
 
                           //여기서 DB 에 방해 금지 시간 저장
+                          bool check = false;
+                          checkAccessToken(check).then((value) => themeController.refresh());
                         }
                       },
                       child: GetBuilder<ThemeController>(
@@ -127,11 +205,34 @@ class MyPageScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Center(
-                              child: Text(
-                                '오후 00시 00분',
-                                style: TextStyle(
-                                  color: TTTWhite,
-                                ),
+                              child: GetBuilder<DisturbAlarmController>(
+                                builder: (_) {
+                                  return Text(
+                                    strSleepStartTime,
+                                    style: TextStyle(
+                                      color: TTTWhite,
+                                    ),
+                                  );
+                                  /*return FutureBuilder(
+                                    future: checkAccessToken(true),
+                                    builder: (context, snapshot) {
+                                      if(!snapshot.hasData) {
+                                        return Container();
+                                      }
+
+                                      if(snapshot.hasError) {
+                                        return Container();
+                                      }
+
+                                      return Text(
+                                        strSleepStartTime,
+                                        style: TextStyle(
+                                          color: TTTWhite,
+                                        ),
+                                      );
+                                    }
+                                  );*/
+                                }
                               ),
                             ),
                           );
@@ -164,6 +265,8 @@ class MyPageScreen extends StatelessWidget {
                             minuteTitle: '분',
                             saveButtonText: '저장',
                             saveButtonColor: themeController.selectedPrimaryColor,
+                            minuteInterval: 1,
+                            initialDateTime: DateTime(0, 0, 0, int.parse(strSleepEndTime.substring(0, 2)), int.parse(strSleepEndTime.substring(2, 4))),
                           ),
                         );
 
@@ -171,11 +274,13 @@ class MyPageScreen extends StatelessWidget {
                           int endHour = result.hour;
                           int endMinute = result.minute;
 
-                          //test
-                          print('확인 : ' + result.toString());
-                          print('확인 : ' + endHour.toString() + " / " + endMinute.toString());
+                          strSleepEndTime = endHour.toString().padLeft(2, '0') + endMinute.toString().padLeft(2, '0');
+
+                          print('종료 시간 저장을 눌렀습니다~ : ${strSleepEndTime}');
 
                           //여기서 DB 에 방해 금지 시간 저장
+                          bool check = false;
+                          checkAccessToken(check).then((value) => themeController.refresh());
                         }
                       },
                       child: GetBuilder<ThemeController>(
@@ -188,11 +293,34 @@ class MyPageScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Center(
-                                child: Text(
-                                  '오후 00시 00분',
-                                  style: TextStyle(
-                                    color: TTTWhite,
-                                  ),
+                                child: GetBuilder<DisturbAlarmController>(
+                                    builder: (_) {
+                                      return Text(
+                                        strSleepEndTime,
+                                        style: TextStyle(
+                                          color: TTTWhite,
+                                        ),
+                                      );
+                                      /*return FutureBuilder(
+                                          future: checkAccessToken(true),
+                                          builder: (context, snapshot) {
+                                            if(!snapshot.hasData) {
+                                              return Container();
+                                            }
+
+                                            if(snapshot.hasError) {
+                                              return Container();
+                                            }
+
+                                            return Text(
+                                              strSleepEndTime,
+                                              style: TextStyle(
+                                                color: TTTWhite,
+                                              ),
+                                            );
+                                          }
+                                      );*/
+                                    }
                                 ),
                               ),
                             );
@@ -453,31 +581,41 @@ class MyPageScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              child: ExpandableNotifier(
-                child: Stack(
-                  children: [
-                    Expandable(
-                      collapsed: buildCollapsedAlarm(),
-                      expanded: buildExpandedAlarm(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(deviceHeight * 0.02),
-                      child: Row(
-                        children: [
-                          Text(
-                            '방해 금지 시간대 설정',
-                            style: TextStyle(
-                              fontSize: deviceWidth * 0.055,
-                            ),
-                          ),
-                          SizedBox(
-                            width: deviceWidth * 0.17,
-                          ),
-                          Builder(
-                            builder: (context) {
-                              return GetBuilder<ThemeController>(
-                                builder: (_) {
-                                  return GetBuilder<DisturbAlarmController>(
+              child: FutureBuilder(
+                future: checkAccessToken(true),
+                builder: (context, snapshot) {
+                  if(!snapshot.hasData) {
+                    return Container();
+                  }
+
+                  if(snapshot.hasError) {
+                    return Container();
+                  }
+
+                  return ExpandableNotifier(
+                    initialExpanded: disturbAlarmController.isDisturbAlarm,
+                    child: Stack(
+                      children: [
+                        Expandable(
+                          collapsed: buildCollapsedAlarm(),
+                          expanded: buildExpandedAlarm(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(deviceHeight * 0.02),
+                          child: Row(
+                            children: [
+                              Text(
+                                '방해 금지 시간대 설정',
+                                style: TextStyle(
+                                  fontSize: deviceWidth * 0.055,
+                                ),
+                              ),
+                              SizedBox(
+                                width: deviceWidth * 0.13,
+                              ),
+                              Builder(
+                                builder: (context) {
+                                  return GetBuilder<ThemeController>(
                                     builder: (_) {
                                       return SwitcherButton(
                                         offColor: TTTGrey,
@@ -487,20 +625,20 @@ class MyPageScreen extends StatelessWidget {
                                         onChange: (_) {
                                           var ec = ExpandableController.of(context, required: true)!;
                                           ec.toggle();
-                                          disturbAlarmController.setIsDisturbAlarmFlag(disturbAlarmController.isDisturbAlarm);
+                                          disturbAlarmController.setIsDisturbAlarmFlag(!disturbAlarmController.isDisturbAlarm);
                                         },
                                       );
                                     }
                                   );
                                 }
-                              );
-                            }
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                        )
+                      ],
+                    ),
+                  );
+                }
               ),
             ),
           ],
