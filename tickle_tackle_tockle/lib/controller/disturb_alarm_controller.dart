@@ -8,4 +8,8 @@ class DisturbAlarmController extends GetxController {
     _isDisturbAlarm = value;
     update();
   }
+
+  void changeDisturbAlarm() {
+    update();
+  }
 }
