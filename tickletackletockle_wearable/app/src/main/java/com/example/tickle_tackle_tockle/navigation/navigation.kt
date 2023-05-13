@@ -8,10 +8,11 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.example.tickle_tackle_tockle.presentation.TickleListScreen
 import com.example.tickle_tackle_tockle.presentation.WelcomeScreen
+import com.example.tickle_tackle_tockle.response.TickleListResponse
 
 
 @Composable
-fun TTTNavHost(sharedPreferences: SharedPreferences) {
+fun TTTNavHost(sharedPreferences: SharedPreferences, tickles: List<TickleListResponse>) {
 
     val navController = rememberSwipeDismissableNavController()
     SwipeDismissableNavHost(
@@ -32,16 +33,21 @@ fun TTTNavHost(sharedPreferences: SharedPreferences) {
             )
         }
         composable("ticklelist_screen") {
-            TickleListScreen(
-                onButtonClick = {
-                    navController.navigate(
-                        "welcome_screen",
-                        NavOptions.Builder()
-                            .setPopUpTo("ticklelist_screen", true)
-                            .build()
+            sharedPreferences.getString("accessToken",null)?.let { accessToken ->
+                sharedPreferences.getString("refreshToken", null)?.let { refreshToken ->
+                    TickleListScreen(
+                        onButtonClick = {
+                            navController.navigate(
+                                "welcome_screen",
+                                NavOptions.Builder()
+                                    .setPopUpTo("ticklelist_screen", true)
+                                    .build()
+                            )
+                        },
+                        ticklesCategory = tickles
                     )
                 }
-            )
+            }
         }
         //TickleListScreen(id = it.arguments?.getString("id")!!)
     }

@@ -12,29 +12,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Scaffold
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.*
 import com.example.tickle_tackle_tockle.R
-import com.example.tickle_tackle_tockle.complication.Tickle
+import com.example.tickle_tackle_tockle.model.Tickle
+import com.example.tickle_tackle_tockle.response.TickleListResponse
 import com.example.tickle_tackle_tockle.theme.TTTTheme
 
 @Composable
 fun TickleListScreen(
-    onButtonClick: () -> Unit
+    onButtonClick: () -> Unit,
+    ticklesCategory: List<TickleListResponse>
 ) {
+    val tickles : MutableList<Tickle> = ArrayList()
+    for (element in ticklesCategory) {
+        tickles.addAll(element.tickles)
+    }
 
-    //DummyData
-    val tickles = listOf(
-        Tickle(getEmojiByUnicode(0x1F60A),"달성"),
-        Tickle(getEmojiByUnicode(0x1F3C3),"달성"),
-        Tickle(getEmojiByUnicode(0x1F3CA),"달성"),
-        Tickle(getEmojiByUnicode(0x1F9D7),"미달성"),
-        Tickle(getEmojiByUnicode(0x1F9D7),"미달성"),
-        Tickle(getEmojiByUnicode(0x1F9D7),"미달성")
-    )
+    val sortedTicklesList = tickles.sortedWith(compareBy { it.executionTime })
 
     TTTTheme {
         Scaffold(
@@ -49,7 +45,8 @@ fun TickleListScreen(
                         .fillMaxWidth()
                         .weight(1.0f),
                     verticalAlignment = Alignment.Bottom,
-                    horizontalArrangement = Arrangement.Center) {}
+                    horizontalArrangement = Arrangement.Center
+                ) {}
                 Row(
                     Modifier
                         .fillMaxWidth()
@@ -75,19 +72,18 @@ fun TickleListScreen(
                         .fillMaxWidth()
                         .weight(4.0f)
                 ) {
-                    tickleList(tickles, onButtonClick)
+                    TickleList(sortedTicklesList,onButtonClick)
                 }
             }
         }
     }
 }
-
 @Composable
-fun tickleList(tickles: List<Tickle>, onButtonClick: () -> Unit) {
+private fun TickleList(tickles: List<Tickle>, onButtonClick: () -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(1),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 15.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier.fillMaxHeight()
     ) {
@@ -95,34 +91,59 @@ fun tickleList(tickles: List<Tickle>, onButtonClick: () -> Unit) {
             Box(
                 Modifier.fillMaxHeight()
             ) {
-                Row {
-                    Column(
-                        modifier = Modifier.weight(0.3f),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                    }
-                    Column(
-                        modifier = Modifier.weight(1.2f),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Text(text = tickle.emoji, textAlign = TextAlign.Center)
-                    }
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 30.dp)
-                            .weight(1.5f)
-                    ) {
-                        Button(
-                            onClick = { onButtonClick },
+                if(!tickle.achieved)
+                {
+                    Row {
+                        Column(
                             modifier = Modifier
-                                .background(
-                                    MaterialTheme.colors.primary,
-                                    shape = RoundedCornerShape(30.dp)
-                                )
-                                .fillMaxSize()
-                                .size(size = 30.dp),
+                                .weight(0.3f)
+                                .padding(top = 3.dp),
+                            verticalArrangement = Arrangement.Bottom
                         ) {
-                            Text(text = tickle.title, style = MaterialTheme.typography.body2)
+                            Text(text = tickle.emoji, textAlign = TextAlign.Center)
+                        }
+                        Column(
+                            modifier = Modifier
+                                .weight(1.3f)
+                                .padding(start = 5.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Row {
+                                Text(
+                                    text = tickle.habitName,
+                                    style = MaterialTheme.typography.body2,
+                                    textAlign = TextAlign.Center,
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1
+                                )
+                            }
+                            Row {
+                                Text(text = "${tickle.executionTime.substring(0,2)}:${tickle.executionTime.substring(2,4)}",
+                                    style = MaterialTheme.typography.caption2,
+                                    textAlign = TextAlign.Center,
+                                    overflow = TextOverflow.Ellipsis,
+                                    maxLines = 1
+                                )
+                            }
+                        }
+                        Column(
+                            modifier = Modifier
+                                .weight(0.7f)
+                        ) {
+                            Button(
+                                onClick = { onButtonClick()}, // TODO: 여기서 API 요청하도록 변경해야함
+                                modifier = Modifier
+                                    .background(
+                                        MaterialTheme.colors.secondary,
+                                        shape = RoundedCornerShape(30.dp)
+                                    )
+                                    .fillMaxSize()
+                                    .size(size = 30.dp),
+                                colors = ButtonDefaults.secondaryButtonColors()
+                            ) {
+                                Text(text = "미달성", style = MaterialTheme.typography.caption1)
+                            }
                         }
                     }
                 }
@@ -131,6 +152,6 @@ fun tickleList(tickles: List<Tickle>, onButtonClick: () -> Unit) {
     }
 }
 
-public fun getEmojiByUnicode(unicode: Int): String {
+private fun getEmojiByUnicode(unicode: Int): String {
     return String(Character.toChars(unicode))
 }

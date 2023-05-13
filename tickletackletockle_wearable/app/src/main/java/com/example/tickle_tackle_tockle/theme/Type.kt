@@ -66,7 +66,28 @@ internal val TTTTypography = Typography(
         fontSize = 18.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.1.sp,
-    )
+    ),
+    caption1 = TextStyle(
+        fontFamily = IgFont.maple,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.1.sp,
+    ),
+    caption2 = TextStyle(
+        fontFamily = IgFont.maple,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.1.sp,
+    ),
+    caption3 = TextStyle(
+        fontFamily = IgFont.maple,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.1.sp,
+    ),
 
 )
 object IgFont{
