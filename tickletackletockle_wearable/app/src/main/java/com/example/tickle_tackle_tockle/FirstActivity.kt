@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import com.google.firebase.messaging.FirebaseMessaging
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -15,7 +15,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
 
-class FirstActivity : AppCompatActivity() {
+class FirstActivity : ComponentActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var firebaseMessaging: FirebaseMessaging
