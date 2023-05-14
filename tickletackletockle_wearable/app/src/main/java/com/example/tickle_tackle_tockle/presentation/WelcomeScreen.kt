@@ -3,6 +3,7 @@ package com.example.tickle_tackle_tockle.presentation
 import android.content.SharedPreferences
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +44,7 @@ fun WelcomeScreen(
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Box(
-                        modifier = Modifier.fillMaxHeight(),
+                        modifier = Modifier.fillMaxHeight().clickable(onClick = {sharedPreferences.edit().clear().apply()}),
                         contentAlignment = Alignment.Center,
                     ) {
                         Image(painter = painterResource(R.drawable.welcometockle),"content description")
