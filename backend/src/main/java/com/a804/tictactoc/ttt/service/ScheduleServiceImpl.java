@@ -79,10 +79,12 @@ public class ScheduleServiceImpl implements ScheduleService {
                 int failCount = 0;
 
                 for (Habit habit:resq) {
-                    pushList.add(new PushReq(habit.getName(),habit.getEmoji(), habit.getUserId()));
+
+                    pushList.add(new PushReq(habit.getName(),habit.getEmoji(), habit.getUser().getId()));
+//                    System.out.println(pushList.get(i++).getEmoji());
                     // 유저 정보 : 현재는 하나하나 가져오게 되어있는데 추후에 한번에 가져와서 찾는 방식으로 개편 필요하다
-                    User selectedUser = userRepo.findById(habit.getUserId()).get();
-//                    System.out.println(selectedUser.getWatchDeviceToken());
+                    User selectedUser = userRepo.findById(habit.getUser().getId()).get();
+
                     if(selectedUser != null
                             && selectedUser.getUid() != null
                             && selectedUser.getPhoneDeviceToken() != null){
