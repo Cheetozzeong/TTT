@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle.presentation
+package com.a804.tickle_tackle_tockle.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,10 +15,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.*
-import com.example.tickle_tackle_tockle.R
-import com.example.tickle_tackle_tockle.model.Tickle
-import com.example.tickle_tackle_tockle.response.TickleListResponse
-import com.example.tickle_tackle_tockle.theme.TTTTheme
+import com.a804.tickle_tackle_tockle.R
+import com.a804.tickle_tackle_tockle.model.Tickle
+import com.a804.tickle_tackle_tockle.response.TickleListResponse
+import com.a804.tickle_tackle_tockle.theme.TTTTheme
 
 @Composable
 fun TickleListScreen(

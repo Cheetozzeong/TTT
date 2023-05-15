@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle.navigation
+package com.a804.tickle_tackle_tockle.navigation
 
 import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
@@ -6,9 +6,9 @@ import androidx.navigation.NavOptions
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.example.tickle_tackle_tockle.presentation.TickleListScreen
-import com.example.tickle_tackle_tockle.presentation.WelcomeScreen
-import com.example.tickle_tackle_tockle.response.TickleListResponse
+import com.a804.tickle_tackle_tockle.presentation.TickleListScreen
+import com.a804.tickle_tackle_tockle.presentation.WelcomeScreen
+import com.a804.tickle_tackle_tockle.response.TickleListResponse
 
 
 @Composable

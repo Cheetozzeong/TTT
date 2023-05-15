@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle.presentation
+package com.a804.tickle_tackle_tockle.presentation
 
 import android.content.SharedPreferences
 import androidx.compose.foundation.Image
@@ -13,8 +13,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.wear.compose.material.*
-import com.example.tickle_tackle_tockle.R
-import com.example.tickle_tackle_tockle.theme.TTTTheme
+import com.a804.tickle_tackle_tockle.R
+import com.a804.tickle_tackle_tockle.theme.TTTTheme
 
 @Composable
 fun WelcomeScreen(

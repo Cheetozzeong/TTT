@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle.theme
+package com.a804.tickle_tackle_tockle.theme
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Typography
-import com.example.tickle_tackle_tockle.R
+import com.a804.tickle_tackle_tockle.R
 
 
 internal val TTTTypography = Typography(

@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle
+package com.a804.tickle_tackle_tockle
 
 import android.content.ContentValues
 import android.content.Context

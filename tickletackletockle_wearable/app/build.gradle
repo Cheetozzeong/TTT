@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.tickle_tackle_tockle'
+    namespace 'com.a804.tickle_tackle_tockle'
     compileSdk 33
 
     defaultConfig {
-        applicationId 'com.example.tickle_tackle_tockle'
+        applicationId 'com.a804.tickle_tackle_tockle'
         minSdk 30
         targetSdk 33
         versionCode 2

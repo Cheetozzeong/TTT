@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:608227876008:android:17b1cb199843147a88369d",
         "android_client_info": {
-          "package_name": "com.example.tickle_tackle_tockle"
+          "package_name": "com.a804.tickle_tackle_tockle"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "608227876008-6c914m7mqcfssvf9qhj37qqdpl613rea.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.tickle_tackle_tockle",
+            "package_name": "com.a804.tickle_tackle_tockle",
             "certificate_hash": "c8a44c43ebc4b6b0274bdf1bb200c8e3f17f85ca"
           }
         },
@@ -25,7 +25,7 @@
           "client_id": "608227876008-6q5tfg64fah9fpvq1lv2lb1ied9bd25v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.tickle_tackle_tockle",
+            "package_name": "com.a804.tickle_tackle_tockle",
             "certificate_hash": "067331c4433e83a9a925517e410cbb9fac116be5"
           }
         },
@@ -33,7 +33,7 @@
           "client_id": "608227876008-9gvaip9dldu04um3vqtvf0va32obr1db.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.tickle_tackle_tockle",
+            "package_name": "com.a804.tickle_tackle_tockle",
             "certificate_hash": "4adf63ba1ea7a718731bfa785d93ed32fc447e28"
           }
         },
@@ -41,7 +41,7 @@
           "client_id": "608227876008-let1oqi5f76178g77q39m4vg8q5drjrn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.tickle_tackle_tockle",
+            "package_name": "com.a804.tickle_tackle_tockle",
             "certificate_hash": "a11dc30ce3d33fdec2da9e37828bf78e296d35e2"
           }
         },
@@ -49,7 +49,7 @@
           "client_id": "608227876008-najhjt8mbs00d0rabjhll9idmf7d5m3g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.tickle_tackle_tockle",
+            "package_name": "com.a804.tickle_tackle_tockle",
             "certificate_hash": "53a933cf324d9a2555ea2c6e9948f77e5c48b03b"
           }
         },
@@ -74,7 +74,7 @@
               "client_id": "608227876008-3lhhuli5ebcldoqp6aip5hbkug1doq7d.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.tickleTackleTockle"
+                "bundle_id": "com.a804.tickleTackleTockle"
               }
             }
           ]

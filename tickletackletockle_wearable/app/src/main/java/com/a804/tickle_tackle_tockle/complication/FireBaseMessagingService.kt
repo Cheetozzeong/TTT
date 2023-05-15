@@ -1,11 +1,11 @@
-package com.example.tickle_tackle_tockle.complication
+package com.a804.tickle_tackle_tockle.complication
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
-import com.example.tickle_tackle_tockle.MainActivity
-import com.example.tickle_tackle_tockle.QRActivity
+import com.a804.tickle_tackle_tockle.MainActivity
+import com.a804.tickle_tackle_tockle.QRActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

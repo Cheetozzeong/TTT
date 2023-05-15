@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle
+package com.a804.tickle_tackle_tockle
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.tickle_tackle_tockle.navigation.TTTNavHost
-import com.example.tickle_tackle_tockle.response.TickleListResponse
-import com.example.tickle_tackle_tockle.theme.TTTTheme
+import com.a804.tickle_tackle_tockle.navigation.TTTNavHost
+import com.a804.tickle_tackle_tockle.response.TickleListResponse
+import com.a804.tickle_tackle_tockle.theme.TTTTheme
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope

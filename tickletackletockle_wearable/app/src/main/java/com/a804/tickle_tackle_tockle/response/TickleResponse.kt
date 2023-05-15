@@ -1,6 +1,6 @@
-package com.example.tickle_tackle_tockle.response
+package com.a804.tickle_tackle_tockle.response
 
-import com.example.tickle_tackle_tockle.model.Tickle
+import com.a804.tickle_tackle_tockle.model.Tickle
 
 data class TickleListResponse(
     val categoryId: String,

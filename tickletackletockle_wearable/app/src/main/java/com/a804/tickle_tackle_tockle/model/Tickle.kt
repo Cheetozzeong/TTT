@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle.model
+package com.a804.tickle_tackle_tockle.model
 
 data class Tickle(
     val achieved: Boolean,
