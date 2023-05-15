@@ -35,10 +35,15 @@ public class TickleServiceImpl implements TickleService{
     }
 
     @Override
-    public TickleRes createTickle(TickleReq tickleReq) throws SQLException {
-        Tickle tickle = tickleReq.toEntity();
-        tRepo.save(tickle);
-        return TickleRes.builder().tickle(tickle).build();
+    public TickleRes createTickle(long userId, TickleReq tickleReq) throws SQLException {
+        Habit habit = hRepo.findById(tickleReq.getHabitId()).get();
+        if(habit.getUser().getId() == userId){
+            Tickle tickle = tickleReq.toEntity();
+            tRepo.save(tickle);
+            System.out.println();
+            return TickleRes.builder().tickle(tickle).build();
+        }
+        return null;
     }
 
     @Override
@@ -107,12 +112,12 @@ public class TickleServiceImpl implements TickleService{
     }
 
     @Override
-    public void deleteTickle(long userId, long tickleId) throws SQLException {
-        Tickle tickle = tRepo.findById(tickleId).get();
-        Habit habit = hRepo.findById(tickle.getHabitId()).get();
+    public void deleteTickle(long userId, TickleReq tickleReq) throws SQLException {
+        Habit habit = hRepo.findById(tickleReq.getHabitId()).get();
         if(habit.getUser().getId() == userId) {
             System.out.println("삭제완료");
-            tRepo.deleteById(tickleId);
+            tRepo.deleteByHabitIdAndExecutionDayAndExecutionTime(tickleReq.getHabitId(),
+                    tickleReq.getExecutionDay(), tickleReq.getExecutionTime());
         }
     }
 }

@@ -60,7 +60,11 @@ public class TickleController {
 	public ResponseEntity<?> createTickle(@RequestBody TickleReq tickleReq, HttpServletRequest request) throws Exception{
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();//임시
-		TickleRes tickleRes = tService.createTickle(tickleReq);
+		TickleRes tickleRes = tService.createTickle(userId, tickleReq);
+
+		if(tickleRes == null)
+			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+
 		return new ResponseEntity<TickleRes>(tickleRes, HttpStatus.OK);
 	}
 
@@ -92,11 +96,11 @@ public class TickleController {
 			responses = {
 					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
-	@GetMapping(value = "/delete/{tickleId}")
-	public ResponseEntity<?> deleteTickle(@PathVariable long tickleId, HttpServletRequest request) throws Exception{
+	@GetMapping(value = "/delete")
+	public ResponseEntity<?> deleteTickle(@RequestBody TickleReq tickleReq, HttpServletRequest request) throws Exception{
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();
-		tService.deleteTickle(userId, tickleId);
+		tService.deleteTickle(userId, tickleReq);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 

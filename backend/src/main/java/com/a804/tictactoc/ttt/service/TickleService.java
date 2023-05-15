@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.List;
 public interface TickleService {
     TickleRes readTickle(long tickleId) throws SQLException;
-    TickleRes createTickle(TickleReq tickleReq) throws SQLException;
+    TickleRes createTickle(long userId, TickleReq tickleReq) throws SQLException;
 
     List<TickleCategoryRes> todayTickle(long userId, String day) throws SQLException;
     List<TickleCountRes> countTickle(long userId) throws SQLException;
 
-    void deleteTickle(long userId, long tickleId) throws SQLException;
+    void deleteTickle(long userId, TickleReq tickleReq) throws SQLException;
 }

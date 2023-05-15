@@ -4,6 +4,7 @@ package com.a804.tictactoc.ttt.db.repository;
 import com.a804.tictactoc.ttt.db.entity.Tickle;
 import com.a804.tictactoc.ttt.response.TickleAchieveRes;
 import com.a804.tictactoc.ttt.response.TickleCountRes;
+import com.a804.tictactoc.ttt.response.TickleRes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -27,4 +28,6 @@ public interface TickleRepo extends JpaRepository<Tickle,Long>{
             "on habit.category_id = category.id\n" +
             "group by category.id;", nativeQuery = true)
     List<TickleCountRes> countByTickle(long userId);
+
+    TickleRes deleteByHabitIdAndExecutionDayAndExecutionTime(long habitId, String executionDay, String executionTime);
 }
