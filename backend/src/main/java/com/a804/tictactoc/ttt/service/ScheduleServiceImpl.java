@@ -66,8 +66,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                                         && Integer.parseInt(habit.getUser().getSleepEndTime()) < Integer.parseInt(targetTime))
                                         ||
                                         (Integer.parseInt(habit.getUser().getSleepStartTime()) < Integer.parseInt(habit.getUser().getSleepEndTime())//아침~오후같은 시간대
-                                        && Integer.parseInt(habit.getUser().getSleepStartTime()) < Integer.parseInt(targetTime)
-                                        && Integer.parseInt(habit.getUser().getSleepEndTime()) > Integer.parseInt(targetTime))
+                                        && (Integer.parseInt(habit.getUser().getSleepStartTime()) > Integer.parseInt(targetTime)
+                                        || Integer.parseInt(habit.getUser().getSleepEndTime()) < Integer.parseInt(targetTime)))
                                         ||
                                         (Integer.parseInt(habit.getUser().getSleepStartTime()) == Integer.parseInt(habit.getUser().getSleepEndTime()))
                                     )
