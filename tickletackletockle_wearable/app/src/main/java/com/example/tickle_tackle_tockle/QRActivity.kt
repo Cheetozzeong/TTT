@@ -3,7 +3,6 @@ package com.example.tickle_tackle_tockle
 import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Paint.Align
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -12,8 +11,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Button
+import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
 import com.example.tickle_tackle_tockle.theme.TTTTheme
@@ -70,6 +70,7 @@ fun QRCodeScreen(content: String, sharedPreferences: SharedPreferences) {
                     modifier = Modifier,
                     contentAlignment = Alignment.Center
                 ) {
+                    Text(text = "QR 생성중...!", textAlign = TextAlign.Center, style = MaterialTheme.typography.title3)
                     if (BarcodeType.QR_CODE.isValueValid(content)) {
                         Barcode(
                             modifier = Modifier
@@ -84,16 +85,6 @@ fun QRCodeScreen(content: String, sharedPreferences: SharedPreferences) {
                         Text("")
                     }
                 }
-            }
-            Row {
-                Modifier.align(Alignment.CenterVertically)
-               Button(
-                   onClick = {
-                       sharedPreferences.edit().putString("accessToken","test").apply()
-                       sharedPreferences.edit().putString("refreshToken","test").apply()
-                   },
-                   Modifier.fillMaxWidth()
-               ) {}
             }
         }
     }

@@ -3,6 +3,7 @@ package com.example.tickle_tackle_tockle.complication
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.tickle_tackle_tockle.MainActivity
 import com.example.tickle_tackle_tockle.QRActivity
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -12,8 +13,9 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.d("URL 요청 결과","알람이 왔어용!")
         sharedPreferences = applicationContext.getSharedPreferences("tttToken", Context.MODE_PRIVATE)
-        if(sharedPreferences.getString("accessToken",null) == null || sharedPreferences.getString("accessToken",null) == null){
+        if(sharedPreferences.getString("accessToken",null) == null || sharedPreferences.getString("refreshToken",null) == null ){
             val accessToken = remoteMessage.data["accessToken"]
             val refreshToken = remoteMessage.data["refreshToken"]
 
