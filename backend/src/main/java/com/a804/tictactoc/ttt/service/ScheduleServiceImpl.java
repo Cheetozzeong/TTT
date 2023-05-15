@@ -69,13 +69,16 @@ public class ScheduleServiceImpl implements ScheduleService {
                                     && habit.getAlarms().stream().anyMatch(alarm -> alarm.getAlarmTime().equals(targetTime))    // 지금이 알람 울릴 시간인지
                                     && Integer.parseInt(habit.getStartTime()) <= Integer.parseInt(targetTime)   // 시작일 내인지
                                     && Integer.parseInt(habit.getEndTime()) >= Integer.parseInt(targetTime)     // 종료일 내인지
-                                    && (Integer.parseInt(habit.getUser().getSleepStartTime()) != Integer.parseInt(habit.getUser().getSleepEndTime())
-                                    && (Integer.parseInt(habit.getUser().getSleepStartTime()) > Integer.parseInt(habit.getUser().getSleepEndTime())//밤~아침같은 시간대
+                                    && ((Integer.parseInt(habit.getUser().getSleepStartTime()) > Integer.parseInt(habit.getUser().getSleepEndTime())//밤~아침같은 시간대
                                         && Integer.parseInt(habit.getUser().getSleepStartTime()) > Integer.parseInt(targetTime)
                                         && Integer.parseInt(habit.getUser().getSleepEndTime()) < Integer.parseInt(targetTime))
-                                    && (Integer.parseInt(habit.getUser().getSleepStartTime()) < Integer.parseInt(habit.getUser().getSleepEndTime())//아침~오후같은 시간대
+                                        ||
+                                        (Integer.parseInt(habit.getUser().getSleepStartTime()) < Integer.parseInt(habit.getUser().getSleepEndTime())//아침~오후같은 시간대
                                         && Integer.parseInt(habit.getUser().getSleepStartTime()) < Integer.parseInt(targetTime)
-                                        && Integer.parseInt(habit.getUser().getSleepEndTime()) > Integer.parseInt(targetTime)))
+                                        && Integer.parseInt(habit.getUser().getSleepEndTime()) > Integer.parseInt(targetTime))
+                                        ||
+                                        (Integer.parseInt(habit.getUser().getSleepStartTime()) == Integer.parseInt(habit.getUser().getSleepEndTime()))
+                                    )
                         )
                         .collect(Collectors.toList());
 
