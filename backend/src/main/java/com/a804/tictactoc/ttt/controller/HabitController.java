@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +64,7 @@ public class HabitController {
 					@ApiResponse(responseCode = "200", description = "습관 변경 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PostMapping(value = "")
-	public ResponseEntity<?> createHabit(@ParameterObject HabitReq habitReq,HttpServletRequest request) throws Exception{
+	public ResponseEntity<?> createHabit(@RequestBody HabitReq habitReq,HttpServletRequest request) throws Exception{
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();
 		HabitRes habitRes = hService.createHabit(habitReq, userId);
@@ -77,7 +76,7 @@ public class HabitController {
 					@ApiResponse(responseCode = "200", description = "습관 생성 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
 	@PatchMapping(value = "")
-	public ResponseEntity<?> updateHabit(@ParameterObject HabitReq habitReq, HttpServletRequest request) throws Exception{
+	public ResponseEntity<?> updateHabit(@RequestBody HabitReq habitReq, HttpServletRequest request) throws Exception{
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();
 		HabitRes habitRes = hService.updateHabit(habitReq);

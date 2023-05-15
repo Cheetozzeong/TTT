@@ -152,7 +152,7 @@ public class TickleServiceImpl implements TickleService{
     public void deleteTickle(long userId, long tickleId) throws SQLException {
         Tickle tickle = tRepo.findById(tickleId).get();
         Habit habit = hRepo.findById(tickle.getHabitId()).get();
-        if(habit.getUserId() == userId) {
+        if(habit.getUser().getId() == userId) {
             System.out.println("삭제완료");
             tRepo.deleteById(tickleId);
         }
