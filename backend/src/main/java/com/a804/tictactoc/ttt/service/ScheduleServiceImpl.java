@@ -64,9 +64,11 @@ public class ScheduleServiceImpl implements ScheduleService {
                                 // 테스트용으로 박홍빈 데이터만
                                 // && habit.getUserId() == 2
                         )
-                        .collect(Collectors.toList());
+                        .collect(Collectors.toList());       
 
                 List<PushReq> pushList = new ArrayList<>();
+
+                System.out.println(resq.stream().count() + "개를 전송해야한다.");
 
                 int successCount = 0;
                 int failCount = 0;
@@ -75,17 +77,17 @@ public class ScheduleServiceImpl implements ScheduleService {
                     pushList.add(new PushReq(habit.getName(),habit.getEmoji(), habit.getUserId()));
                     // 유저 정보 : 현재는 하나하나 가져오게 되어있는데 추후에 한번에 가져와서 찾는 방식으로 개편 필요하다
                     User selectedUser = userRepo.findById(habit.getUserId()).get();
-                    System.out.println(selectedUser.getWatchDeviceToken());
+//                    System.out.println(selectedUser.getWatchDeviceToken());
                     if(selectedUser != null
-                            && selectedUser.getUid().isEmpty() == false
-                            && selectedUser.getPhoneDeviceToken().isEmpty() == false){
+                            && selectedUser.getUid() != null
+                            && selectedUser.getPhoneDeviceToken() != null){
                         if(pushService.SendPush(habit.getEmoji(),
                                 habit.getName() + "할 시간입니다.",
                                 selectedUser.getPhoneDeviceToken()
                                 ,CommonEnum.PushType.PHONE
                                 ,selectedUser.getId()
                                 ,selectedUser.getUid())){
-                            if(selectedUser.getWatchDeviceToken().isEmpty() == false){
+                            if(selectedUser.getWatchDeviceToken() != null){
                                 //실패
                                 if(pushService.SendPush(habit.getEmoji(),habit.getName() + "할 시간입니다."
                                         ,selectedUser.getWatchDeviceToken()
