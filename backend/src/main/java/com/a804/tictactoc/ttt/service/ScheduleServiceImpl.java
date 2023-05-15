@@ -61,31 +61,40 @@ public class ScheduleServiceImpl implements ScheduleService {
                                     && habit.getAlarms().stream().anyMatch(alarm -> alarm.getAlarmTime().equals(targetTime))    // 지금이 알람 울릴 시간인지
                                     && Integer.parseInt(habit.getStartTime()) <= Integer.parseInt(targetTime)   // 시작일 내인지
                                     && Integer.parseInt(habit.getEndTime()) >= Integer.parseInt(targetTime)     // 종료일 내인지
-                                // 테스트용으로 박홍빈 데이터만
-                                // && habit.getUserId() == 2
+                                    && (Integer.parseInt(habit.getUser().getSleepStartTime()) != Integer.parseInt(habit.getUser().getSleepEndTime())
+                                    && (Integer.parseInt(habit.getUser().getSleepStartTime()) > Integer.parseInt(habit.getUser().getSleepEndTime())//밤~아침같은 시간대
+                                        && Integer.parseInt(habit.getUser().getSleepStartTime()) > Integer.parseInt(targetTime)
+                                        && Integer.parseInt(habit.getUser().getSleepEndTime()) < Integer.parseInt(targetTime))
+                                    && (Integer.parseInt(habit.getUser().getSleepStartTime()) < Integer.parseInt(habit.getUser().getSleepEndTime())//아침~오후같은 시간대
+                                        && Integer.parseInt(habit.getUser().getSleepStartTime()) < Integer.parseInt(targetTime)
+                                        && Integer.parseInt(habit.getUser().getSleepEndTime()) > Integer.parseInt(targetTime)))
                         )
                         .collect(Collectors.toList());
 
                 List<PushReq> pushList = new ArrayList<>();
+                now = LocalDateTime.now();
+                System.out.println("[" + now.toString() + "]" + resq.stream().count() + "개를 전송해야한다.");
 
                 int successCount = 0;
                 int failCount = 0;
 
                 for (Habit habit:resq) {
-                    pushList.add(new PushReq(habit.getName(),habit.getEmoji(), habit.getUserId()));
+
+                    pushList.add(new PushReq(habit.getName(),habit.getEmoji(), habit.getUser().getId()));
+//                    System.out.println(pushList.get(i++).getEmoji());
                     // 유저 정보 : 현재는 하나하나 가져오게 되어있는데 추후에 한번에 가져와서 찾는 방식으로 개편 필요하다
-                    User selectedUser = userRepo.findById(habit.getUserId()).get();
-                    System.out.println(selectedUser.getWatchDeviceToken());
+                    User selectedUser = userRepo.findById(habit.getUser().getId()).get();
+
                     if(selectedUser != null
-                            && selectedUser.getUid().isEmpty() == false
-                            && selectedUser.getPhoneDeviceToken().isEmpty() == false){
+                            && selectedUser.getUid() != null
+                            && selectedUser.getPhoneDeviceToken() != null){
                         if(pushService.SendPush(habit.getEmoji(),
                                 habit.getName() + "할 시간입니다.",
                                 selectedUser.getPhoneDeviceToken()
                                 ,CommonEnum.PushType.PHONE
                                 ,selectedUser.getId()
                                 ,selectedUser.getUid())){
-                            if(selectedUser.getWatchDeviceToken().isEmpty() == false){
+                            if(selectedUser.getWatchDeviceToken() != null){
                                 //실패
                                 if(pushService.SendPush(habit.getEmoji(),habit.getName() + "할 시간입니다."
                                         ,selectedUser.getWatchDeviceToken()
@@ -107,7 +116,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                     }
                 }
                 result = new CommonResult(CommonEnum.Result.SUCCESS, successCount + "개의 메세지 전송에 성공했습니다.");
-                System.out.println(successCount + "개의 메세지 전송에 성공/" + failCount + "개의 매세지 전송에 실패 했습니다.");
+                now = LocalDateTime.now();
+                System.out.println("[" + now.toString() + "]" + successCount + "개의 메세지 전송에 성공/" + failCount + "개의 매세지 전송에 실패 했습니다.");
 
             }
         }
@@ -122,3 +132,4 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
 }
+
