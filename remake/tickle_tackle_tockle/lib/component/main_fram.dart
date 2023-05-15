@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../const/theme.dart';
+import '../controller/create_habit_controller.dart';
 import '../controller/theme_controller.dart';
 import '../screen/create/category_screen.dart';
-import '../screen/create/create_screen.dart';
+import 'hide_screen.dart';
 import '../screen/habits/habits_screen.dart';
 import '../screen/home/home_screen.dart';
 import '../screen/mypage/mypage_screen.dart';
@@ -23,12 +24,13 @@ class MainFrame extends StatelessWidget {
     final double deviceHeight = size.height;
 
     ThemeController themeController = Get.put(ThemeController());
+    CreateHabitController createHabitController = Get.put(CreateHabitController());
 
     List<Widget> _buildScreens() {
       return [
         HomeScreen(),
         HabitsScreen(),
-        CreateScreen(),
+        HideScreen(),
         RewardScreen(),
         MyPageScreen(mainContext: context,),
       ];
@@ -118,6 +120,8 @@ class MainFrame extends StatelessWidget {
                     child: FittedBox(
                       child: FloatingActionButton(
                         onPressed: () {
+                          createHabitController.initValue();
+
                           PersistentNavBarNavigator.pushNewScreen(
                             context,
                             screen: const CategoryScreen(),

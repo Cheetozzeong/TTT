@@ -36,7 +36,7 @@ class _CameraScreen extends State<CameraScreen> {
   Future<http.Response> sendAccessToken(String qrCode) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String accessToken = pref.getString('accessToken')!;
-    var url = Uri.parse('${ServerUrl}/watchfcmtoken');
+    var url = Uri.parse('${ServerUrl}/watchfcmtoken/register');
     var response = await http.post(
       url,
       headers: <String, String>{
