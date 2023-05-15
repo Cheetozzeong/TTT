@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), redisTemplate, firebaseAuth, userService,principalDetailsService ))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository, userService ))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository, userService,redisTemplate ))
                 .authorizeRequests()
                 .antMatchers("/reissue").permitAll()
                 .antMatchers("/*").permitAll()

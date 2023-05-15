@@ -112,10 +112,13 @@ public class UserServiceImpl implements UserService {
             return response;
         }
         // 레디스에 저장된 리프레시 토큰과 일치하지 않으면
+        System.out.println("체크 리프레시 토큰 "+refreshToken);
+        System.out.println("체크 토큰 " +checkToken);
         if(!checkToken.equals(refreshToken)){
             response.put("message", "Refresh Token 정보가 일치하지 않습니다.");
             return response;
         }
+
         // access token 재발급
         String accessToken = JWT.create()
                 .withSubject(user.getUid())
@@ -124,6 +127,8 @@ public class UserServiceImpl implements UserService {
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
         response.put("message", "success");
         response.put("accessToken", JwtProperties.TOKEN_PREFIX+accessToken);
+
+
         return response;
 
     }
