@@ -58,6 +58,6 @@ public class HabitRes {
 		this.endTime = habit.getEndTime();
 		this.term = habit.getTerm();
 		this.repeatDay = habit.getRepeatDay();
-		this.tickleCount = habit.getTickles().size();
+		this.tickleCount = habit.getTickles() != null ? habit.getTickles().size() : 0;
 	}
 }
