@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle.navigation
+package com.a804.tickle_tackle_tockle.navigation
 
 import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
@@ -6,15 +6,18 @@ import androidx.navigation.NavOptions
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
-import com.example.tickle_tackle_tockle.presentation.TickleListScreen
-import com.example.tickle_tackle_tockle.presentation.WelcomeScreen
-import com.example.tickle_tackle_tockle.response.TickleListResponse
+import com.a804.tickle_tackle_tockle.presentation.TickleListScreen
+import com.a804.tickle_tackle_tockle.presentation.WelcomeScreen
+import com.a804.tickle_tackle_tockle.response.TickleListResponse
 
 
 @Composable
 fun TTTNavHost(sharedPreferences: SharedPreferences, tickles: List<TickleListResponse>) {
 
     val navController = rememberSwipeDismissableNavController()
+    val accessToken = sharedPreferences.getString("accessToken","null")
+    val refreshToken = sharedPreferences.getString("refreshToken","null")
+
     SwipeDismissableNavHost(
         navController = navController,
         startDestination = "welcome_screen"
@@ -36,15 +39,9 @@ fun TTTNavHost(sharedPreferences: SharedPreferences, tickles: List<TickleListRes
             sharedPreferences.getString("accessToken",null)?.let { accessToken ->
                 sharedPreferences.getString("refreshToken", null)?.let { refreshToken ->
                     TickleListScreen(
-                        onButtonClick = {
-                            navController.navigate(
-                                "welcome_screen",
-                                NavOptions.Builder()
-                                    .setPopUpTo("ticklelist_screen", true)
-                                    .build()
-                            )
-                        },
-                        ticklesCategory = tickles
+                        ticklesCategory = tickles,
+                        accessToken = accessToken,
+                        refreshToken = refreshToken
                     )
                 }
             }

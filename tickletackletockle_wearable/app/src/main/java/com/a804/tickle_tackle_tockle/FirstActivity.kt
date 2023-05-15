@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle
+package com.a804.tickle_tackle_tockle
 
 import android.content.ContentValues
 import android.content.Context
@@ -51,6 +51,7 @@ class FirstActivity : ComponentActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        finish()
     }
 
     private fun postNewDeviceToken(deviceToken: String, accessToken: String) {

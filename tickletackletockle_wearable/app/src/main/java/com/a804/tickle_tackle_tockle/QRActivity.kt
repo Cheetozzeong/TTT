@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle
+package com.a804.tickle_tackle_tockle
 
 import android.content.ContentValues
 import android.content.Context
@@ -13,10 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
-import com.example.tickle_tackle_tockle.theme.TTTTheme
+import com.a804.tickle_tackle_tockle.theme.TTTTheme
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.simonsickle.compose.barcodes.Barcode

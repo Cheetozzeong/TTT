@@ -1,4 +1,4 @@
-package com.example.tickle_tackle_tockle.theme
+package com.a804.tickle_tackle_tockle.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
