@@ -10,6 +10,7 @@ import com.a804.tictactoc.ttt.request.FcmReq;
 import com.a804.tictactoc.ttt.request.WatchFcmReq;
 import com.a804.tictactoc.ttt.response.HabitRes;
 import com.a804.tictactoc.ttt.request.UserSleepReq;
+import com.a804.tictactoc.ttt.response.UserSleepRes;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -64,6 +65,15 @@ public class UserServiceImpl implements UserService {
         user.setSleepStartTime(userSleepReq.getSleepStartTime());
         user.setSleepEndTime(userSleepReq.getSleepEndTime());
         userRepository.save(user);
+    }
+
+    @Transactional
+    public UserSleepRes getSleepTime(long userId) throws SQLException{
+        User user = userRepository.findById(userId).get();
+        return UserSleepRes.builder()
+                .sleepStartTime(user.getSleepStartTime())
+                .sleepEndTime(user.getSleepEndTime())
+                .build();
     }
 
     @Transactional
