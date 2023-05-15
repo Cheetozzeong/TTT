@@ -67,8 +67,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .collect(Collectors.toList());       
 
                 List<PushReq> pushList = new ArrayList<>();
-
-                System.out.println(resq.stream().count() + "개를 전송해야한다.");
+                now = LocalDateTime.now();
+                System.out.println("[" + now.toString() + "]" + resq.stream().count() + "개를 전송해야한다.");
 
                 int successCount = 0;
                 int failCount = 0;
@@ -109,7 +109,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                     }
                 }
                 result = new CommonResult(CommonEnum.Result.SUCCESS, successCount + "개의 메세지 전송에 성공했습니다.");
-                System.out.println(successCount + "개의 메세지 전송에 성공/" + failCount + "개의 매세지 전송에 실패 했습니다.");
+                now = LocalDateTime.now();
+                System.out.println("[" + now.toString() + "]" + successCount + "개의 메세지 전송에 성공/" + failCount + "개의 매세지 전송에 실패 했습니다.");
 
             }
         }
