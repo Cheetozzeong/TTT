@@ -81,15 +81,15 @@ public class ScheduleServiceImpl implements ScheduleService {
                     // 유저 정보 : 현재는 하나하나 가져오게 되어있는데 추후에 한번에 가져와서 찾는 방식으로 개편 필요하다
                     User selectedUser = userRepo.findById(habit.getUser().getId()).get();
                     if(selectedUser != null
-                            && selectedUser.getUid().isEmpty() == false
-                            && selectedUser.getPhoneDeviceToken().isEmpty() == false){
+                            && selectedUser.getUid() != null
+                            && selectedUser.getPhoneDeviceToken() != null){
                         if(pushService.SendPush(habit.getEmoji(),
                                 habit.getName() + "할 시간입니다.",
                                 selectedUser.getPhoneDeviceToken()
                                 ,CommonEnum.PushType.PHONE
                                 ,selectedUser.getId()
                                 ,selectedUser.getUid())){
-                            if(selectedUser.getWatchDeviceToken().isEmpty() == false){
+                            if(selectedUser.getWatchDeviceToken() != null){
                                 //실패
                                 if(pushService.SendPush(habit.getEmoji(),habit.getName() + "할 시간입니다."
                                         ,selectedUser.getWatchDeviceToken()
