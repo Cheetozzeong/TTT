@@ -44,5 +44,5 @@ public interface TickleRepo extends JpaRepository<Tickle,Long>{
     List<String> isMonthAchieve(long userId, String day);
     
     @Transactional
-    TickleRes deleteByHabitIdAndExecutionDayAndExecutionTime(long habitId, String executionDay, String executionTime);
+    void deleteByHabitIdAndExecutionDayAndExecutionTime(long habitId, String executionDay, String executionTime);
 }

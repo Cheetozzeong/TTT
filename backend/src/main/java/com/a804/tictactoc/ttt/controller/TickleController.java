@@ -119,7 +119,7 @@ public class TickleController {
 			responses = {
 					@ApiResponse(responseCode = "200", description = "습관 읽기 성공"),
 					@ApiResponse(responseCode = "500", description = "서버 오류") })
-	@GetMapping(value = "/delete")
+	@DeleteMapping(value = "/delete")
 	public ResponseEntity<?> deleteTickle(@RequestBody TickleReq tickleReq, HttpServletRequest request) throws Exception{
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();
