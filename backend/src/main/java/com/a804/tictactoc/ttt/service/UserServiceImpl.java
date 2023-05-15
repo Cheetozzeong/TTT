@@ -5,6 +5,7 @@ import com.a804.tictactoc.ttt.common.CommonResult;
 import com.a804.tictactoc.ttt.config.jwt.JwtProperties;
 import com.a804.tictactoc.ttt.db.entity.Habit;
 import com.a804.tictactoc.ttt.db.entity.User;
+import com.a804.tictactoc.ttt.db.repository.HabitRepo;
 import com.a804.tictactoc.ttt.db.repository.UserRepository;
 import com.a804.tictactoc.ttt.request.FcmReq;
 import com.a804.tictactoc.ttt.request.WatchFcmReq;
@@ -34,6 +35,11 @@ public class UserServiceImpl implements UserService {
     private final FirebaseAuth firebaseAuth;
     private final RedisTemplate redisTemplate;
 
+    @Autowired
+    private PushService pushService;
+
+    @Autowired
+    private HabitRepo habitRepo;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, FirebaseAuth firebaseAuth, RedisTemplate redisTemplate) {
@@ -165,12 +171,44 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public CommonResult saveWatchFcmToken(WatchFcmReq fcm, User user){
+    public CommonResult updateWatchFcmToken(WatchFcmReq fcm, User user){
         CommonResult result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." ); //userRepository.get
 
         try{
             user.setWatchDeviceToken(fcm.getWatchFcmToken());
             User selectedUser = userRepository.save(user);
+
+            result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." );
+
+        }
+        catch (Exception ex){
+            result = new CommonResult(CommonEnum.Result.FAIL,"WATCH FCM 토큰 저장에 실패했습니다." );
+        }
+
+        return result;
+    }
+
+
+    public CommonResult registerWatchFcmToken(WatchFcmReq fcm, User user){
+        CommonResult result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공했습니다." ); //userRepository.get
+
+        try{
+            user.setWatchDeviceToken(fcm.getWatchFcmToken());
+            User selectedUser = userRepository.save(user);
+
+            if(selectedUser != null && selectedUser.getWatchDeviceToken().isEmpty() == false
+                    && pushService.SendPush(
+                    "🎃🎃🎃🎃🎃",
+                    "로그인 완 ! 료 ! "
+                    ,selectedUser.getWatchDeviceToken()
+                    ,CommonEnum.PushType.WATCH
+                    ,selectedUser.getId()
+                    ,selectedUser.getUid())) {
+                result = new CommonResult(CommonEnum.Result.SUCCESS,"WATCH FCM 토큰 저장에 성공하고 알림 전송도 성공했습니다." );
+            }
+            else{
+                result = new CommonResult(CommonEnum.Result.FAIL,"WATCH FCM 토큰 저장에는 성공했지만 알림전송은 실패했습니다." );
+            }
         }
         catch (Exception ex){
             result = new CommonResult(CommonEnum.Result.FAIL,"WATCH FCM 토큰 저장에 실패했습니다." );
