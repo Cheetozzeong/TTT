@@ -15,6 +15,9 @@ import com.a804.tickle_tackle_tockle.response.TickleListResponse
 fun TTTNavHost(sharedPreferences: SharedPreferences, tickles: List<TickleListResponse>) {
 
     val navController = rememberSwipeDismissableNavController()
+    val accessToken = sharedPreferences.getString("accessToken","null")
+    val refreshToken = sharedPreferences.getString("refreshToken","null")
+
     SwipeDismissableNavHost(
         navController = navController,
         startDestination = "welcome_screen"
@@ -36,15 +39,9 @@ fun TTTNavHost(sharedPreferences: SharedPreferences, tickles: List<TickleListRes
             sharedPreferences.getString("accessToken",null)?.let { accessToken ->
                 sharedPreferences.getString("refreshToken", null)?.let { refreshToken ->
                     TickleListScreen(
-                        onButtonClick = {
-                            navController.navigate(
-                                "welcome_screen",
-                                NavOptions.Builder()
-                                    .setPopUpTo("ticklelist_screen", true)
-                                    .build()
-                            )
-                        },
-                        ticklesCategory = tickles
+                        ticklesCategory = tickles,
+                        accessToken = accessToken,
+                        refreshToken = refreshToken
                     )
                 }
             }

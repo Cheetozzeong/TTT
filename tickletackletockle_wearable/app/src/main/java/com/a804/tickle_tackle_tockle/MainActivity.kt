@@ -26,7 +26,8 @@ class MainActivity : ComponentActivity() {
     private var tickles: List<TickleListResponse>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        sharedPreferences = applicationContext.getSharedPreferences("tttToken", Context.MODE_PRIVATE)
+        sharedPreferences =
+            applicationContext.getSharedPreferences("tttToken", Context.MODE_PRIVATE)
 
         sharedPreferences.getString("accessToken", null)?.let { accessToken ->
             sharedPreferences.getString("refreshToken", null)?.let { refreshToken ->
@@ -49,7 +50,8 @@ class MainActivity : ComponentActivity() {
             val nowDate = LocalDate.now()
             val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
             val formattedDate = nowDate.format(formatter)
-            val url = "https://k8a804.p.ssafy.io/staging-api/tickle/schedule?targetDate=${formattedDate}"
+            val url =
+                "https://k8a804.p.ssafy.io/staging-api/tickle/schedule?targetDate=${formattedDate}"
 
             val client = OkHttpClient()
             val request = Request.Builder()
@@ -65,7 +67,10 @@ class MainActivity : ComponentActivity() {
                     Log.d("URL 요청 결과", "Success to get TickleList!!!!.")
                     val json = response.body?.string()
                     val TickleList: List<TickleListResponse> =
-                        Gson().fromJson(json, object : TypeToken<List<TickleListResponse>>() {}.type)
+                        Gson().fromJson(
+                            json,
+                            object : TypeToken<List<TickleListResponse>>() {}.type
+                        )
                     tickles = TickleList
                     setContent {
                         TTTTheme {
