@@ -125,8 +125,8 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                       builder: (_) {
                                         String strAlarm = '${createHabitController.startTime.substring(0, 2)}시 ${createHabitController.startTime.substring(2, 4)}분';
                                         return Container(
-                                          height: deviceHeight * 0.035,
-                                          width: deviceWidth * 0.3,
+                                          height: 30,
+                                          width: 150,
                                           decoration: BoxDecoration(
                                             color: themeController.selectedPrimaryColor,
                                             borderRadius: BorderRadius.circular(20),
@@ -193,8 +193,8 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                       builder: (_) {
                                         String strAlarm = '${createHabitController.endTime.substring(0, 2)}시 ${createHabitController.endTime.substring(2, 4)}분';
                                         return Container(
-                                          height: deviceHeight * 0.035,
-                                          width: deviceWidth * 0.3,
+                                          height: 30,
+                                          width: 150,
                                           decoration: BoxDecoration(
                                             color: themeController.selectedPrimaryColor,
                                             borderRadius: BorderRadius.circular(20),
@@ -261,10 +261,10 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                   },
                                   child: GetBuilder<ThemeController>(
                                       builder: (_) {
-                                        String strAlarm = '${createHabitController.repeatTime.substring(0, 2)}시 ${createHabitController.repeatTime.substring(2, 4)}분';
+                                        String strAlarm = '${createHabitController.repeatTime.substring(0, 2)}시간 ${createHabitController.repeatTime.substring(2, 4)}분 마다';
                                         return Container(
-                                          height: deviceHeight * 0.035,
-                                          width: deviceWidth * 0.3,
+                                          height: 30,
+                                          width: 150,
                                           decoration: BoxDecoration(
                                             color: themeController.selectedPrimaryColor,
                                             borderRadius: BorderRadius.circular(20),
@@ -333,8 +333,8 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                       builder: (_) {
                                         String strAlarm = '${createHabitController.alarmTime.substring(0, 2)}시 ${createHabitController.alarmTime.substring(2, 4)}분';
                                         return Container(
-                                          height: deviceHeight * 0.035,
-                                          width: deviceWidth * 0.3,
+                                          height: 30,
+                                          width: 150,
                                           decoration: BoxDecoration(
                                             color: themeController.selectedPrimaryColor,
                                             borderRadius: BorderRadius.circular(20),
