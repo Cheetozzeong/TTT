@@ -87,6 +87,7 @@ public class TickleServiceImpl implements TickleService{
                 else
                     tickleTodayRes.setAchieved(true);
 
+                tickleTodayRes.setHabitId(habit.getId());
                 tickleTodayRes.setHabitName(habit.getName());
                 tickleTodayRes.setExecutionTime(tickleAchieveRes.getAlarmTime());
                 tickleTodayRes.setEmoji(habit.getEmoji());
