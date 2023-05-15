@@ -16,6 +16,8 @@ public class TickleTodayRes implements Comparable<TickleTodayRes>{
 	@Schema(description = "달성 여부", example = "false", defaultValue = "false")
 	boolean achieved = false;
 
+	long habitId;
+
 	String habitName;
 
 	String executionTime;

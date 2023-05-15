@@ -65,6 +65,6 @@ public class User{
 	@Column(name="modified_date", updatable = false, insertable = false)
 	String modifiedDate;
 
-	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	List<Habit> habits = new ArrayList<>();
 }

@@ -45,6 +45,9 @@ public class HabitRes {
 	@Schema(name = "알람이 울리는 요일 7비트", example = "1011011", defaultValue = "1011011")
 	String repeatDay;
 
+	@Schema(name = "이 습관이 생성한 티끌 수", example = "10", defaultValue = "10")
+	int tickleCount;
+
 	@Builder
 	public HabitRes(Habit habit){
 		this.id = habit.getId();
@@ -55,5 +58,6 @@ public class HabitRes {
 		this.endTime = habit.getEndTime();
 		this.term = habit.getTerm();
 		this.repeatDay = habit.getRepeatDay();
+		this.tickleCount = habit.getTickles() != null ? habit.getTickles().size() : 0;
 	}
 }

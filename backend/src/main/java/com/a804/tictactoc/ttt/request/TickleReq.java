@@ -20,13 +20,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 public class TickleReq {
-	@Schema(name = "습관의 아이디", description = "어떤 습관의 티끌인지", example = "1")
+	@Schema(name = "habitId", description = "어떤 습관의 티끌인지", example = "1")
 	long habitId;
 
-	@Schema(name = "이 티끌이 만들어진 날짜", example = "20230427", defaultValue = "YYYYMMDD")
+	@Schema(name = "executionDay", example = "20230427", defaultValue = "YYYYMMDD")
 	String executionDay;
 
-	@Schema(name = "이 티끌이 만들어진 시간", example = "0930", defaultValue = "HHmm")
+	@Schema(name = "executionTime", example = "0930", defaultValue = "HHmm")
 	String executionTime;
 
 	public Tickle toEntity() {

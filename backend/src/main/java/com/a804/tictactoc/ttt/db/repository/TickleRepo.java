@@ -5,9 +5,11 @@ import com.a804.tictactoc.ttt.db.entity.Tickle;
 import com.a804.tictactoc.ttt.response.TickleAchieveRes;
 import com.a804.tictactoc.ttt.response.TickleCountRes;
 import com.a804.tictactoc.ttt.response.TicklePastAchieveRes;
+import com.a804.tictactoc.ttt.response.TickleRes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,4 +42,7 @@ public interface TickleRepo extends JpaRepository<Tickle,Long>{
             "and habit.user_id = ?1 " +
             "and tickle.execution_day like ?2 ", nativeQuery = true)
     List<String> isMonthAchieve(long userId, String day);
+    
+    @Transactional
+    void deleteByHabitIdAndExecutionDayAndExecutionTime(long habitId, String executionDay, String executionTime);
 }
