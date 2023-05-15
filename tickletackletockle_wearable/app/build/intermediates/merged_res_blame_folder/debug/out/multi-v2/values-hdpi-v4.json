@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.a804.tickle_tackle_tockle.app-mergeDebugResources-4:/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "C:\\Free\\compose-for-wear-os\\gradle\\wrapper\\caches\\transforms-3\\51eb40ffb36483473d7ce5f9dea88c3c\\transformed\\appcompat-1.6.1\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}

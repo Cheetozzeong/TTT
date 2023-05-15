@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">723020757063-psmt0v850q7qaun6vqb6nrpepgsmigs2.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">723020757063</string>
+    <string name="google_api_key" translatable="false">AIzaSyCjilUvGrLzTApip0BG1zaGdN82sedKu2Y</string>
+    <string name="google_app_id" translatable="false">1:723020757063:android:4b8c9449708ca87c8a9962</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCjilUvGrLzTApip0BG1zaGdN82sedKu2Y</string>
+    <string name="google_storage_bucket" translatable="false">tickletackletockle-a804.appspot.com</string>
+    <string name="project_id" translatable="false">tickletackletockle-a804</string>
+</resources>

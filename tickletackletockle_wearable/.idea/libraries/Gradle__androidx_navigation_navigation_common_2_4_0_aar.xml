@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.navigation:navigation-common:2.4.0@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c0ef9fd7569574bb39cb9a7228b74a62/transformed/navigation-common-2.4.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c0ef9fd7569574bb39cb9a7228b74a62/transformed/navigation-common-2.4.0/res" />
+      <root url="file://$PROJECT_DIR$/../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c0ef9fd7569574bb39cb9a7228b74a62/transformed/navigation-common-2.4.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../compose-for-wear-os/gradle/wrapper/caches/modules-2/files-2.1/androidx.navigation/navigation-common/2.4.0/b218cde7c3b9b5a36ef723de3d412e2d35b68aae/navigation-common-2.4.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
