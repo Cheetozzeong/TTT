@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/const/theme.dart';
+import 'package:tickle_tackle_tockle/controller/edit_habit_controller.dart';
 import '../../component/common_appbar.dart';
 import '../../const/serveraddress.dart';
 import '../../controller/loading_controller.dart';
@@ -114,6 +115,7 @@ class HabitsScreen extends StatelessWidget {
     LoadingController loadingController = Get.put(LoadingController());
     ThemeController themeController = Get.put(ThemeController());
     PageChangeController pageChangeController = Get.put(PageChangeController());
+    EditHabitController editHabitController = Get.put(EditHabitController());
 
     Future<http.Response> sendAccessToken() async {
 
@@ -180,7 +182,9 @@ class HabitsScreen extends StatelessWidget {
           String name = habitRes.name;
           String repeatDay = habitRes.repeatDay;
           int tickleCount = habitRes.tickleCount;
-
+          String repeatTime = habitRes.term;
+          String startTime = habitRes.startTime;
+          String endTime = habitRes.endTime;
           List<bool> week = [];
           for(int i=0;i<7;i++){
             String day = repeatDay[i];
@@ -195,6 +199,21 @@ class HabitsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  editHabitController.id = id;
+                  editHabitController.category = '금전';
+                  editHabitController.name = name;
+                  editHabitController.emoji = emoji;
+                  editHabitController.repeatWeek = repeatDay;
+                  editHabitController.repeatTime = repeatTime;
+                  editHabitController.startTime = startTime;
+                  editHabitController.endTime = endTime;
+
+                  if(editHabitController.repeatTime == '2400') {
+                    editHabitController.isAlarmRepeat = false;
+                  } else {
+                    editHabitController.isAlarmRepeat = true;
+                  }
+
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: const HabitEditScreen(),
@@ -288,6 +307,10 @@ class HabitsScreen extends StatelessWidget {
           String name = habitRes.name;
           String repeatDay = habitRes.repeatDay;
           int tickleCount = habitRes.tickleCount;
+          String repeatTime = habitRes.term;
+          String startTime = habitRes.startTime;
+          String endTime = habitRes.endTime;
+
           List<bool> week = [];
           for(int i=0;i<7;i++){
             String day = repeatDay[i];
@@ -302,6 +325,22 @@ class HabitsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  //누른 습관의 값을 받아와서 컨트롤러에 저장하면 됨
+                  editHabitController.id = id;
+                  editHabitController.category = '운동';
+                  editHabitController.name = name;
+                  editHabitController.emoji = emoji;
+                  editHabitController.repeatWeek = repeatDay;
+                  editHabitController.repeatTime = repeatTime;
+                  editHabitController.startTime = startTime;
+                  editHabitController.endTime = endTime;
+
+                  if(editHabitController.repeatTime == '2400') {
+                    editHabitController.isAlarmRepeat = false;
+                  } else {
+                    editHabitController.isAlarmRepeat = true;
+                  }
+
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: const HabitEditScreen(),
@@ -399,6 +438,9 @@ class HabitsScreen extends StatelessWidget {
           String name = habitRes.name;
           String repeatDay = habitRes.repeatDay;
           int tickleCount = habitRes.tickleCount;
+          String repeatTime = habitRes.term;
+          String startTime = habitRes.startTime;
+          String endTime = habitRes.endTime;
           List<bool> week = [];
           for(int i=0;i<7;i++){
             String day = repeatDay[i];
@@ -413,6 +455,21 @@ class HabitsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  editHabitController.id = id;
+                  editHabitController.category = '학습';
+                  editHabitController.name = name;
+                  editHabitController.emoji = emoji;
+                  editHabitController.repeatWeek = repeatDay;
+                  editHabitController.repeatTime = repeatTime;
+                  editHabitController.startTime = startTime;
+                  editHabitController.endTime = endTime;
+
+                  if(editHabitController.repeatTime == '2400') {
+                    editHabitController.isAlarmRepeat = false;
+                  } else {
+                    editHabitController.isAlarmRepeat = true;
+                  }
+
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: const HabitEditScreen(),
@@ -510,6 +567,9 @@ class HabitsScreen extends StatelessWidget {
           String name = habitRes.name;
           String repeatDay = habitRes.repeatDay;
           int tickleCount = habitRes.tickleCount;
+          String repeatTime = habitRes.term;
+          String startTime = habitRes.startTime;
+          String endTime = habitRes.endTime;
           List<bool> week = [];
           for(int i=0;i<7;i++){
             String day = repeatDay[i];
@@ -524,6 +584,21 @@ class HabitsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  editHabitController.id = id;
+                  editHabitController.category = '관계';
+                  editHabitController.name = name;
+                  editHabitController.emoji = emoji;
+                  editHabitController.repeatWeek = repeatDay;
+                  editHabitController.repeatTime = repeatTime;
+                  editHabitController.startTime = startTime;
+                  editHabitController.endTime = endTime;
+
+                  if(editHabitController.repeatTime == '2400') {
+                    editHabitController.isAlarmRepeat = false;
+                  } else {
+                    editHabitController.isAlarmRepeat = true;
+                  }
+
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: const HabitEditScreen(),
@@ -620,6 +695,9 @@ class HabitsScreen extends StatelessWidget {
           String name = habitRes.name;
           String repeatDay = habitRes.repeatDay;
           int tickleCount = habitRes.tickleCount;
+          String repeatTime = habitRes.term;
+          String startTime = habitRes.startTime;
+          String endTime = habitRes.endTime;
           List<bool> week = [];
           for(int i=0;i<7;i++){
             String day = repeatDay[i];
@@ -634,6 +712,21 @@ class HabitsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  editHabitController.id = id;
+                  editHabitController.category = '생활';
+                  editHabitController.name = name;
+                  editHabitController.emoji = emoji;
+                  editHabitController.repeatWeek = repeatDay;
+                  editHabitController.repeatTime = repeatTime;
+                  editHabitController.startTime = startTime;
+                  editHabitController.endTime = endTime;
+
+                  if(editHabitController.repeatTime == '2400') {
+                    editHabitController.isAlarmRepeat = false;
+                  } else {
+                    editHabitController.isAlarmRepeat = true;
+                  }
+
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: const HabitEditScreen(),
@@ -730,6 +823,9 @@ class HabitsScreen extends StatelessWidget {
           String name = habitRes.name;
           String repeatDay = habitRes.repeatDay;
           int tickleCount = habitRes.tickleCount;
+          String repeatTime = habitRes.term;
+          String startTime = habitRes.startTime;
+          String endTime = habitRes.endTime;
           List<bool> week = [];
           for(int i=0;i<7;i++){
             String day = repeatDay[i];
@@ -744,6 +840,21 @@ class HabitsScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  editHabitController.id = id;
+                  editHabitController.category = '기타';
+                  editHabitController.name = name;
+                  editHabitController.emoji = emoji;
+                  editHabitController.repeatWeek = repeatDay;
+                  editHabitController.repeatTime = repeatTime;
+                  editHabitController.startTime = startTime;
+                  editHabitController.endTime = endTime;
+
+                  if(editHabitController.repeatTime == '2400') {
+                    editHabitController.isAlarmRepeat = false;
+                  } else {
+                    editHabitController.isAlarmRepeat = true;
+                  }
+
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: const HabitEditScreen(),

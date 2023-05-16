@@ -579,6 +579,7 @@ class _CreateScreenState extends State<CreateScreen> {
                   print('호히호히 : $category !! $categoryNum');
 
                   HabitReq habitReq = new HabitReq(
+                    id : 0,
                     categoryId: categoryNum,
                     name: createHabitController.name,
                     emoji: createHabitController.emoji,

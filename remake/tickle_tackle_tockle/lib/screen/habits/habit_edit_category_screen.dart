@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:tickle_tackle_tockle/controller/edit_habit_controller.dart';
+import 'package:get/get.dart';
 import '../../component/common_appbar.dart';
 
 class HabitEditCategoryScreen extends StatelessWidget {
@@ -10,6 +12,8 @@ class HabitEditCategoryScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final double deviceWidth = size.width;
     final double deviceHeight = size.height;
+    
+    EditHabitController editHabitController = Get.put(EditHabitController());
 
     return SafeArea(
       child: Scaffold(
@@ -22,22 +26,82 @@ class HabitEditCategoryScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(width: deviceWidth * 0.47, child: Image.asset('assets/images/buttons/categoryBtnIcon_money.png'),),
-                  SizedBox(width: deviceWidth * 0.47, child: Image.asset('assets/images/buttons/categoryBtnIcon_exercise.png'),),
+                  SizedBox(
+                    width: deviceWidth * 0.47,
+                    child: InkWell(
+                      onTap: () {
+                        editHabitController.category = '금전';
+
+                        Navigator.of(context).pop();
+                      },
+                      child: Image.asset('assets/images/buttons/categoryBtnIcon_money.png'),
+                    ),
+                  ),
+                  SizedBox(
+                    width: deviceWidth * 0.47,
+                    child: InkWell(
+                      onTap: () {
+                        editHabitController.category = '운동';
+
+                        Navigator.of(context).pop();
+                      },
+                      child: Image.asset('assets/images/buttons/categoryBtnIcon_exercise.png'),
+                    ),
+                  ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(width: deviceWidth * 0.47, child: Image.asset('assets/images/buttons/categoryBtnIcon_study.png'),),
-                  SizedBox(width: deviceWidth * 0.47, child: Image.asset('assets/images/buttons/categoryBtnIcon_relationship.png'),),
+                  SizedBox(
+                    width: deviceWidth * 0.47,
+                    child: InkWell(
+                      onTap: () {
+                        editHabitController.category = '학습';
+
+                        Navigator.of(context).pop();
+                      },
+                      child: Image.asset('assets/images/buttons/categoryBtnIcon_study.png'),
+                    ),
+                  ),
+                  SizedBox(
+                    width: deviceWidth * 0.47,
+                    child: InkWell(
+                      onTap: () {
+                        editHabitController.category = '관계';
+
+                        Navigator.of(context).pop();
+                      },
+                      child: Image.asset('assets/images/buttons/categoryBtnIcon_relationship.png'),
+                    ),
+                  ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(width: deviceWidth * 0.47, child: Image.asset('assets/images/buttons/categoryBtnIcon_life.png'),),
-                  SizedBox(width: deviceWidth * 0.47, child: Image.asset('assets/images/buttons/categoryBtnIcon_etc.png'),),
+                  SizedBox(
+                    width: deviceWidth * 0.47,
+                    child: InkWell(
+                      onTap: () {
+                        editHabitController.category = '생활';
+
+                        Navigator.of(context).pop();
+                      },
+                      child: Image.asset('assets/images/buttons/categoryBtnIcon_life.png'),
+                    ),
+                  ),
+                  SizedBox(
+                    width: deviceWidth * 0.47,
+                    child: InkWell(
+                      onTap: () {
+                        editHabitController.category = '기타';
+
+                        Navigator.of(context).pop();
+                      },
+                      child: Image.asset('assets/images/buttons/categoryBtnIcon_etc.png'),
+                    ),
+                  ),
                 ],
               ),
             ],
