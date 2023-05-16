@@ -93,16 +93,6 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
 
     _nameController = TextEditingController(text: editHabitController.name);
 
-    late Widget categoryImgWidget;
-    switch(editHabitController.category) {
-      case '금전': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_money_small.png'); break;
-      case '운동': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_exercise_small.png'); break;
-      case '학습': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_study_small.png'); break;
-      case '관계': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_relationship_small.png'); break;
-      case '생활': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_life_small.png'); break;
-      case '기타': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_etc_small.png'); break;
-    }
-
     void replaceWeekString(int weekIdx) {
       FocusManager.instance.primaryFocus?.unfocus();
       String strReplace = editHabitController.repeatWeek[weekIdx];
@@ -128,491 +118,505 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
       }
     }
 
-    return SafeArea(
-      child: GestureDetector(
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: Scaffold(
-          appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '나만의 습관 생성',),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+    return GetBuilder<PageChangeController>(
+      builder: (_) {
+        late Widget categoryImgWidget;
+        switch(editHabitController.category) {
+          case '금전': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_money_small.png'); break;
+          case '운동': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_exercise_small.png'); break;
+          case '학습': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_study_small.png'); break;
+          case '관계': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_relationship_small.png'); break;
+          case '생활': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_life_small.png'); break;
+          case '기타': categoryImgWidget = Image.asset('assets/images/buttons/categoryBtnIcon_etc_small.png'); break;
+        }
+
+        return SafeArea(
+          child: GestureDetector(
+            onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Scaffold(
+              appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '나만의 습관 생성',),
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Column(
                           children: [
-                            InkWell(
-                              onTap: () {
-                                showModalBottomSheet<void>(
-                                    context: context,
-                                    builder: (_) {
-                                      return EmojiPicker(
-                                        onEmojiSelected: (category, emoji) {
-                                          editHabitController.emoji = emoji.emoji;
-                                          themeController.refreshTheme();
-                                          Navigator.pop(context);
-                                        },
-                                        config: const Config(
-                                          columns: 7,
-                                          emojiSizeMax: 20,
-                                          verticalSpacing: 10,
-                                          horizontalSpacing: 10,
-                                          gridPadding: EdgeInsets.all(5.0),
-                                          initCategory: Category.RECENT,
-                                          bgColor: Color(0xFFF2F2F2),
-                                          indicatorColor: Colors.blue,
-                                          iconColor: Colors.grey,
-                                          iconColorSelected: Colors.blue,
-                                          backspaceColor: Colors.blue,
-                                          skinToneDialogBgColor: Colors.white,
-                                          skinToneIndicatorColor: Colors.grey,
-                                          enableSkinTones: true,
-                                          showRecentsTab: true,
-                                          recentsLimit: 28,
-                                          noRecents: Text(
-                                            'No Recents',
-                                            style: TextStyle(fontSize: 20, color: Colors.black26),
-                                            textAlign: TextAlign.center,
-                                          ), // Needs to be const Widget
-                                          loadingIndicator: SizedBox.shrink(), // Needs to be const Widget
-                                          tabIndicatorAnimDuration: kTabScrollDuration,
-                                          categoryIcons: CategoryIcons(),
-                                          buttonMode: ButtonMode.MATERIAL,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    showModalBottomSheet<void>(
+                                        context: context,
+                                        builder: (_) {
+                                          return EmojiPicker(
+                                            onEmojiSelected: (category, emoji) {
+                                              editHabitController.emoji = emoji.emoji;
+                                              themeController.refreshTheme();
+                                              Navigator.pop(context);
+                                            },
+                                            config: const Config(
+                                              columns: 7,
+                                              emojiSizeMax: 20,
+                                              verticalSpacing: 10,
+                                              horizontalSpacing: 10,
+                                              gridPadding: EdgeInsets.all(5.0),
+                                              initCategory: Category.RECENT,
+                                              bgColor: Color(0xFFF2F2F2),
+                                              indicatorColor: Colors.blue,
+                                              iconColor: Colors.grey,
+                                              iconColorSelected: Colors.blue,
+                                              backspaceColor: Colors.blue,
+                                              skinToneDialogBgColor: Colors.white,
+                                              skinToneIndicatorColor: Colors.grey,
+                                              enableSkinTones: true,
+                                              showRecentsTab: true,
+                                              recentsLimit: 28,
+                                              noRecents: Text(
+                                                'No Recents',
+                                                style: TextStyle(fontSize: 20, color: Colors.black26),
+                                                textAlign: TextAlign.center,
+                                              ), // Needs to be const Widget
+                                              loadingIndicator: SizedBox.shrink(), // Needs to be const Widget
+                                              tabIndicatorAnimDuration: kTabScrollDuration,
+                                              categoryIcons: CategoryIcons(),
+                                              buttonMode: ButtonMode.MATERIAL,
+                                            ),
+                                          );
+                                        }
+                                    );
+                                  },
+                                  child: GetBuilder<ThemeController>(
+                                      builder: (_) {
+                                        return CircleAvatar(
+                                          maxRadius: 25,
+                                          backgroundColor: TTTWhite,
+
+                                          child: Text(editHabitController.emoji, style: TextStyle(fontSize: 25),),
+                                        );
+                                      }
+                                  ),
+                                ),
+                                SizedBox(width: 20,),
+                                Text('습관을 대표할 이모지를 설정해주세요!'),
+                              ],
+                            ),
+                            SizedBox(height: 10,),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(20),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.7),
+                                              blurRadius: 5.0,
+                                              spreadRadius: 0.0,
+                                              offset: const Offset(0, 7),
+                                            ),
+                                          ],
                                         ),
-                                      );
-                                    }
-                                );
-                              },
+                                        child: SizedBox(height: 50, width: deviceWidth,),
+                                      ),
+                                      SizedBox(
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: '습관 이름을 입력해주세요!'
+                                          ),
+                                          maxLength: 12,
+                                          maxLines: 1,
+                                          textAlign: TextAlign.center,
+                                          controller: _nameController,
+                                          onChanged: (value) {
+                                            editHabitController.name = value;
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(20.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    blurRadius: 5.0,
+                                    spreadRadius: 0.0,
+                                    offset: const Offset(0, 7),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('알람', style: TextStyle(fontSize: 20,),),
+                                  SizedBox(
+                                    height: 40,
+                                    width: 150,
+                                    child: GetBuilder<ThemeController>(
+                                        builder: (_) {
+                                          return ElevatedButton(
+                                            onPressed: () {
+                                              FocusManager.instance.primaryFocus?.unfocus();
+                                              PersistentNavBarNavigator.pushNewScreen(
+                                                context,
+                                                screen: const HabitsAlarmScreen(),
+                                                withNavBar: false,
+                                                pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                                              );
+                                            },
+                                            style: ButtonStyle(
+                                              backgroundColor: MaterialStateProperty.all<Color>(themeController.selectedPrimaryColor),
+                                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                  )
+                                              ),
+                                            ),
+                                            child: Text('시간 설정', style: TextStyle(fontSize: 17,), textAlign: TextAlign.center),
+                                          );
+                                        }
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text('습관 반복 요일', style: TextStyle(fontSize: 20)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(20.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    blurRadius: 5.0,
+                                    spreadRadius: 0.0,
+                                    offset: const Offset(0, 7),
+                                  ),
+                                ],
+                              ),
                               child: GetBuilder<ThemeController>(
                                   builder: (_) {
-                                    return CircleAvatar(
-                                      maxRadius: 25,
-                                      backgroundColor: TTTWhite,
-
-                                      child: Text(editHabitController.emoji, style: TextStyle(fontSize: 25),),
+                                    return Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            replaceWeekString(0);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.7),
+                                                  blurRadius: 5.0,
+                                                  spreadRadius: 0.0,
+                                                ),
+                                              ],
+                                              border: Border.all(
+                                                color: editHabitController.repeatWeek[0] == '1'
+                                                    ? themeController.selectedPrimaryColor : TTTWhite,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            child: Text('일', style: TextStyle(color: TTTPrimary1,)),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            replaceWeekString(1);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.7),
+                                                  blurRadius: 5.0,
+                                                  spreadRadius: 0.0,
+                                                ),
+                                              ],
+                                              border: Border.all(
+                                                color: editHabitController.repeatWeek[1] == '1'
+                                                    ? themeController.selectedPrimaryColor : TTTWhite,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            child: Text('월', style: TextStyle(color: TTTBlack,)),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            replaceWeekString(2);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.7),
+                                                  blurRadius: 5.0,
+                                                  spreadRadius: 0.0,
+                                                ),
+                                              ],
+                                              border: Border.all(
+                                                color: editHabitController.repeatWeek[2] == '1'
+                                                    ? themeController.selectedPrimaryColor : TTTWhite,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            child: Text('화', style: TextStyle(color: TTTBlack,)),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            replaceWeekString(3);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.7),
+                                                  blurRadius: 5.0,
+                                                  spreadRadius: 0.0,
+                                                ),
+                                              ],
+                                              border: Border.all(
+                                                color: editHabitController.repeatWeek[3] == '1'
+                                                    ? themeController.selectedPrimaryColor : TTTWhite,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            child: Text('수', style: TextStyle(color: TTTBlack,)),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            replaceWeekString(4);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.7),
+                                                  blurRadius: 5.0,
+                                                  spreadRadius: 0.0,
+                                                ),
+                                              ],
+                                              border: Border.all(
+                                                color: editHabitController.repeatWeek[4] == '1'
+                                                    ? themeController.selectedPrimaryColor : TTTWhite,
+                                                width: 2.0,),
+                                            ),
+                                            child: Text('목', style: TextStyle(color: TTTBlack,)),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            replaceWeekString(5);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.7),
+                                                  blurRadius: 5.0,
+                                                  spreadRadius: 0.0,
+                                                ),
+                                              ],
+                                              border: Border.all(
+                                                color: editHabitController.repeatWeek[5] == '1'
+                                                    ? themeController.selectedPrimaryColor : TTTWhite,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            child: Text('금', style: TextStyle(color: TTTBlack,)),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            replaceWeekString(6);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.withOpacity(0.7),
+                                                  blurRadius: 5.0,
+                                                  spreadRadius: 0.0,
+                                                ),
+                                              ],
+                                              border: Border.all(
+                                                color: editHabitController.repeatWeek[6] == '1'
+                                                    ? themeController.selectedPrimaryColor : TTTWhite,
+                                                width: 2.0,
+                                              ),
+                                            ),
+                                            child: Text('토', style: TextStyle(color: TTTPrimary1,)),
+                                          ),
+                                        ),
+                                      ],
                                     );
                                   }
                               ),
                             ),
-                            SizedBox(width: 20,),
-                            Text('습관을 대표할 이모지를 설정해주세요!'),
-                          ],
-                        ),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.7),
-                                          blurRadius: 5.0,
-                                          spreadRadius: 0.0,
-                                          offset: const Offset(0, 7),
-                                        ),
-                                      ],
-                                    ),
-                                    child: SizedBox(height: 50, width: deviceWidth,),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    blurRadius: 5.0,
+                                    spreadRadius: 0.0,
+                                    offset: const Offset(0, 7),
                                   ),
-                                  SizedBox(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: '습관 이름을 입력해주세요!'
-                                      ),
-                                      maxLength: 12,
-                                      maxLines: 1,
-                                      textAlign: TextAlign.center,
-                                      controller: _nameController,
-                                      onChanged: (value) {
-                                        editHabitController.name = value;
-                                      },
-                                    ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('카테고리', style: TextStyle(fontSize: 20,),),
+                                  InkWell(
+                                    onTap: () {
+                                      FocusManager.instance.primaryFocus?.unfocus();
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                            context,
+                                            screen: const HabitEditCategoryScreen(),
+                                            withNavBar: false,
+                                            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                                      );
+                                    },
+                                    child: SizedBox(
+                                      height: 60,
+                                      width: 130,
+                                      child: categoryImgWidget,),
                                   ),
                                 ],
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(20.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.7),
-                                blurRadius: 5.0,
-                                spreadRadius: 0.0,
-                                offset: const Offset(0, 7),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('알람', style: TextStyle(fontSize: 20,),),
-                              SizedBox(
-                                height: 40,
-                                width: 150,
-                                child: GetBuilder<ThemeController>(
-                                    builder: (_) {
-                                      return ElevatedButton(
-                                        onPressed: () {
-                                          FocusManager.instance.primaryFocus?.unfocus();
-                                          PersistentNavBarNavigator.pushNewScreen(
-                                            context,
-                                            screen: const HabitsAlarmScreen(),
-                                            withNavBar: false,
-                                            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                                          );
-                                        },
-                                        style: ButtonStyle(
-                                          backgroundColor: MaterialStateProperty.all<Color>(themeController.selectedPrimaryColor),
-                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(20),
-                                              )
-                                          ),
-                                        ),
-                                        child: Text('시간 설정', style: TextStyle(fontSize: 17,), textAlign: TextAlign.center),
-                                      );
-                                    }
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('습관 반복 요일', style: TextStyle(fontSize: 20)),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(20.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.7),
-                                blurRadius: 5.0,
-                                spreadRadius: 0.0,
-                                offset: const Offset(0, 7),
-                              ),
-                            ],
-                          ),
-                          child: GetBuilder<ThemeController>(
-                              builder: (_) {
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        replaceWeekString(0);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                            ),
-                                          ],
-                                          border: Border.all(
-                                            color: editHabitController.repeatWeek[0] == '1'
-                                                ? themeController.selectedPrimaryColor : TTTWhite,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Text('일', style: TextStyle(color: TTTPrimary1,)),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        replaceWeekString(1);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                            ),
-                                          ],
-                                          border: Border.all(
-                                            color: editHabitController.repeatWeek[1] == '1'
-                                                ? themeController.selectedPrimaryColor : TTTWhite,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Text('월', style: TextStyle(color: TTTBlack,)),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        replaceWeekString(2);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                            ),
-                                          ],
-                                          border: Border.all(
-                                            color: editHabitController.repeatWeek[2] == '1'
-                                                ? themeController.selectedPrimaryColor : TTTWhite,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Text('화', style: TextStyle(color: TTTBlack,)),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        replaceWeekString(3);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                            ),
-                                          ],
-                                          border: Border.all(
-                                            color: editHabitController.repeatWeek[3] == '1'
-                                                ? themeController.selectedPrimaryColor : TTTWhite,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Text('수', style: TextStyle(color: TTTBlack,)),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        replaceWeekString(4);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                            ),
-                                          ],
-                                          border: Border.all(
-                                            color: editHabitController.repeatWeek[4] == '1'
-                                                ? themeController.selectedPrimaryColor : TTTWhite,
-                                            width: 2.0,),
-                                        ),
-                                        child: Text('목', style: TextStyle(color: TTTBlack,)),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        replaceWeekString(5);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                            ),
-                                          ],
-                                          border: Border.all(
-                                            color: editHabitController.repeatWeek[5] == '1'
-                                                ? themeController.selectedPrimaryColor : TTTWhite,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Text('금', style: TextStyle(color: TTTBlack,)),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        replaceWeekString(6);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(10.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                            ),
-                                          ],
-                                          border: Border.all(
-                                            color: editHabitController.repeatWeek[6] == '1'
-                                                ? themeController.selectedPrimaryColor : TTTWhite,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                        child: Text('토', style: TextStyle(color: TTTPrimary1,)),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.7),
-                                blurRadius: 5.0,
-                                spreadRadius: 0.0,
-                                offset: const Offset(0, 7),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('카테고리', style: TextStyle(fontSize: 20,),),
-                              InkWell(
-                                onTap: () {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  PersistentNavBarNavigator.pushNewScreen(
-                                        context,
-                                        screen: const HabitEditCategoryScreen(),
-                                        withNavBar: false,
-                                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                                  );
-                                },
-                                child: SizedBox(
-                                  height: 60,
-                                  width: 130,
-                                  child: categoryImgWidget,),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  if(editHabitController.name.length == 0) {
-                    Fluttertoast.showToast(
-                        msg: "이름을 입력해주세요!",
-                        gravity: ToastGravity.BOTTOM,
-                        backgroundColor: const Color(0xff6E6E6E),
-                        fontSize: deviceWidth * 0.04,
-                        toastLength: Toast.LENGTH_SHORT);
+                  InkWell(
+                    onTap: () {
+                      if(editHabitController.name.length == 0) {
+                        Fluttertoast.showToast(
+                            msg: "이름을 입력해주세요!",
+                            gravity: ToastGravity.BOTTOM,
+                            backgroundColor: const Color(0xff6E6E6E),
+                            fontSize: deviceWidth * 0.04,
+                            toastLength: Toast.LENGTH_SHORT);
 
-                    return;
-                  }
-                  //꺼져있을때
-                  if(editHabitController.isAlarmRepeat == false) {
-                    editHabitController.repeatTime = '2400';
-                    editHabitController.startTime = editHabitController.endTime = editHabitController.alarmTime;
-                  }
-                  String category = editHabitController.category;
-                  int categoryNum = 0;
+                        return;
+                      }
+                      //꺼져있을때
+                      if(editHabitController.isAlarmRepeat == false) {
+                        editHabitController.repeatTime = '2400';
+                        editHabitController.startTime = editHabitController.endTime = editHabitController.alarmTime;
+                      }
+                      String category = editHabitController.category;
+                      int categoryNum = 0;
 
-                  switch(category){
-                    case '금전': categoryNum =0; break;
-                    case '운동': categoryNum =1; break;
-                    case '학습': categoryNum =2; break;
-                    case '관계': categoryNum =3; break;
-                    case '생활': categoryNum =4; break;
-                    case '기타': categoryNum =5; break;
-                  }
+                      switch(category){
+                        case '금전': categoryNum =0; break;
+                        case '운동': categoryNum =1; break;
+                        case '학습': categoryNum =2; break;
+                        case '관계': categoryNum =3; break;
+                        case '생활': categoryNum =4; break;
+                        case '기타': categoryNum =5; break;
+                      }
 
-                  print('호히호히 : $category !! $categoryNum');
+                      print('호히호히 : $category !! $categoryNum');
 
-                  HabitReq habitReq = new HabitReq(
-                    id : editHabitController.id,
-                    categoryId: categoryNum,
-                    name: editHabitController.name,
-                    emoji: editHabitController.emoji,
-                    startTime: editHabitController.startTime,
-                    endTime: editHabitController.endTime,
-                    term: editHabitController.repeatTime,
-                    repeatDay: editHabitController.repeatWeek,
-                  );
-
-                  checkAccessToken(habitReq).then((value) {
-                    pageChangeController.rebuildPage();
-                    Navigator.of(context).popUntil((route) => route.isFirst);
-                  });
-                },
-                child: GetBuilder<ThemeController>(
-                    builder: (_) {
-                      return Container(
-                        width: deviceWidth,
-                        height: deviceHeight * 0.1,
-                        color: themeController.selectedPrimaryColor,
-                        child: Center(child: Text('생성하기', style: TextStyle(color: TTTWhite, fontSize: 20),)),
+                      HabitReq habitReq = new HabitReq(
+                        id : editHabitController.id,
+                        categoryId: categoryNum,
+                        name: editHabitController.name,
+                        emoji: editHabitController.emoji,
+                        startTime: editHabitController.startTime,
+                        endTime: editHabitController.endTime,
+                        term: editHabitController.repeatTime,
+                        repeatDay: editHabitController.repeatWeek,
                       );
-                    }
-                ),
+
+                      checkAccessToken(habitReq).then((value) {
+                        pageChangeController.rebuildPage();
+                        Navigator.of(context).popUntil((route) => route.isFirst);
+                      });
+                    },
+                    child: GetBuilder<ThemeController>(
+                        builder: (_) {
+                          return Container(
+                            width: deviceWidth,
+                            height: deviceHeight * 0.1,
+                            color: themeController.selectedPrimaryColor,
+                            child: Center(child: Text('생성하기', style: TextStyle(color: TTTWhite, fontSize: 20),)),
+                          );
+                        }
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }

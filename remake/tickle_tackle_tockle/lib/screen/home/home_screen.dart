@@ -26,9 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-  List<Event> _getEventsForDay(DateTime day) {
-    return kEvents[day] ?? [];
-  }
+  ThemeController themeController = Get.put(ThemeController());
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -36,94 +34,93 @@ class _HomeScreenState extends State<HomeScreen> {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
       });
-
-      _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
-  buildMoneyListCard() {
-    //선택된 날짜의 금전 티끌이 있는지 확인
-    bool isExist = true;
+  buildTickleListTile(String category, DateTime selectedDateTime) {
+    List<Widget> tickleList = [];
+    tickleList.add(Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(category, style: const TextStyle(fontSize: 20,)),
+      ],
+    ));
+    tickleList.add(const SizedBox(height: 20,),);
 
-    if(isExist) {
-      return Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Container(
-          padding: EdgeInsets.all(30.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.7),
-                blurRadius: 5.0,
-                spreadRadius: 0.0,
-                offset: const Offset(0, 7),
-              ),
-            ],
-          ),
-          child: Column(
+    //요청하는 날짜 YYYYMMDD
+    String reqDateTime = selectedDateTime.year.toString() + selectedDateTime.month.toString().padLeft(2, '0') + selectedDateTime.day.toString().padLeft(2, '0');
+    //요청하는 카테고리 이름 : category
+
+    if(isSameDay(DateTime.now(), selectedDateTime)) {
+      // 오늘 => 달성/미달성 토글이 가능한 일정 위젯을 반환
+
+      tickleList.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('😀', style: TextStyle(fontSize: 20,),),
+          Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('금전', style: TextStyle(fontSize: 23,)),
-                ],
-              ),
-              SizedBox(height: 20,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(Icons.ac_unit_outlined),
-                  Column(
-                    children: [
-                      Text('산책하기'),
-                      Text('오전 06:00', style: TextStyle(fontSize: 10, color: TTTGrey),),
-                    ],
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(TTTPrimary1),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          )
-                      ),
-                    ),
-                    child: Text('달성'),
-                  ),
-                ],
-              ),
+              Text('산책하기', style: TextStyle(fontSize: 15,),),
+              SizedBox(height: 5,),
+              Text('오전 06:00', style: TextStyle(fontSize: 10, color: TTTGrey),),
             ],
           ),
-        ),
-      );
-    } else {
-      return Container();
+          GetBuilder<ThemeController>(
+            builder: (_) {
+              return ElevatedButton(
+                onPressed: () {
+
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(themeController.selectedPrimaryColor),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      )
+                  ),
+                ),
+                child: Text('달성'),
+              );
+            }
+          ),
+        ],
+      ));
+
+    } else if(selectedDateTime.compareTo(DateTime.now()) == -1) {
+      // 과거 => 달성 표시가 되어있고 달성/미달성 토글이 불가능한 일정 위젯을 반환
+
+
+    } else if(selectedDateTime.compareTo(DateTime.now()) == 1) {
+      // 미래 => 미달성 표시가 되어있고 달성/미달성 토글이 불가능한 일정 위젯을 반환
+
+
     }
+
+    return tickleList;
   }
 
-  buildExerciseListCard() {
-    return Container();
-  }
-
-  buildStudyListCard() {
-    return Container();
-  }
-
-  buildRelationshipListCard() {
-    return Container();
-  }
-
-  buildLifeListCard() {
-    return Container();
-  }
-
-  buildEtcListCard() {
-    return Container();
+  buildTickleListCart(String category, DateTime selectedDateTime) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Container(
+        padding: EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.7),
+              blurRadius: 5.0,
+              spreadRadius: 0.0,
+              offset: const Offset(0, 7),
+            ),
+          ],
+        ),
+        child: Column(
+          children: buildTickleListTile(category, selectedDateTime),
+        ),
+      ),
+    );
   }
 
   @override
@@ -131,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    //_selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
   @override
@@ -203,9 +200,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final double deviceWidth = size.width;
     final double deviceHeight = size.height;
 
-    LoadingController loadingController = Get.put(LoadingController());
-    ThemeController themeController = Get.put(ThemeController());
-
     Future<http.Response> sendAccessToken(String targetMonth) async {
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       String accessToken = sharedPreferences.getString('accessToken')!;
@@ -221,195 +215,140 @@ class _HomeScreenState extends State<HomeScreen> {
       return response;
     }
 
+    return SafeArea(
+      child: Scaffold(
+        appBar: CommonAppBar(appBarType: AppBarType.homePageAppBar, title: '틱택톡'),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              FutureBuilder(
+                future: checkAccessToken(_focusedDay.year.toString() + _focusedDay.month.toString().padLeft(2, '0')),
+                builder: (context, snapshot) {
+                  if(!snapshot.hasData) {
+                    return CircularProgressIndicator();
+                  }
 
-    final myController = TextEditingController();
+                  if(snapshot.hasError) {
+                    return Container();
+                  }
 
-    String strFocusDate = _focusedDay.year.toString() + _focusedDay.month.toString().padLeft(2, '0');
+                  List<String>? inputList = snapshot.data;
+                  if(inputList == null) {
+                    return Container();
+                  }
 
-    return Scaffold(
-      appBar: CommonAppBar(appBarType: AppBarType.homePageAppBar, title: '틱택톡'),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            FutureBuilder(
-              future: checkAccessToken(strFocusDate),
-              builder: (context, snapshot) {
-                if(!snapshot.hasData) {
-                  return CircularProgressIndicator();
-                }
+                  _kEventSource.clear();
+                  for(int listIdx = 0; listIdx < inputList.length; listIdx++) {
+                    int year = int.parse(inputList[listIdx].substring(0, 4));
+                    int month = int.parse(inputList[listIdx].substring(4, 6));
+                    int day = int.parse(inputList[listIdx].substring(6, 8));
 
-                if(snapshot.hasError) {
-                  return Container();
-                }
+                    _kEventSource[DateTime(year, month, day)] = Event(date: DateTime(year, month, day));
+                  }
 
-                List<String>? inputList = snapshot.data;
-                if(inputList == null) {
-                  return Container();
-                }
-
-                //DateTime(2023, 05, 01)
-                _kEventSource.clear();
-
-
-                for(int listIdx = 0; listIdx < inputList.length; listIdx++) {
-                  int year = int.parse(inputList[listIdx].substring(0, 4));
-                  int month = int.parse(inputList[listIdx].substring(4, 6));
-                  int day = int.parse(inputList[listIdx].substring(6, 8));
-                  print(year);
-                  print(month);
-                  print(day);
-                  print('날짜');
-
-                  DateTime date = DateTime(year, month, day);
-                  _kEventSource.update(date, (events) => events..add(Event()) , ifAbsent: () => [Event()]);
-                }
-                //_selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
-                _getEventsForDay(_selectedDay!);
-
-                print('비교');
-                print(_kEventSource[DateTime(2023, 5, 7)]);
-                print(_kEventSource[DateTime(2023, 5, 30)]);
-                print(_kEventSource[DateTime(2023, 5, 10)]);
-
-                return Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Container(
+                  return Padding(
                     padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.7),
-                          blurRadius: 5.0,
-                          spreadRadius: 0.0,
-                          offset: const Offset(0, 7),
-                        ),
-                      ],
-                    ),
-                    child: GetBuilder<ThemeController>(
-                        builder: (_) {
-                          return TableCalendar<Event>(
-                            locale: 'ko_KR',
-                            calendarBuilders: CalendarBuilders(
-                              dowBuilder: (context, day) {
-                                if (day.weekday == DateTime.sunday) {
-                                  return const Center(child: Text('일', style: TextStyle(color: Colors.red),),);
-                                } else if(day.weekday == DateTime.saturday) {
-                                  return const Center(child: Text('토', style: TextStyle(color: Colors.red),),);
-                                }
-                              },
-                              markerBuilder: (context, day, events) {
-                                if(events.isNotEmpty) {
-                                  return Positioned(
-                                    right: 1,
-                                    bottom: 1,
-                                    child: SizedBox(
-                                      height: 30,
-                                      width: 30,
-                                      child: Image.asset('assets/images/tockles/toc_00.png'),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                            firstDay: DateTime.utc(2023, 1, 1),
-                            lastDay: DateTime.utc(2100, 12, 31),
-                            focusedDay: _focusedDay,
-                            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                            calendarFormat: CalendarFormat.month,
-                            rangeSelectionMode: RangeSelectionMode.disabled,
-                            eventLoader: _getEventsForDay,
-                            startingDayOfWeek: StartingDayOfWeek.sunday,
-                            calendarStyle: CalendarStyle(
-                              outsideDaysVisible: false,
-                              rangeStartDecoration: ShapeDecoration(
-                                shape: const CircleBorder(),
-                                color: themeController.selectedPrimaryColor,
-                              ),
-                              selectedDecoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                ),
-                                color: themeController.selectedPrimaryColor,
-                              ),
-                              todayDecoration: ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                ),
-                                color: themeController.selectedPrimaryColor.withOpacity(0.5),
-                              ),
-                            ),
-                            onDaySelected: _onDaySelected,
-                            headerStyle: const HeaderStyle(
-                              formatButtonVisible: false,
-                              headerPadding: EdgeInsets.fromLTRB(0, 0.0, 0.0, 20.0),
-                              titleCentered: true,
-                            ),
-                            onPageChanged: (focusedDay) {
-                              print('focusedDay $focusedDay');
-                              _focusedDay = focusedDay;
-                            },
-                          );
-                        }
-                    ),
-                  ),
-                );
-              }
-            ),
-            const SizedBox(height: 8.0),
-            Column(
-              children: [
-                buildMoneyListCard(),
-                buildExerciseListCard(),
-                buildStudyListCard(),
-                buildRelationshipListCard(),
-                buildLifeListCard(),
-                buildEtcListCard(),
-              ],
-            ),
-            const SizedBox(height: 50.0),
-            /*Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Container(
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.7),
-                      blurRadius: 5.0,
-                      spreadRadius: 0.0,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: ValueListenableBuilder<List<Event>>(
-                  valueListenable: _selectedEvents,
-                  builder: (context, value, _) {
-                    return ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: value.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 12.0,
-                            vertical: 4.0,
+                    child: Container(
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.7),
+                            blurRadius: 5.0,
+                            spreadRadius: 0.0,
+                            offset: const Offset(0, 7),
                           ),
-                          child: ListTile(
-                            onTap: () => print('${value[index]}'),
-                            title: Text('${value[index]}'),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
+                        ],
+                      ),
+                      child: GetBuilder<ThemeController>(
+                          builder: (_) {
+                            return TableCalendar<Event>(
+                              locale: 'ko_KR',
+                              calendarBuilders: CalendarBuilders(
+                                dowBuilder: (context, day) {
+                                  if (day.weekday == DateTime.sunday) {
+                                    return const Center(child: Text('일', style: TextStyle(color: Colors.red),),);
+                                  } else if(day.weekday == DateTime.saturday) {
+                                    return const Center(child: Text('토', style: TextStyle(color: Colors.red),),);
+                                  }
+                                },
+                                markerBuilder: (context, date, events) {
+                                  DateTime _date = DateTime(date.year, date.month, date.day);
+
+                                  if(isSameDay(_date, _kEventSource[_date]?.date)) {
+                                    return Positioned(
+                                      right: 1,
+                                      bottom: 1,
+                                      child: SizedBox(
+                                        height: 30,
+                                        width: 30,
+                                        child: Image.asset('assets/images/tockles/toc_00.png'),
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                              firstDay: DateTime.utc(2023, 1, 1),
+                              lastDay: DateTime.utc(2100, 12, 31),
+                              focusedDay: _focusedDay,
+                              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                              calendarFormat: CalendarFormat.month,
+                              rangeSelectionMode: RangeSelectionMode.disabled,
+                              startingDayOfWeek: StartingDayOfWeek.sunday,
+                              availableGestures: AvailableGestures.none,
+                              calendarStyle: CalendarStyle(
+                                outsideDaysVisible: false,
+                                rangeStartDecoration: ShapeDecoration(
+                                  shape: const CircleBorder(),
+                                  color: themeController.selectedPrimaryColor,
+                                ),
+                                selectedDecoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  color: themeController.selectedPrimaryColor,
+                                ),
+                                todayDecoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  color: themeController.selectedPrimaryColor.withOpacity(0.5),
+                                ),
+                              ),
+                              onDaySelected: _onDaySelected,
+                              headerStyle: const HeaderStyle(
+                                formatButtonVisible: false,
+                                headerPadding: EdgeInsets.fromLTRB(0, 0.0, 0.0, 20.0),
+                                titleCentered: true,
+                              ),
+                              onPageChanged: (focusedDay) {
+                                setState(() {
+                                  _focusedDay = focusedDay;
+                                });
+                              },
+                            );
+                          }
+                      ),
+                    ),
+                  );
+                }
               ),
-            ),*/
-          ],
+              const SizedBox(height: 8.0),
+              Column(
+                children: [
+                  buildTickleListCart('금전', _selectedDay!),
+                  buildTickleListCart('운동', _selectedDay!),
+                  buildTickleListCart('학습', _selectedDay!),
+                  buildTickleListCart('관계', _selectedDay!),
+                  buildTickleListCart('생활', _selectedDay!),
+                  buildTickleListCart('기타', _selectedDay!),
+                ],
+              ),
+              const SizedBox(height: 50.0),
+            ],
+          ),
         ),
       ),
     );
@@ -417,36 +356,17 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class Event {
-  final String str = '';
+  final DateTime date;
 
-  const Event();
-
-/*  @override
-  String toString() => title;*/
+  Event({required this.date});
 }
 
-final kEvents = LinkedHashMap<DateTime, List<Event>>(
+final kEvents = LinkedHashMap<DateTime, Event>(
   equals: isSameDay,
   hashCode: getHashCode,
 )..addAll(_kEventSource);
 
-final Map<DateTime, List<Event>> _kEventSource = {
-  DateTime(2023, 05, 01) : [Event()],
-  DateTime(2023, 05, 10) : [Event()],
-/*  DateTime(2023, 5, 1) : [Event(category: '운동', emoji: '🥾', title: '걷기', time: '1020', isClear: true)],
-  DateTime(2023, 5, 1) : [Event(category: '금전', emoji: '🛒', title: '쇼핑하기', time: '1320', isClear: true)],
-  DateTime(2023, 5, 1) : [Event(category: '학습', emoji: '✒', title: '공부하기', time: '1420', isClear: true)],
-  DateTime(2023, 5, 1) : [Event(category: '관계', emoji: '😁', title: '웃기', time: '1520', isClear: true)],
-  DateTime(2023, 5, 1) : [Event(category: '생활', emoji: '🎉', title: '파티하기', time: '1620', isClear: true)],
-  DateTime(2023, 5, 1) : [Event(category: '기타', emoji: '🎸', title: '기타치기', time: '1720', isClear: true)],
-  DateTime(2023, 5, 12) : [Event(category: '운동', emoji: '👏', title: '박수치기', time: '0920', isClear: true)],
-  DateTime(2023, 5, 12) : [Event(category: '운동', emoji: '🥾', title: '걷기', time: '1020', isClear: true)],
-  DateTime(2023, 5, 12) : [Event(category: '금전', emoji: '🛒', title: '쇼핑하기', time: '1320', isClear: true)],
-  DateTime(2023, 5, 12) : [Event(category: '학습', emoji: '✒', title: '공부하기', time: '1420', isClear: true)],
-  DateTime(2023, 5, 12) : [Event(category: '관계', emoji: '😁', title: '웃기', time: '1520', isClear: true)],
-  DateTime(2023, 5, 12) : [Event(category: '생활', emoji: '🎉', title: '파티하기', time: '1620', isClear: true)],
-  DateTime(2023, 5, 12) : [Event(category: '기타', emoji: '🎸', title: '기타치기', time: '1720', isClear: true)],*/
-};
+final Map<DateTime, Event> _kEventSource = {};
 
 int getHashCode(DateTime key) {
   return key.day * 1000000 + key.month * 10000;

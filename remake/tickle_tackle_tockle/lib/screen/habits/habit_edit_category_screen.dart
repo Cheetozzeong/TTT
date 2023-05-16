@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:tickle_tackle_tockle/controller/edit_habit_controller.dart';
 import 'package:get/get.dart';
+import 'package:tickle_tackle_tockle/controller/page_change_controller.dart';
 import '../../component/common_appbar.dart';
 
 class HabitEditCategoryScreen extends StatelessWidget {
@@ -14,6 +15,7 @@ class HabitEditCategoryScreen extends StatelessWidget {
     final double deviceHeight = size.height;
     
     EditHabitController editHabitController = Get.put(EditHabitController());
+    PageChangeController pageChangeController = Get.put(PageChangeController());
 
     return SafeArea(
       child: Scaffold(
@@ -32,6 +34,7 @@ class HabitEditCategoryScreen extends StatelessWidget {
                       onTap: () {
                         editHabitController.category = '금전';
 
+                        pageChangeController.rebuildPage();
                         Navigator.of(context).pop();
                       },
                       child: Image.asset('assets/images/buttons/categoryBtnIcon_money.png'),
@@ -43,6 +46,7 @@ class HabitEditCategoryScreen extends StatelessWidget {
                       onTap: () {
                         editHabitController.category = '운동';
 
+                        pageChangeController.rebuildPage();
                         Navigator.of(context).pop();
                       },
                       child: Image.asset('assets/images/buttons/categoryBtnIcon_exercise.png'),
@@ -59,6 +63,7 @@ class HabitEditCategoryScreen extends StatelessWidget {
                       onTap: () {
                         editHabitController.category = '학습';
 
+                        pageChangeController.rebuildPage();
                         Navigator.of(context).pop();
                       },
                       child: Image.asset('assets/images/buttons/categoryBtnIcon_study.png'),
@@ -70,6 +75,7 @@ class HabitEditCategoryScreen extends StatelessWidget {
                       onTap: () {
                         editHabitController.category = '관계';
 
+                        pageChangeController.rebuildPage();
                         Navigator.of(context).pop();
                       },
                       child: Image.asset('assets/images/buttons/categoryBtnIcon_relationship.png'),
@@ -86,6 +92,7 @@ class HabitEditCategoryScreen extends StatelessWidget {
                       onTap: () {
                         editHabitController.category = '생활';
 
+                        pageChangeController.rebuildPage();
                         Navigator.of(context).pop();
                       },
                       child: Image.asset('assets/images/buttons/categoryBtnIcon_life.png'),
@@ -97,6 +104,7 @@ class HabitEditCategoryScreen extends StatelessWidget {
                       onTap: () {
                         editHabitController.category = '기타';
 
+                        pageChangeController.rebuildPage();
                         Navigator.of(context).pop();
                       },
                       child: Image.asset('assets/images/buttons/categoryBtnIcon_etc.png'),
