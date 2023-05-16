@@ -85,7 +85,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Map<String, String> reissue(String refreshToken) {
 
-        System.out.println("선수 입장");
         Map<String, String> response = new HashMap<>();
         //유저 정보를 찾기 위한 복호화(accessToken과 방식은 같다)
         DecodedJWT refreshJwt = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(refreshToken);
@@ -94,7 +93,6 @@ public class UserServiceImpl implements UserService {
         if(expiration.getTime() - now < 0) { // 만료되었으면
             response.put("message", "리프레시 토큰 만료");
         }
-        System.out.println("왜 안되는 거지? ;;; 리프레쉬 토큰");
         String uid = null;
         try {
             uid = refreshJwt.getClaim("uid").asString();
@@ -116,6 +114,7 @@ public class UserServiceImpl implements UserService {
             response.put("message", "Refresh Token 정보가 일치하지 않습니다.");
             return response;
         }
+
         // access token 재발급
         String accessToken = JWT.create()
                 .withSubject(user.getUid())
@@ -124,6 +123,8 @@ public class UserServiceImpl implements UserService {
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
         response.put("message", "success");
         response.put("accessToken", JwtProperties.TOKEN_PREFIX+accessToken);
+
+
         return response;
 
     }
