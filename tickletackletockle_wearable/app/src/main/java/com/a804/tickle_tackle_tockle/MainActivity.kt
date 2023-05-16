@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
             val client = OkHttpClient()
             val request = Request.Builder()
                 .url(url)
-                .header("authorization", "Bearer $accessToken")
+                .header("accessToken", "Bearer $accessToken")
                 .get()
                 .build()
             val response: Response

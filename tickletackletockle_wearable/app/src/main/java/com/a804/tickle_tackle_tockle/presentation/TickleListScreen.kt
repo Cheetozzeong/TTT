@@ -239,8 +239,8 @@ private fun postCreateTickle(accessToken: String, refreshToken: String, habitId:
     val client = OkHttpClient()
     val request = Request.Builder()
         .url(url)
-        .header("authorization", "Bearer $accessToken")
-//          .header("accessToken",accessToken)
+//        .header("authorization", "Bearer $accessToken")
+        .header("accessToken", "Bearer $accessToken")
 //          .header("refreshToken",refreshToken)
         //TODO: authorization -> accessToken 뒤에 있는거 각자 accessToken으로 url은 https로 Manifest에 있는 android:usesCleartextTraffic="true"코드 지우기
         .post(requestBody)
