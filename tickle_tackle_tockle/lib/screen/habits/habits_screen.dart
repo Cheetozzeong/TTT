@@ -141,7 +141,6 @@ class HabitsScreen extends StatelessWidget {
       return habitList;
     }
 
-    checkAccessToken();
 
     buildMoneyHabitsList(List<HabitRes> totalHabitsList) {
       List<Widget> columHabit = [];

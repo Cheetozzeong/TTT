@@ -25,7 +25,7 @@ class RewardScreen extends StatelessWidget {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'authorization' :  accessToken,
+        'accesstoken' :  accessToken,
       },
     );
     return response;
@@ -38,6 +38,29 @@ class RewardScreen extends StatelessWidget {
     if (response.statusCode == 200) {
       retList = parseTickleCountNameResList(utf8.decode(response.bodyBytes));
       print(retList);
+    } else if(response.statusCode == 401){
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String refreshToken = pref.getString('refreshToken')!;
+      String accessToken = pref.getString('accessToken')!;
+      var url = Uri.parse('${ServerUrl}/tickle/count');
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accesstoken' : accessToken,
+          'refreshtoken' :  refreshToken,
+        },
+      );
+      final headers = response.headers;
+      final accesstoken = headers['accesstoken'];
+      final refreshtoken = headers['refreshtoken'];
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      sharedPreferences.setString('accessToken', accesstoken!);
+      sharedPreferences.setString('refreshToken', refreshtoken!);
+      retList = parseTickleCountNameResList(utf8.decode(response.bodyBytes));
+      print("엑세스" + accesstoken);
+      print("리프레시" + refreshtoken);
+
     } else {
       print('Login failed with status: ${response.statusCode}');
     }

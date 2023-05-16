@@ -63,8 +63,6 @@ class LoginScreen extends StatelessWidget {
       final headers = response.headers;
       final accessToken = headers['accesstoken'];
       final refreshToken = headers['refreshtoken'];
-      print('Access Token: $accessToken');
-      print('Refresh Token: $refreshToken');
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString('accessToken', accessToken!);
       sharedPreferences.setString('refreshToken', refreshToken!);

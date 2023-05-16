@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:collection';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
 import 'package:get/get.dart';
 import 'package:tickle_tackle_tockle/const/theme.dart';
+import '../../const/serveraddress.dart';
 import '../../controller/loading_controller.dart';
 import '../../controller/theme_controller.dart';
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -141,6 +146,33 @@ class _HomeScreenState extends State<HomeScreen> {
 
     LoadingController loadingController = Get.put(LoadingController());
     ThemeController themeController = Get.put(ThemeController());
+
+    Future<http.Response> sendAccessToken(String targetMonth) async {
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      String accessToken = sharedPreferences.getString('accessToken')!;
+      var url = Uri.parse('${ServerUrl}/tickle/month');
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'authorization': accessToken,
+          'targetDate': targetMonth,
+        },
+      );
+      return response;
+    }
+
+/*    Future<List<String>> checkAccessToken(String targetMonth) async {
+      final response = await sendAccessToken(targetMonth);
+      List<String> toDo = [];
+      if (response.statusCode == 200) {
+        habitList = parseHabitList(utf8.decode(response.bodyBytes));
+      } else {
+        print('Login failed with status: ${response.statusCode}');
+        return null;
+      }
+    }*/
+
 
     final myController = TextEditingController();
 
@@ -292,16 +324,12 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class Event {
-  final String category;
-  final String emoji;
-  final String title;
-  final String time;
-  final bool isClear;
+  final String str = '';
 
-  const Event({required this.category, required this.emoji, required this.title, required this.time, required this.isClear});
+  const Event();
 
-  @override
-  String toString() => title;
+/*  @override
+  String toString() => title;*/
 }
 
 final kEvents = LinkedHashMap<DateTime, List<Event>>(
@@ -310,8 +338,9 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
 )..addAll(_kEventSource);
 
 final _kEventSource = {
-  DateTime(2023, 5, 1) : [Event(category: '운동', emoji: '👏', title: '박수치기', time: '0920', isClear: true)],
-  DateTime(2023, 5, 1) : [Event(category: '운동', emoji: '🥾', title: '걷기', time: '1020', isClear: true)],
+  DateTime(2023, 05, 01) : [Event()],
+  DateTime(2023, 05, 10) : [Event()],
+/*  DateTime(2023, 5, 1) : [Event(category: '운동', emoji: '🥾', title: '걷기', time: '1020', isClear: true)],
   DateTime(2023, 5, 1) : [Event(category: '금전', emoji: '🛒', title: '쇼핑하기', time: '1320', isClear: true)],
   DateTime(2023, 5, 1) : [Event(category: '학습', emoji: '✒', title: '공부하기', time: '1420', isClear: true)],
   DateTime(2023, 5, 1) : [Event(category: '관계', emoji: '😁', title: '웃기', time: '1520', isClear: true)],
@@ -323,7 +352,7 @@ final _kEventSource = {
   DateTime(2023, 5, 12) : [Event(category: '학습', emoji: '✒', title: '공부하기', time: '1420', isClear: true)],
   DateTime(2023, 5, 12) : [Event(category: '관계', emoji: '😁', title: '웃기', time: '1520', isClear: true)],
   DateTime(2023, 5, 12) : [Event(category: '생활', emoji: '🎉', title: '파티하기', time: '1620', isClear: true)],
-  DateTime(2023, 5, 12) : [Event(category: '기타', emoji: '🎸', title: '기타치기', time: '1720', isClear: true)],
+  DateTime(2023, 5, 12) : [Event(category: '기타', emoji: '🎸', title: '기타치기', time: '1720', isClear: true)],*/
 };
 
 int getHashCode(DateTime key) {

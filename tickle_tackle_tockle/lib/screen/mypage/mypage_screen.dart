@@ -57,7 +57,7 @@ class MyPageScreen extends StatelessWidget {
           url,
           headers: <String, String>{
             'Content-Type': 'application/json',
-            'authorization' :  accessToken,
+            'accesstoken' :  accessToken,
           },
         );
         return response;
@@ -69,7 +69,7 @@ class MyPageScreen extends StatelessWidget {
           url,
           headers: <String, String>{
             'Content-Type': 'application/json',
-            'authorization' :  accessToken,
+            'accesstoken' :  accessToken,
           },
           body: jsonEncode(<String, String>{
             'sleepStartTime': strSleepStartTime,
@@ -95,17 +95,65 @@ class MyPageScreen extends StatelessWidget {
           strSleepStartTime = userSleepReq.sleepStartTime;
           strSleepEndTime = userSleepReq.sleepEndTime;
 
-          print(userSleepReq.sleepStartTime);
-          print(userSleepReq.sleepEndTime);
-          print('무한루프 멈춰 ;');
-
           if(strSleepStartTime == strSleepEndTime) disturbAlarmController.setIsDisturbAlarmFlag(false);
           else disturbAlarmController.setIsDisturbAlarmFlag(true);
 
-        }else print('Login failed with status: ${response.statusCode}');
+        }else if(response.statusCode == 401){
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          String refreshToken = pref.getString('refreshToken')!;
+          String accessToken = pref.getString('accessToken')!;
+          var url = Uri.parse('${ServerUrl}/user/sleep');
+          var response = await http.get(
+            url,
+            headers: <String, String>{
+              'Content-Type': 'application/json',
+              'accesstoken' : accessToken,
+              'refreshtoken' :  refreshToken,
+            },
+          );
+          final decodedJson = json.decode(utf8.decode(response.bodyBytes));
+          userSleepReq.sleepStartTime = decodedJson['sleepStartTime'];
+          userSleepReq.sleepEndTime = decodedJson['sleepEndTime'];
+
+          strSleepStartTime = userSleepReq.sleepStartTime;
+          strSleepEndTime = userSleepReq.sleepEndTime;
+
+          if(strSleepStartTime == strSleepEndTime) disturbAlarmController.setIsDisturbAlarmFlag(false);
+          else disturbAlarmController.setIsDisturbAlarmFlag(true);
+          final headers = response.headers;
+          final accesstoken = headers['accesstoken'];
+          final refreshtoken = headers['refreshtoken'];
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          print("===이게되나요----");
+          print(accesstoken);
+          print(refreshtoken);
+          sharedPreferences.setString('accessToken', accesstoken!);
+          sharedPreferences.setString('refreshToken', refreshtoken!);
+        }
+        else print('Login failed with status: ${response.statusCode}');
       }else{
         if (response.statusCode == 200) print("저장");
-        else print('Login failed with status: ${response.statusCode}');
+        else if(response.statusCode == 401) {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          String refreshToken = pref.getString('refreshToken')!;
+          String accessToken = pref.getString('accessToken')!;
+          var url = Uri.parse('${ServerUrl}/user/sleep');
+          var response = await http.get(
+            url,
+            headers: <String, String>{
+              'Content-Type': 'application/json',
+              'accesstoken': accessToken,
+              'refreshtoken': refreshToken,
+            },
+          );
+          final headers = response.headers;
+          final accesstoken = headers['accesstoken'];
+          final refreshtoken = headers['refreshtoken'];
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          sharedPreferences.setString('accessToken', accesstoken!);
+          sharedPreferences.setString('refreshToken', refreshtoken!);
+
+        }else print('Login failed with status: ${response.statusCode}');
       }
       return userSleepReq;
     }
