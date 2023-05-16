@@ -68,6 +68,8 @@ public class HabitController {
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();
 		HabitRes habitRes = hService.createHabit(habitReq, userId);
+		if(habitRes == null)
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<HabitRes>(habitRes, HttpStatus.OK);
 	}
 
@@ -80,6 +82,8 @@ public class HabitController {
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();
 		HabitRes habitRes = hService.updateHabit(habitReq);
+		if(habitRes == null)
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<HabitRes>(habitRes, HttpStatus.OK);
 	}
 
