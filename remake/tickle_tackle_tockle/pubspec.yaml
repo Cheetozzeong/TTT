@@ -58,6 +58,7 @@ dependencies:
   flutter_slidable: ^3.0.0
   fluttertoast: ^8.1.2
   emoji_picker_flutter: ^1.5.4
+  swipeable_tile: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:

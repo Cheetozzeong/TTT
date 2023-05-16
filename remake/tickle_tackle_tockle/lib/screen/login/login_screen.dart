@@ -63,8 +63,6 @@ class LoginScreen extends StatelessWidget {
       final headers = response.headers;
       final accessToken = headers['accesstoken'];
       final refreshToken = headers['refreshtoken'];
-      print('Access Token: $accessToken');
-      print('Refresh Token: $refreshToken');
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString('accessToken', accessToken!);
       sharedPreferences.setString('refreshToken', refreshToken!);
@@ -84,63 +82,63 @@ class LoginScreen extends StatelessWidget {
     ThemeController themeController = Get.put(ThemeController());
 
     return GetBuilder<ThemeController>(
-      builder: (_) {
-        return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: true,
-            title: Text(
-              '로그인 하기',
-              style: TextStyle(
-                color: themeController.selectedPrimaryColor,
+        builder: (_) {
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: true,
+              title: Text(
+                '로그인 하기',
+                style: TextStyle(
+                  color: themeController.selectedPrimaryColor,
+                ),
               ),
+              backgroundColor: Colors.white,
             ),
-            backgroundColor: Colors.white,
-          ),
-          body: Center(
-            child: SizedBox(
-              height: deviceHeight * 0.07,
-              width: deviceWidth * 0.8,
-              child: ElevatedButton(
-                onPressed: () async {
-                  loadingController.setIsLoadingFlag(true);
-                  googleAuthSignIn().then((value) {
-                    if(value != null) {
-                      print('로그인 성공!!');
-                      saveIdToken().then((value) => checkIdToken());
+            body: Center(
+              child: SizedBox(
+                height: deviceHeight * 0.07,
+                width: deviceWidth * 0.8,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    loadingController.setIsLoadingFlag(true);
+                    googleAuthSignIn().then((value) {
+                      if(value != null) {
+                        print('로그인 성공!!');
+                        saveIdToken().then((value) => checkIdToken());
 
-                    } else {
-                      print('로그인실패!!!!!!');
-                    }
-                  }).whenComplete(() => loadingController.setIsLoadingFlag(false));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
-                  side: const BorderSide(width: 2,),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset(
-                      'assets/images/google_logo.png',
-                      width: size.width * 0.06,
-                    ),
-                    SizedBox(
-                      width: deviceWidth * 0.1,
-                    ),
-                    const Text(
-                      '구글로 로그인하기',
-                      style: TextStyle(
-                        color: Colors.black,
+                      } else {
+                        print('로그인실패!!!!!!');
+                      }
+                    }).whenComplete(() => loadingController.setIsLoadingFlag(false));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+                    side: const BorderSide(width: 2,),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/images/google_logo.png',
+                        width: size.width * 0.06,
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        width: deviceWidth * 0.1,
+                      ),
+                      const Text(
+                        '구글로 로그인하기',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      }
+          );
+        }
     );
   }
 }
