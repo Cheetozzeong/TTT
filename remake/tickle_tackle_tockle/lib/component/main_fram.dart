@@ -4,7 +4,7 @@ import '../const/theme.dart';
 import '../controller/create_habit_controller.dart';
 import '../controller/theme_controller.dart';
 import '../screen/create/category_screen.dart';
-import 'hide_screen.dart';
+import 'a804_screen.dart';
 import '../screen/habits/habits_screen.dart';
 import '../screen/home/home_screen.dart';
 import '../screen/mypage/mypage_screen.dart';
@@ -30,7 +30,7 @@ class MainFrame extends StatelessWidget {
       return [
         HomeScreen(),
         HabitsScreen(),
-        HideScreen(),
+        A804Screen(),
         RewardScreen(),
         MyPageScreen(mainContext: context,),
       ];

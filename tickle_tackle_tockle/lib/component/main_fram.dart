@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tickle_tackle_tockle/component/a804_screen.dart';
 import '../const/theme.dart';
 import '../controller/theme_controller.dart';
 import '../screen/create/category_screen.dart';
@@ -28,6 +29,7 @@ class MainFrame extends StatelessWidget {
       return [
         HomeScreen(),
         HabitsScreen(),
+        A804Screen(),
         CreateScreen(),
         RewardScreen(),
         MyPageScreen(mainContext: context,),
