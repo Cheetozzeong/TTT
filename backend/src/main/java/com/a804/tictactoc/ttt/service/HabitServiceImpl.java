@@ -38,10 +38,12 @@ public class HabitServiceImpl implements HabitService{
 
     @Override
     public HabitRes createHabit(HabitReq habitReq, long userId) throws SQLException {
+        if(Integer.parseInt(habitReq.getTerm()) == 0)
+            return null;
+
         Habit habit = habitReq.toEntity();
         habit.setUser(uRepo.findById(userId).get());//habit.setUserId(userId);
         habit = hRepo.save(habit);
-
         createAlarm(habit.getStartTime(), habit.getEndTime(), habit.getTerm(), habit.getId());
 
         return HabitRes.builder().habit(habit).build();
@@ -49,6 +51,9 @@ public class HabitServiceImpl implements HabitService{
 
     @Override
     public HabitRes updateHabit(HabitReq habitReq) throws SQLException {
+        if(Integer.parseInt(habitReq.getTerm()) == 0)
+            return null;
+
         Habit habit = hRepo.findById(habitReq.getId()).get();
         habit.setCategoryId(habitReq.getCategoryId());
         habit.setName(habitReq.getName());
