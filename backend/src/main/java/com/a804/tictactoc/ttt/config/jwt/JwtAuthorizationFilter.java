@@ -67,11 +67,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         //리프레시 토큰 가져옴(Bearer 없애고 가져오쟈)
         String refreshToken = request.getHeader(REFRESH_HEADER);
 
-        System.out.println(accessToken + " : 엑세스 토큰");
-        System.out.println(refreshToken + " : 리프레시 토큰");
-
-        refreshToken = changeToken(refreshToken);
-        //액세스 토큰 변화해줌
         accessToken = changeToken(accessToken);
         //변화 과정에서 방식이 이상하면 아예 return해야됨(해커임 ;)
 
@@ -79,8 +74,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
+
         if(refreshToken==null){
             try {
+
                 DecodedJWT accssJwt = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(accessToken);
                 Date expiration = accssJwt.getExpiresAt();
                 long now = new Date().getTime();
@@ -88,6 +85,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 if(expiration.getTime() > now) {
                     // AccessToken이 유효한 경우
                     identifyUid(accessToken); //uid 제공
+
                 }
 
             } catch (JWTVerificationException e) {
@@ -99,43 +97,44 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 return;
             }
         }else{
-            System.out.println("Refresh Token 받았나요? : " + refreshToken);
+            refreshToken = changeToken(refreshToken);
+            //액세스 토큰 변화해줌
+            PrincipalDetails principalDetails = PrincipalDetailInfo.staticPrincipalDetailis;
+            try {
+                //7일 남았으면 재갱신
+                DecodedJWT refreshJwt = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(accessToken);
+                Date expiration = refreshJwt.getExpiresAt();
+                long now = new Date().getTime();
 
-            //7일 남았으면 재갱신
-            DecodedJWT refreshJwt = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(refreshToken);
-            Date expiration = refreshJwt.getExpiresAt();
-            long now = new Date().getTime();
+                long time = 1000 * 60 * 60 * 24 * 7;
 
-            long time = 1000*60*60*24*7;
 
-            PrincipalDetails principalDetailis = PrincipalDetailInfo.staticPrincipalDetailis;
-            System.out.println(principalDetailis.getUser().getUid()+" 이게되나?");
+                // do something with principalDetails
 
-            // do something with principalDetails
+                if (expiration.getTime() < now + time){};
 
-            if(expiration.getTime() < now + time ) { // 리프레시 토큰 7일밖에 안남았으면 재갱신하기
+            }catch(JWTVerificationException e) {
+               // 리프레시 토큰 7일밖에 안남았으면 재갱신하기
 
-                System.out.println("다시 만들어지나요?");
 
-                redisTemplate.delete("RT:" + uid); // 레디스에서 유저 삭제
-                refreshToken = JWT.create()
-                        .withSubject(principalDetailis.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME))
-                        .withClaim("uid", principalDetailis.getUser().getUid())
-                        .sign(Algorithm.HMAC512(JwtProperties.SECRET));
-                //RefreshToken을 Redis에 저장 (expirationTime 설정을 통해 자동 삭제 처리)
-                redisTemplate.opsForValue()
-                        .set("RT:" + principalDetailis.getUsername(), refreshToken, JwtProperties.REFRESH_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
-                System.out.println("access 갱신");
-            }
-
+                    redisTemplate.delete("RT:" + uid); // 레디스에서 유저 삭제
+                    refreshToken = JWT.create()
+                            .withSubject(principalDetails.getUsername())
+                            .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.REFRESH_EXPIRATION_TIME))
+                            .withClaim("uid", principalDetails.getUser().getUid())
+                            .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+                    //RefreshToken을 Redis에 저장 (expirationTime 설정을 통해 자동 삭제 처리)
+                    redisTemplate.opsForValue()
+                            .set("RT:" + principalDetails.getUsername(), refreshToken, JwtProperties.REFRESH_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
+                    System.out.println("refresh 갱신");
+                }
             Map<String, String> doit = userService.reissue(refreshToken);
             accessToken = doit.get("accessToken");
             accessToken = changeToken(accessToken);
             //redis에 access 저장
 
             redisTemplate.opsForValue()
-                    .set("AT:" + principalDetailis.getUsername(), accessToken, JwtProperties.ACCESS_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
+                    .set("AT:" + principalDetails.getUsername(), accessToken, JwtProperties.ACCESS_EXPIRATION_TIME, TimeUnit.MILLISECONDS);
 
             identifyUid(accessToken);
         }
@@ -150,9 +149,18 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication); // 권한 관리를 위해 세션에 값 저장
             request.setAttribute("USER", user);  //api 호출을 위해 request에 user 정보 저장
         }
-        response.setHeader(JwtProperties.ACCESS_HEADER, accessToken);
-        if(refreshToken!=null) response.setHeader(JwtProperties.REFRESH_HEADER, refreshToken);
+
+        if(refreshToken!=null){
+            String refresh = JwtProperties.TOKEN_PREFIX+refreshToken;
+            response.setHeader(JwtProperties.REFRESH_HEADER, refresh);
+        }
+
+        String access = JwtProperties.TOKEN_PREFIX+accessToken;
+        response.setHeader(JwtProperties.ACCESS_HEADER, access);
+
+
         chain.doFilter(request, response);
+
     }
 
 

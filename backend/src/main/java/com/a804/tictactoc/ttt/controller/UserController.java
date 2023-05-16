@@ -124,7 +124,6 @@ public class UserController {
 
     @PatchMapping("/user/sleep")
     public ResponseEntity<?> setSleepTime(@RequestBody UserSleepReq userSleepReq, HttpServletRequest request) throws Exception {
-        System.out.println("들어오긴함?");
         User user = (User) request.getAttribute("USER");
         long userId = user.getId();
         userService.sleepTime(userId, userSleepReq);
