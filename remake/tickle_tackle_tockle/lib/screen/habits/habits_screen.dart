@@ -138,7 +138,7 @@ class HabitsScreen extends StatelessWidget {
 
       if (response.statusCode == 200) {
         habitList = parseHabitList(utf8.decode(response.bodyBytes));
-        print(habitList);
+
       }else if(response.statusCode == 401){
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         String accessToken = sharedPreferences.getString('accessToken')!;
