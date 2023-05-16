@@ -9,6 +9,7 @@ class HabitRes {
   String endTime;
   String term;
   String repeatDay;
+  int tickleCount;
 
   HabitRes({
     required this.id,
@@ -19,6 +20,7 @@ class HabitRes {
     required this.endTime,
     required this.term,
     required this.repeatDay,
+    required this.tickleCount,
   });
 
   factory HabitRes.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class HabitRes {
       endTime: json['endTime'] as String,
       term: json['term'] as String,
       repeatDay: json['repeatDay'] as String,
+        tickleCount: json['tickleCount'] as int,
     );
   }
 }

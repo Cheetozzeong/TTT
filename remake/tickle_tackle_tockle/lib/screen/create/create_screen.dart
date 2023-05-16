@@ -1,16 +1,22 @@
+import 'dart:convert';
+
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_dialogs/dialogs.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
 import 'package:get/get.dart';
 import 'package:tickle_tackle_tockle/controller/create_habit_controller.dart';
+import 'package:tickle_tackle_tockle/controller/page_change_controller.dart';
 
+import '../../const/serveraddress.dart';
 import '../../const/theme.dart';
 import '../../controller/theme_controller.dart';
+import '../../model/HabitReq.dart';
 import 'alarm_screen.dart';
-
+import 'package:http/http.dart' as http;
 
 class CreateScreen extends StatefulWidget {
   const CreateScreen({Key? key}) : super(key: key);
@@ -24,6 +30,55 @@ class _CreateScreenState extends State<CreateScreen> {
   TextEditingController _nameController = TextEditingController();
   ThemeController themeController = Get.put(ThemeController());
   CreateHabitController createHabitController = Get.put(CreateHabitController());
+  PageChangeController pageChangeController = Get.put(PageChangeController());
+
+  Future<http.Response> sendAccessToken(HabitReq habitReq) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String accessToken = pref.getString('accessToken')!;
+    var url = Uri.parse('${ServerUrl}/habit');
+
+      var response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accesstoken' :  accessToken,
+        },
+        body: json.encode(habitReq.toJson()),
+      );
+      return response;
+  }
+
+  Future<void> checkAccessToken(HabitReq habitReq) async {
+
+    final response = await sendAccessToken(habitReq);
+
+      if (response.statusCode == 200) {
+        print('성공했지로옹');
+    }else if(response.statusCode == 401){
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        String refreshToken = pref.getString('refreshToken')!;
+        String accessToken = pref.getString('accessToken')!;
+        var url = Uri.parse('${ServerUrl}/habit');
+        var response = await http.post(
+          url,
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'accesstoken' : accessToken,
+            'refreshtoken' :  refreshToken,
+          },
+          body: json.encode(habitReq.toJson()),
+        );
+        final headers = response.headers;
+        final accesstoken = headers['accesstoken'];
+        final refreshtoken = headers['refreshtoken'];
+        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+        sharedPreferences.setString('accessToken', accesstoken!);
+        sharedPreferences.setString('refreshToken', refreshtoken!);
+      }else print('Login failed with status: ${response.statusCode}');
+      
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -494,14 +549,49 @@ class _CreateScreenState extends State<CreateScreen> {
               ),
               InkWell(
                 onTap: () {
+                  if(createHabitController.name.length == 0) {
+                    Fluttertoast.showToast(
+                        msg: "이름을 입력해주세요!",
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: const Color(0xff6E6E6E),
+                        fontSize: deviceWidth * 0.04,
+                        toastLength: Toast.LENGTH_SHORT);
 
-                  print('저장 상태 확인');
-                  print(createHabitController.emoji);
-                  print(createHabitController.category);
-                  print(createHabitController.name);
-                  print(createHabitController.repeatWeek);
+                    return;
+                  }
+                  //꺼져있을때
+                  if(createHabitController.isAlarmRepeat == false) {
+                    createHabitController.repeatTime = '2400';
+                    createHabitController.startTime = createHabitController.endTime = createHabitController.alarmTime;
+                  }
+                  String category = createHabitController.category;
+                  int categoryNum = 0;
 
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  switch(category){
+                    case '금전': categoryNum =0; break;
+                    case '운동': categoryNum =1; break;
+                    case '학습': categoryNum =2; break;
+                    case '관계': categoryNum =3; break;
+                    case '생활': categoryNum =4; break;
+                    case '기타': categoryNum =5; break;
+                  }
+
+                  print('호히호히 : $category !! $categoryNum');
+
+                  HabitReq habitReq = new HabitReq(
+                    categoryId: categoryNum,
+                    name: createHabitController.name,
+                    emoji: createHabitController.emoji,
+                    startTime: createHabitController.startTime,
+                    endTime: createHabitController.endTime,
+                    term: createHabitController.repeatTime,
+                    repeatDay: createHabitController.repeatWeek,
+                  );
+
+                  checkAccessToken(habitReq).then((value) {
+                    pageChangeController.rebuildPage();
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                  });
                 },
                 child: GetBuilder<ThemeController>(
                     builder: (_) {

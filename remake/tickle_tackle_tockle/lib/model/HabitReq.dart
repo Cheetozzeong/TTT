@@ -1,5 +1,4 @@
 class HabitReq {
-  int id; // 생성 req면 0으로 올거고
   int categoryId;
   String name;
   String emoji;
@@ -9,7 +8,6 @@ class HabitReq {
   String repeatDay;
 
   HabitReq({
-    required this.id,
     required this.categoryId,
     required this.name,
     required this.emoji,
@@ -21,7 +19,6 @@ class HabitReq {
 
   factory HabitReq.fromJson(Map<String, dynamic> json) {
     return HabitReq(
-      id: json['id'] as int,
       categoryId: json['categoryId'] as int,
       name: json['name'] as String,
       emoji: json['emoji'] as String,
@@ -34,7 +31,6 @@ class HabitReq {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
     data['categoryId'] = categoryId;
     data['name'] = name;
     data['emoji'] = emoji;
