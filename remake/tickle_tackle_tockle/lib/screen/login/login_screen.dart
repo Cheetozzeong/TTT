@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String? token = await firebaseMessaging.getToken();
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('token', token!);
+    sharedPreferences.setString('deviceToken', token!);
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,

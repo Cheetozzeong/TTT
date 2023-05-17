@@ -63,6 +63,7 @@ class _MyAppState extends State<MyApp> {
     String str = await FirebaseAuth.instance.currentUser!.getIdToken();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString('idToken', str!);
+    await postDeviceToken();
     await checkIdToken();
     return 0;
   }
@@ -97,6 +98,35 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<http.Response> checkDeviceTokenRequest() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String accessToken = pref.getString('accessToken')!;
+    String deviceToken = pref.getString('deviceToken')!;
+    var url = Uri.parse('${ServerUrl}/fcmtoken');
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'accessToken': accessToken,
+      },
+      body: jsonEncode(<String, String>{
+        'fcmToken': deviceToken,
+      }),
+    );
+    return response;
+  }
+
+  Future<void> postDeviceToken() async {
+    final response = await checkDeviceTokenRequest().catchError((error) {
+      print('postDeviceToken Error + $error');
+    });
+
+    if (response.statusCode == 200) {
+      print('Token send successFully: ${response.statusCode}');
+    } else {
+      print('Device Token send failed with status: ${response.statusCode}');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     LoadingController loadingController = Get.put(LoadingController());

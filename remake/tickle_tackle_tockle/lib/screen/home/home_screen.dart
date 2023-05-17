@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
+        // postDeviceToken();
       });
     }
   }
@@ -88,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // 오늘 => 달성/미달성 토글이 가능한 일정 위젯을 반환
 
       for(TickleTodayRes todayRes in ticklesList as List<TickleTodayRes>) {
+        tickleList.add(SizedBox(height: 20,));
         tickleList.add(Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -130,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // 과거 => 달성 표시가 되어있고 달성/미달성 토글이 불가능한 일정 위젯을 반환
 
       for(TicklePastRes pastRes in ticklesList as List<TicklePastRes>) {
+        tickleList.add(SizedBox(height: 20,));
         tickleList.add(Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -153,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // 미래 => 미달성 표시가 되어있고 달성/미달성 토글이 불가능한 일정 위젯을 반환
 
       for(TickleTodayRes futureRes in ticklesList as List<TickleTodayRes>) {
+        tickleList.add(SizedBox(height: 20,));
         tickleList.add(Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -529,25 +533,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    postDeviceToken();
     final Size size = MediaQuery.of(context).size;
     final double deviceWidth = size.width;
     final double deviceHeight = size.height;
-
-    Future<http.Response> sendAccessToken(String targetMonth) async {
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      String accessToken = sharedPreferences.getString('accessToken')!;
-      var url = Uri.parse('${ServerUrl}/tickle/month');
-      var response = await http.get(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'authorization': accessToken,
-          'targetDate': targetMonth,
-        },
-      );
-      return response;
-    }
 
     String strSelectedDate = _selectedDay!.year.toString() + _selectedDay!.month.toString().padLeft(2, '0') + _selectedDay!.day.toString().padLeft(2, '0');
     bool isCurrentOrFuture = false;
@@ -668,6 +656,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onPageChanged: (focusedDay) {
                                     setState(() {
                                       _focusedDay = focusedDay;
+                                      // postDeviceToken();
                                     });
                                   },
                                 );

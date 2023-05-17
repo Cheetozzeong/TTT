@@ -259,7 +259,7 @@ class HabitsScreen extends StatelessWidget {
                       ),
                       GetBuilder<ThemeController>(
                           builder: (_) {
-                            return Text('$tickleCount 티끌', style: TextStyle(color: themeController.selectedPrimaryColor),);
+                            return Text('$tickleCount 달성', style: TextStyle(color: themeController.selectedPrimaryColor),);
                           }
                       ),
                     ],
@@ -387,7 +387,7 @@ class HabitsScreen extends StatelessWidget {
                       ),
                       GetBuilder<ThemeController>(
                           builder: (_) {
-                            return Text('$tickleCount 티끌', style: TextStyle(color: themeController.selectedPrimaryColor),);
+                            return Text('$tickleCount 달성', style: TextStyle(color: themeController.selectedPrimaryColor),);
                           }
                       ),
                     ],
@@ -517,7 +517,7 @@ class HabitsScreen extends StatelessWidget {
                       ),
                       GetBuilder<ThemeController>(
                           builder: (_) {
-                            return Text('$tickleCount 티끌', style: TextStyle(color: themeController.selectedPrimaryColor),);
+                            return Text('$tickleCount 달성', style: TextStyle(color: themeController.selectedPrimaryColor),);
                           }
                       ),
                     ],
@@ -647,7 +647,7 @@ class HabitsScreen extends StatelessWidget {
                       ),
                       GetBuilder<ThemeController>(
                           builder: (_) {
-                            return Text('$tickleCount 티끌', style: TextStyle(color: themeController.selectedPrimaryColor),);
+                            return Text('$tickleCount 달성', style: TextStyle(color: themeController.selectedPrimaryColor),);
                           }
                       ),
                     ],
@@ -776,7 +776,7 @@ class HabitsScreen extends StatelessWidget {
                       ),
                       GetBuilder<ThemeController>(
                           builder: (_) {
-                            return Text('$tickleCount 티끌', style: TextStyle(color: themeController.selectedPrimaryColor),);
+                            return Text('$tickleCount 달성', style: TextStyle(color: themeController.selectedPrimaryColor),);
                           }
                       ),
                     ],
@@ -905,7 +905,7 @@ class HabitsScreen extends StatelessWidget {
                       ),
                       GetBuilder<ThemeController>(
                           builder: (_) {
-                            return Text('$tickleCount 티끌', style: TextStyle(color: themeController.selectedPrimaryColor),);
+                            return Text('$tickleCount 달성', style: TextStyle(color: themeController.selectedPrimaryColor),);
                           }
                       ),
                     ],
@@ -954,7 +954,9 @@ class HabitsScreen extends StatelessWidget {
                     return Container();
                   }
 
-                  return Column(
+                  List<HabitRes> checkList = snapshot.data!;
+
+                  return checkList.length != 0 ? Column(
                     children: [
                       buildMoneyHabitsList(snapshot.data!),
                       buildExerciseHabitsList(snapshot.data!),
@@ -964,7 +966,7 @@ class HabitsScreen extends StatelessWidget {
                       buildEtcHabitsList(snapshot.data!),
                       SizedBox(height: deviceHeight * 0.05,),
                     ],
-                  );
+                  ) : Center(child: Text('습관을 등록해주세요!'),);
                 }
               ),
             ),

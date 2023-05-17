@@ -636,6 +636,13 @@ class MyPageScreen extends StatelessWidget {
                                                 var ec = ExpandableController.of(context, required: true)!;
                                                 ec.toggle();
                                                 disturbAlarmController.setIsDisturbAlarmFlag(!disturbAlarmController.isDisturbAlarm);
+
+                                                strSleepStartTime = '0000';
+                                                strSleepEndTime = '0000';
+
+                                                bool check = false;
+                                                checkAccessToken(check).then((value) => themeController.refresh());
+
                                               },
                                             );
                                           }
