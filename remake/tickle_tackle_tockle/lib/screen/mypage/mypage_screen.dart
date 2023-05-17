@@ -256,30 +256,11 @@ class MyPageScreen extends StatelessWidget {
                                   child: GetBuilder<DisturbAlarmController>(
                                       builder: (_) {
                                         return Text(
-                                          strSleepStartTime,
+                                          strSleepStartTime.substring(0, 2) + '시 ' + strSleepStartTime.substring(2, 4) + '분',
                                           style: TextStyle(
                                             color: TTTWhite,
                                           ),
                                         );
-                                        /*return FutureBuilder(
-                                    future: checkAccessToken(true),
-                                    builder: (context, snapshot) {
-                                      if(!snapshot.hasData) {
-                                        return Container();
-                                      }
-
-                                      if(snapshot.hasError) {
-                                        return Container();
-                                      }
-
-                                      return Text(
-                                        strSleepStartTime,
-                                        style: TextStyle(
-                                          color: TTTWhite,
-                                        ),
-                                      );
-                                    }
-                                  );*/
                                       }
                                   ),
                                 ),
@@ -344,30 +325,11 @@ class MyPageScreen extends StatelessWidget {
                                   child: GetBuilder<DisturbAlarmController>(
                                       builder: (_) {
                                         return Text(
-                                          strSleepEndTime,
+                                          strSleepEndTime.substring(0, 2) + '시 ' + strSleepEndTime.substring(2, 4) + '분',
                                           style: TextStyle(
                                             color: TTTWhite,
                                           ),
                                         );
-                                        /*return FutureBuilder(
-                                          future: checkAccessToken(true),
-                                          builder: (context, snapshot) {
-                                            if(!snapshot.hasData) {
-                                              return Container();
-                                            }
-
-                                            if(snapshot.hasError) {
-                                              return Container();
-                                            }
-
-                                            return Text(
-                                              strSleepEndTime,
-                                              style: TextStyle(
-                                                color: TTTWhite,
-                                              ),
-                                            );
-                                          }
-                                      );*/
                                       }
                                   ),
                                 ),

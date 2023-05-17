@@ -97,8 +97,7 @@ class TosScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: const CommonAppBar(
-            appBarType: AppBarType.normalAppBar, title: '개인 정보 처리 방침'),
+        appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '이용 약관'),
         body: Padding(
           padding: EdgeInsets.fromLTRB(
               deviceWidth * 0.05, deviceHeight * 0.02, deviceWidth * 0.05, 0),

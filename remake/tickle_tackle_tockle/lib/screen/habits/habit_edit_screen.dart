@@ -85,6 +85,7 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -133,10 +134,11 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
         return SafeArea(
           child: GestureDetector(
             onTap: () {
+
               FocusManager.instance.primaryFocus?.unfocus();
             },
             child: Scaffold(
-              appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '나만의 습관 생성',),
+              appBar: CommonAppBar(appBarType: AppBarType.habitEditAppBar, title: '습관 수정하기',),
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -582,8 +584,6 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
                         case '기타': categoryNum =5; break;
                       }
 
-                      print('호히호히 : $category !! $categoryNum');
-
                       HabitReq habitReq = new HabitReq(
                         id : editHabitController.id,
                         categoryId: categoryNum,
@@ -606,7 +606,7 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
                             width: deviceWidth,
                             height: deviceHeight * 0.1,
                             color: themeController.selectedPrimaryColor,
-                            child: Center(child: Text('생성하기', style: TextStyle(color: TTTWhite, fontSize: 20),)),
+                            child: Center(child: Text('수정하기', style: TextStyle(color: TTTWhite, fontSize: 20),)),
                           );
                         }
                     ),

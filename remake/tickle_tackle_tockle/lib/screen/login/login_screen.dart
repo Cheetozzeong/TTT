@@ -14,6 +14,12 @@ import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import 'package:tickle_tackle_tockle/model/LoginReq.dart';
 
 import '../../const/serveraddress.dart';
+import '../../const/theme.dart';
+import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:get/get.dart';
+
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -62,49 +68,13 @@ class _LoginScreenState extends State<LoginScreen> {
     String? token = await firebaseMessaging.getToken();
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('token', token!);
+    sharedPreferences.setString('deviceToken', token!);
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
     return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  Future<void> saveIdToken() async {
-    String str = await FirebaseAuth.instance.currentUser!.getIdToken();
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('idToken', str!);
-  }
-
-  Future<http.Response> sendIdToken() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String idToken = pref.getString('idToken')!;
-    var url = Uri.parse('${ServerUrl}/login');
-    var loginReq = LoginReq(idToken: idToken);
-    var body = json.encode(loginReq.toJson());
-    var response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-      },
-      body: body,
-    );
-    return response;
-  }
-
-  void checkIdToken() async {
-    final response = await sendIdToken();
-    if (response.statusCode == 200) {
-      final headers = response.headers;
-      final accessToken = headers['accesstoken'];
-      final refreshToken = headers['refreshtoken'];
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString('accessToken', accessToken!);
-      sharedPreferences.setString('refreshToken', refreshToken!);
-    } else {
-      print('Login failed with status: ${response.statusCode}');
-    }
   }
 
   @override
@@ -134,49 +104,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 100.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Center(
-                    child: SizedBox(
-                      height: deviceHeight * 0.07,
-                      width: deviceWidth * 0.8,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          loadingController.setIsLoadingFlag(true);
-                          googleAuthSignIn().then((value) {
-                            if (value != null) {
-                              print('로그인 성공!!');
-                              saveIdToken().then((value) => checkIdToken());
-                            } else {
-                              print('로그인실패!!!!!!');
-                            }
-                          }).whenComplete(() => loadingController.setIsLoadingFlag(false));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                          side: const BorderSide(width: 2),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/images/google_logo.png',
-                              width: size.width * 0.06,
-                            ),
-                            SizedBox(
-                              width: deviceWidth * 0.1,
-                            ),
-                            const Text(
-                              '구글로 로그인하기',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
+            body: Center(
+              child: SizedBox(
+                height: deviceHeight * 0.07,
+                width: deviceWidth * 0.8,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    loadingController.setIsLoadingFlag(true);
+                    googleAuthSignIn().then((value) {
+                      if(value != null) {
+                        print('로그인 성공!!');
+
+
+                      } else {
+                        print('로그인실패!!!!!!');
+                      }
+                    }).whenComplete(() => loadingController.setIsLoadingFlag(false));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+                    side: const BorderSide(width: 2,),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/images/google_logo.png',
+                        width: size.width * 0.06,
+                      ),
+                      SizedBox(
+                        width: deviceWidth * 0.1,
+                      ),
+                      const Text(
+                        '구글로 로그인하기',
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
                       ),
                     ),
