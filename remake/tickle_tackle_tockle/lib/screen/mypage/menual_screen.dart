@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import '../../component/common_appbar.dart';
 
-
 class ManualScreen extends StatelessWidget {
-  const ManualScreen({Key? key}) : super(key: key);
+  List<String> images = [
+    'assets/images/guide/guide_1.png',
+    'assets/images/guide/guide_2.png',
+    'assets/images/guide/guide_3.png',
+    'assets/images/guide/guide_4.png',
+    'assets/images/guide/guide_5.png',
+    'assets/images/guide/guide_6.png',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,38 +37,28 @@ class ManualScreen extends StatelessWidget {
                   spreadRadius: 0.0,
                   offset: const Offset(0, 7),
                 ),
-              ],
-            ),
-            child: Container(
-              margin: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  const Text(
-                    '사용 안내',
-                    style: TextStyle(
-                      fontFamily: "NotoSansKr",
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  SizedBox(
-                    height: deviceHeight * 0.02,
-                  ),
-                  Row(
-                    children: const [
-                      Text(
-                        '호에에에에에에에에에엥',
-                        style: TextStyle(
-                          fontFamily: "NotoSansKr",
+                items: images.map((imagePath) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: deviceWidth,
+                        margin: EdgeInsets.symmetric(horizontal: 0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
               ),
             ),
-          ),
+          ],
         ),
-      ),
-    );
+        ),
+      );
   }
 }

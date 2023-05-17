@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> {
                     );
                   }
 
-                  return const LoginScreen();
+                  return LoginScreen();
                 }
             ),
             GetBuilder<LoadingController>(

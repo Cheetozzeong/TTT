@@ -9,6 +9,7 @@ import 'package:tickle_tackle_tockle/controller/edit_habit_controller.dart';
 import 'package:tickle_tackle_tockle/controller/page_change_controller.dart';
 import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import '../const/serveraddress.dart';
+import 'package:tickle_tackle_tockle/screen/mypage/menual_screen.dart';
 import '../const/theme.dart';
 import '../screen/camera/camera_screen.dart';
 import '../screen/mypage/setting_screen.dart';
@@ -90,44 +91,34 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     PageChangeController pageChangeController = Get.put(PageChangeController());
 
     return GetBuilder<ThemeController>(
-      builder: (_) {
-        return AppBar(
-          automaticallyImplyLeading: true,
-          centerTitle: true,
-          elevation: 1.5,
-          title: Text(
-            title,
-            style: TextStyle(
-              color: themeController.selectedPrimaryColor,
-            ),
-          ),
-          actions: [
-            appBarType == AppBarType.myPageAppBar ? IconButton(
-              onPressed: () {
-                PersistentNavBarNavigator.pushNewScreen(
-                  context,
-                  screen: const SettingScreen(),
-                  withNavBar: false,
-                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                );
-              },
-              icon: Icon(
-                Icons.settings,
+        builder: (_) {
+          return AppBar(
+            automaticallyImplyLeading: true,
+            centerTitle: true,
+            elevation: 1.5,
+            title: Text(
+              title,
+              style: TextStyle(
                 color: themeController.selectedPrimaryColor,
               ),
-            )
-                : appBarType == AppBarType.homePageAppBar ? IconButton(
+            ),
+            leading: appBarType == AppBarType.homePageAppBar ? IconButton(
               onPressed: () {
-                PersistentNavBarNavigator.pushNewScreen(
-                  context,
-                  screen: const CameraScreen(),
-                  withNavBar: false,
-                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                );
+
               },
-              icon: Icon(
-                Icons.watch_outlined,
-                color: themeController.selectedPrimaryColor,
+              icon: IconButton(
+                onPressed: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: ManualScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                icon: Icon(
+                  Icons.question_mark,
+                  color: themeController.selectedPrimaryColor,
+                ),
               ),
             )
                 : appBarType == AppBarType.habitEditAppBar ? IconButton(
@@ -179,6 +170,44 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         );
       }
+            ) : Container(),
+            actions: [
+              appBarType == AppBarType.myPageAppBar ? IconButton(
+                onPressed: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const SettingScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                icon: Icon(
+                  Icons.settings,
+                  color: themeController.selectedPrimaryColor,
+                ),
+              )
+                  : appBarType == AppBarType.homePageAppBar ? IconButton(
+                onPressed: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const CameraScreen(),
+                    withNavBar: false,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+                icon: Icon(
+                  Icons.watch_outlined,
+                  color: themeController.selectedPrimaryColor,
+                ),
+              )
+                  : Container(),
+            ],
+            backgroundColor: Colors.white,
+            iconTheme: IconThemeData(
+              color: themeController.selectedPrimaryColor,
+            ),
+          );
+        }
     );
   }
 }

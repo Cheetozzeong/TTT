@@ -160,29 +160,6 @@ class SettingScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      PersistentNavBarNavigator.pushNewScreen(
-                        context,
-                        screen: const ManualScreen(),
-                        withNavBar: false,
-                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '사용 안내',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: menuFontSize
-                          ),
-                        ),
-                        Icon(Icons.arrow_forward_ios),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
                       loadingController.setIsLoadingFlag(true);
                       signOutGoogle().then((value) {
                         loadingController.setIsLoadingFlag(false);
