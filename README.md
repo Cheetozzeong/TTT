@@ -104,6 +104,8 @@
 
 ---
 
+![구성도.png](output/application/구성도.png)
+
 ### 프론트엔드
 
 - IDE : Android Studio
