@@ -136,27 +136,27 @@
 # 🍓 주요 기능
 
 ## 메인화면
-<img src="./output/application/메인.png" width="30%" title="메인"/>
+![메인.png](output/application/메인.png)
 <br/>
 
 ## 습관생성
-<img src="./output/application/습관생성.png" width="30%" title="습관생성"/>
+![습관생성.png](output/application/습관생성.png)
 <br/>
 
 ## 습관목록
-<img src="./output/application/습관목록.png" width="30%" title="습관목록"/>
+![습관목록.png](output/application/습관목록.png)
 <br/>
 
 ## 토끌이
-<img src="./output/application/토끌이.png" width="30%" title="토끌이"/>
+![토끌이.png](output/application/토끌이.png)
 <br/>
 
 ## 알람설정
-<img src="./output/application/알람설정.png" width="30%" title="알람설정"/>
+![알람설정.png](output/application/알람설정.png)
 <br/>
 
 ## 방해금지
-<img src="./output/application/방해금지.png" width="30%" title="방해금지"/>
+![방해금지시간.png](output/application/방해금지시간.png)
 <br/>
 
 ---
