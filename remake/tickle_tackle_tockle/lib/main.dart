@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                     return const MainFrame();
                   }
 
-                  return const LoginScreen();
+                  return LoginScreen();
                 }
             ),
             GetBuilder<LoadingController>(
