@@ -59,6 +59,8 @@ dependencies:
   fluttertoast: ^8.1.2
   emoji_picker_flutter: ^1.5.4
   swipeable_tile: ^2.0.0+3
+  carousel_slider: ^4.2.1
+  another_flutter_splash_screen: ^1.1.4
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +89,7 @@ flutter:
     - assets/images/
     - assets/images/tockles/
     - assets/images/buttons/
+    - assets/images/guide/
 
   fonts:
     - family: Maplestory
