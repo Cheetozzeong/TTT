@@ -5,6 +5,7 @@
 # 🖥️ 프로젝트 소개
 
 ---
+![Image Pasted at 2023-5-16 10-21.png](output/application/Image Pasted at 2023-5-16 10-21.png)
 
 ### *좋은 습관을 만들고 싶다…!*
 
