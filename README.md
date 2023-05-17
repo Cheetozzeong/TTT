@@ -131,32 +131,46 @@
 - EC2
 - Firebase
 
+### 협업툴
+
+- GitLab
+- Notion
+- Jira
+- Mattermost
+
 <br/>
 
 # 🍓 주요 기능
+<br/>
 
 ## 메인화면
 ![메인.png](output/application/메인.png)
+<br/>
 <br/>
 
 ## 습관생성
 ![습관생성.png](output/application/습관생성.png)
 <br/>
+<br/>
 
 ## 습관목록
 ![습관목록.png](output/application/습관목록.png)
+<br/>
 <br/>
 
 ## 토끌이
 ![토끌이.png](output/application/토끌이.png)
 <br/>
+<br/>
 
 ## 알람설정
 ![알람설정.png](output/application/알람설정.png)
 <br/>
+<br/>
 
 ## 방해금지
 ![방해금지시간.png](output/application/방해금지시간.png)
+<br/>
 <br/>
 
 ---
