@@ -1,52 +1,39 @@
 package com.a804.tictactoc.ttt.config.jwt;
 
 import com.a804.tictactoc.ttt.config.FirebaseAuthenticationToken;
-import com.a804.tictactoc.ttt.db.repository.UserRepository;
+
 import com.a804.tictactoc.ttt.request.LoginReq;
-import com.a804.tictactoc.ttt.response.UserFirebaseRes;
+
 import com.a804.tictactoc.ttt.service.UserService;
-import com.a804.tictactoc.ttt.service.UserServiceImpl;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.auth.UserRecord;
-import com.google.firebase.cloud.FirestoreClient;
-import com.google.firebase.internal.FirebaseService;
+
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+
 import java.util.concurrent.TimeUnit;
 
-import static com.a804.tictactoc.ttt.config.jwt.JwtProperties.ACCESS_HEADER;
-import static com.a804.tictactoc.ttt.config.jwt.JwtProperties.REFRESH_HEADER;
 
 
 @RequiredArgsConstructor
@@ -132,7 +119,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 
         PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
-
+        PrincipalDetailInfo.staticPrincipalDetailis = principalDetailis;
         String accessToken = JWT.create()
                 .withSubject(principalDetailis.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME))
@@ -156,7 +143,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String refresh = JwtProperties.TOKEN_PREFIX+refreshToken;
         response.setHeader(JwtProperties.ACCESS_HEADER, access);
         response.setHeader(JwtProperties.REFRESH_HEADER, refresh);
-
 
 
     }
