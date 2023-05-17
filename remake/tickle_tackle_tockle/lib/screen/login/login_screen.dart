@@ -14,12 +14,6 @@ import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import 'package:tickle_tackle_tockle/model/LoginReq.dart';
 
 import '../../const/serveraddress.dart';
-import '../../const/theme.dart';
-import 'package:tickle_tackle_tockle/controller/loading_controller.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:get/get.dart';
-
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -68,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String? token = await firebaseMessaging.getToken();
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString('deviceToken', token!);
+    sharedPreferences.setString('token', token!);
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
@@ -104,42 +98,48 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            body: Center(
-              child: SizedBox(
-                height: deviceHeight * 0.07,
-                width: deviceWidth * 0.8,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    loadingController.setIsLoadingFlag(true);
-                    googleAuthSignIn().then((value) {
-                      if(value != null) {
-                        print('로그인 성공!!');
-
-
-                      } else {
-                        print('로그인실패!!!!!!');
-                      }
-                    }).whenComplete(() => loadingController.setIsLoadingFlag(false));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
-                    side: const BorderSide(width: 2,),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/images/google_logo.png',
-                        width: size.width * 0.06,
-                      ),
-                      SizedBox(
-                        width: deviceWidth * 0.1,
-                      ),
-                      const Text(
-                        '구글로 로그인하기',
-                        style: TextStyle(
-                          color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 100.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Center(
+                    child: SizedBox(
+                      height: deviceHeight * 0.07,
+                      width: deviceWidth * 0.8,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          loadingController.setIsLoadingFlag(true);
+                          googleAuthSignIn().then((value) {
+                            if (value != null) {
+                              print('로그인 성공!!');
+                            } else {
+                              print('로그인실패!!!!!!');
+                            }
+                          }).whenComplete(() => loadingController.setIsLoadingFlag(false));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                          side: const BorderSide(width: 2),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/images/google_logo.png',
+                              width: size.width * 0.06,
+                            ),
+                            SizedBox(
+                              width: deviceWidth * 0.1,
+                            ),
+                            const Text(
+                              '구글로 로그인하기',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

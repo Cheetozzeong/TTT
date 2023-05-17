@@ -49,7 +49,7 @@ class A804Screen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: const CommonAppBar(appBarType: AppBarType.normalAppBar, title: 'E팀장과 I들'),
+        appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: 'E팀장과 I들'),
         body: Center(
           child: GridView.count(
             crossAxisCount: 2,

@@ -9,9 +9,9 @@ import 'package:tickle_tackle_tockle/controller/edit_habit_controller.dart';
 import 'package:tickle_tackle_tockle/controller/page_change_controller.dart';
 import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import '../const/serveraddress.dart';
-import 'package:tickle_tackle_tockle/screen/mypage/menual_screen.dart';
 import '../const/theme.dart';
 import '../screen/camera/camera_screen.dart';
+import '../screen/mypage/menual_screen.dart';
 import '../screen/mypage/setting_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -120,56 +120,6 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   color: themeController.selectedPrimaryColor,
                 ),
               ),
-            )
-                : appBarType == AppBarType.habitEditAppBar ? IconButton(
-              onPressed: () {
-                Dialogs.materialDialog(
-                  msg: '선택한 습관을 지울까요?',
-                  title: '습관 삭제',
-                  titleStyle: const TextStyle(
-                    color: Colors.red,
-                  ),
-                  color: Colors.white,
-                  context: context,
-                  actions: [
-                    IconsOutlineButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      text: '취소',
-                      textStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    IconsButton(
-                      onPressed: () {
-                        sendRemoveHabit(editHabitController.id).then((value) {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                          pageChangeController.rebuildPage();
-                        });
-                      },
-                      text: '삭제하기',
-                      color: Colors.red,
-                      textStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                );
-              },
-              icon: Icon(
-                Icons.delete_outline,
-                color: themeController.selectedPrimaryColor,
-              ),
-            ) :Container(),
-          ],
-          backgroundColor: Colors.white,
-          iconTheme: IconThemeData(
-            color: themeController.selectedPrimaryColor,
-          ),
-        );
-      }
             ) : Container(),
             actions: [
               appBarType == AppBarType.myPageAppBar ? IconButton(
@@ -200,7 +150,48 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   color: themeController.selectedPrimaryColor,
                 ),
               )
-                  : Container(),
+                  : appBarType == AppBarType.habitEditAppBar ? IconButton(
+                onPressed: () {
+                  Dialogs.materialDialog(
+                    msg: '선택한 습관을 지울까요?',
+                    title: '습관 삭제',
+                    titleStyle: const TextStyle(
+                      color: Colors.red,
+                    ),
+                    color: Colors.white,
+                    context: context,
+                    actions: [
+                      IconsOutlineButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        text: '취소',
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconsButton(
+                        onPressed: () {
+                          sendRemoveHabit(editHabitController.id).then((value) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            pageChangeController.rebuildPage();
+                          });
+                        },
+                        text: '삭제하기',
+                        color: Colors.red,
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                icon: Icon(
+                  Icons.delete_outline,
+                  color: themeController.selectedPrimaryColor,
+                ),
+              ) :Container(),
             ],
             backgroundColor: Colors.white,
             iconTheme: IconThemeData(

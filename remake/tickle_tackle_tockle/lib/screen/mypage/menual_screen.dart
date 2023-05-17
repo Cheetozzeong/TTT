@@ -21,21 +21,16 @@ class ManualScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '사용 안내'),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(deviceWidth * 0.05, deviceHeight * 0.02, deviceWidth * 0.05, 0),
-          child: Container(
-            height: deviceHeight * 0.4,
-            width: deviceWidth * 0.9,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.7),
-                  blurRadius: 5.0,
-                  spreadRadius: 0.0,
-                  offset: const Offset(0, 7),
+        body: Column(
+          children: [
+            Expanded(
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  aspectRatio: deviceWidth * 1.6  / deviceHeight * 0.9,
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                  initialPage: 0,
+                  autoPlay: false,
                 ),
                 items: images.map((imagePath) {
                   return Builder(
@@ -58,7 +53,7 @@ class ManualScreen extends StatelessWidget {
             ),
           ],
         ),
-        ),
+      ),
       );
   }
 }
