@@ -109,8 +109,8 @@
 ### 프론트엔드
 
 - IDE : Android Studio
-- SDK : Flutter, Kotlin, Compose
-- Language : Dart
+- SDK : Flutter, Compose
+- Language : Dart, Kotlin
 
 ### 백엔드
 
