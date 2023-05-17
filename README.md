@@ -104,7 +104,7 @@
 
 ---
 
-![구성도.png](output/application/구성도.png)
+![구성도.jpg](output/application/구성도.jpg)
 
 ### 프론트엔드
 
