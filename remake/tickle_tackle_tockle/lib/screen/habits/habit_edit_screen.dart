@@ -84,49 +84,6 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
 
   }
 
-  Future<http.Response> RemoveHabit (int habitId) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String accessToken = pref.getString('accessToken')!;
-    var url = Uri.parse('${ServerUrl}/habit/quit/{$habitId}');
-
-    var response = await http.patch(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'accesstoken' :  accessToken,
-      },
-    );
-    return response;
-  }
-
-  Future<void> sendRemoveHabit(int habitId) async {
-
-    final response = await RemoveHabit(habitId);
-
-    if (response.statusCode == 200) {
-      print('삭제');
-    }else if(response.statusCode == 401){
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      String refreshToken = pref.getString('refreshToken')!;
-      String accessToken = pref.getString('accessToken')!;
-      var url = Uri.parse('${ServerUrl}/habit/quit/{$habitId}');
-      var response = await http.patch(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'accesstoken' : accessToken,
-          'refreshtoken' :  refreshToken,
-        },
-      );
-      final headers = response.headers;
-      final accesstoken = headers['accesstoken'];
-      final refreshtoken = headers['refreshtoken'];
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.setString('accessToken', accesstoken!);
-      sharedPreferences.setString('refreshToken', refreshtoken!);
-
-    }else print('Login failed with status: ${response.statusCode}');
-  }
 
 
   @override
@@ -181,7 +138,7 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
               FocusManager.instance.primaryFocus?.unfocus();
             },
             child: Scaffold(
-              appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '습관 수정하기',),
+              appBar: CommonAppBar(appBarType: AppBarType.habitEditAppBar, title: '습관 수정하기',),
               body: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -627,8 +584,6 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
                         case '기타': categoryNum =5; break;
                       }
 
-                      print('호히호히 : $category !! $categoryNum');
-
                       HabitReq habitReq = new HabitReq(
                         id : editHabitController.id,
                         categoryId: categoryNum,
@@ -651,7 +606,7 @@ class _HabitEditScreenState extends State<HabitEditScreen> {
                             width: deviceWidth,
                             height: deviceHeight * 0.1,
                             color: themeController.selectedPrimaryColor,
-                            child: Center(child: Text('생성하기', style: TextStyle(color: TTTWhite, fontSize: 20),)),
+                            child: Center(child: Text('수정하기', style: TextStyle(color: TTTWhite, fontSize: 20),)),
                           );
                         }
                     ),

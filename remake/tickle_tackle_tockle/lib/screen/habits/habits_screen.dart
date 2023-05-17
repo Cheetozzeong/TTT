@@ -161,8 +161,6 @@ class HabitsScreen extends StatelessWidget {
       return habitList;
     }
 
-    checkAccessToken();
-
     buildMoneyHabitsList(List<HabitRes> totalHabitsList) {
       List<Widget> columHabit = [];
       List<HabitRes>  habitList = [];
@@ -210,6 +208,7 @@ class HabitsScreen extends StatelessWidget {
 
                   if(editHabitController.repeatTime == '2400') {
                     editHabitController.isAlarmRepeat = false;
+                    editHabitController.alarmTime = editHabitController.startTime;
                   } else {
                     editHabitController.isAlarmRepeat = true;
                   }
@@ -337,6 +336,7 @@ class HabitsScreen extends StatelessWidget {
 
                   if(editHabitController.repeatTime == '2400') {
                     editHabitController.isAlarmRepeat = false;
+                    editHabitController.alarmTime = editHabitController.startTime;
                   } else {
                     editHabitController.isAlarmRepeat = true;
                   }
@@ -466,6 +466,7 @@ class HabitsScreen extends StatelessWidget {
 
                   if(editHabitController.repeatTime == '2400') {
                     editHabitController.isAlarmRepeat = false;
+                    editHabitController.alarmTime = editHabitController.startTime;
                   } else {
                     editHabitController.isAlarmRepeat = true;
                   }
@@ -595,6 +596,7 @@ class HabitsScreen extends StatelessWidget {
 
                   if(editHabitController.repeatTime == '2400') {
                     editHabitController.isAlarmRepeat = false;
+                    editHabitController.alarmTime = editHabitController.startTime;
                   } else {
                     editHabitController.isAlarmRepeat = true;
                   }
@@ -723,6 +725,7 @@ class HabitsScreen extends StatelessWidget {
 
                   if(editHabitController.repeatTime == '2400') {
                     editHabitController.isAlarmRepeat = false;
+                    editHabitController.alarmTime = editHabitController.startTime;
                   } else {
                     editHabitController.isAlarmRepeat = true;
                   }
@@ -851,6 +854,7 @@ class HabitsScreen extends StatelessWidget {
 
                   if(editHabitController.repeatTime == '2400') {
                     editHabitController.isAlarmRepeat = false;
+                    editHabitController.alarmTime = editHabitController.startTime;
                   } else {
                     editHabitController.isAlarmRepeat = true;
                   }

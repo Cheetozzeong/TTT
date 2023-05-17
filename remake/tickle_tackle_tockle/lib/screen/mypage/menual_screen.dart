@@ -14,7 +14,7 @@ class ManualScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: const CommonAppBar(appBarType: AppBarType.normalAppBar, title: '사용 안내'),
+        appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '사용 안내'),
         body: Padding(
           padding: EdgeInsets.fromLTRB(deviceWidth * 0.05, deviceHeight * 0.02, deviceWidth * 0.05, 0),
           child: Container(

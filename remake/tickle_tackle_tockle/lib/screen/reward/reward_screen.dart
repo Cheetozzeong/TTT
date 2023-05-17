@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/const/theme.dart';
+import 'package:tickle_tackle_tockle/controller/page_change_controller.dart';
 import 'package:tickle_tackle_tockle/model/TickleCountNameRes.dart';
 import '../../component/common_appbar.dart';
 import 'package:tickle_tackle_tockle/const/tockle_list.dart';
@@ -76,7 +77,7 @@ class RewardScreen extends StatelessWidget {
     const double tokleImgSizeWidth = 110;
     const double tokleImgSizeHeight = 110;
 
-    LoadingController loadingController = Get.put(LoadingController());
+    PageChangeController pageChangeController = Get.put(PageChangeController());
 
     buildTocklesRow({
       required int tickleCntMoney,
@@ -333,18 +334,22 @@ class RewardScreen extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '나의 토끌이들'),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: deviceHeight * 0.02,
+    return GetBuilder<PageChangeController>(
+      builder: (_) {
+        return Scaffold(
+          appBar: CommonAppBar(appBarType: AppBarType.normalAppBar, title: '나의 토끌이들'),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: deviceHeight * 0.02,
+                ),
+                buildTocklesColumn(),
+              ],
             ),
-            buildTocklesColumn(),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }
