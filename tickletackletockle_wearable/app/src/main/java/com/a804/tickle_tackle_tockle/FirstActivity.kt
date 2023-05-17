@@ -55,7 +55,7 @@ class FirstActivity : ComponentActivity() {
     }
 
     private fun postNewDeviceToken(deviceToken: String, accessToken: String) {
-        val url = "https://k8a804.p.ssafy.io/staging-api/watchfcmtoken/update"
+        val url = "https://k8a804.p.ssafy.io/api/watchfcmtoken/update"
         val jsonMediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody = "{\"watchFcmToken\":\"$deviceToken\"}".toRequestBody(jsonMediaType)
 

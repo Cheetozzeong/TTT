@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
             val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
             val formattedDate = nowDate.format(formatter)
             val url =
-                "https://k8a804.p.ssafy.io/staging-api/tickle/schedule?targetDate=${formattedDate}"
+                "https://k8a804.p.ssafy.io/api/tickle/schedule?targetDate=${formattedDate}"
 
             val client = OkHttpClient()
             val request = Request.Builder()

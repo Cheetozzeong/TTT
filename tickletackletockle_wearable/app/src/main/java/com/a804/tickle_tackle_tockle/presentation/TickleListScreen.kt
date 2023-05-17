@@ -226,7 +226,7 @@ private fun postCreateTickle(accessToken: String, refreshToken: String, habitId:
     val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
     val formattedDate = nowDate.format(formatter)
 
-    val url = "https://k8a804.p.ssafy.io/staging-api/tickle"
+    val url = "https://k8a804.p.ssafy.io/api/tickle"
     val jsonMediaType = "application/json; charset=utf-8".toMediaType()
     val requestBody = """
     {

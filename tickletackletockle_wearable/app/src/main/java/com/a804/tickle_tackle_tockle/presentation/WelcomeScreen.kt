@@ -52,10 +52,18 @@ fun WelcomeScreen(
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Box(
-                        modifier = Modifier.fillMaxHeight().clickable(onClick = {sharedPreferences.edit().clear().apply()}),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable(onClick = {
+                                sharedPreferences
+                                    .edit()
+                                    .clear()
+                                    .apply()
+                            }),
                         contentAlignment = Alignment.Center,
                     ) {
-                        Image(painter = painterResource(R.drawable.welcometockle),"content description")
+                        Text(text = "티끌 소환중..", style = MaterialTheme.typography.caption1)
+                        welecomeGif()
                     }
                 }
                 Row(
@@ -98,28 +106,28 @@ fun WelcomeScreen(
     }
 }
 
-//@Composable
-//fun welecomeGif(
-//    modifier: Modifier = Modifier,
-//) {
-//    val context = LocalContext.current
-//    val imageLoader = ImageLoader.Builder(context)
-//        .components {
-//            if (Build.VERSION.SDK_INT >= 28) {
-//                add(ImageDecoderDecoder.Factory())
-//            } else {
-//                add(GifDecoder.Factory())
-//            }
-//        }
-//        .build()
-//    Image(
-//        painter = rememberAsyncImagePainter(
-//            ImageRequest.Builder(context).data(data = R.drawable.movingtockle).apply(block = {
-//                size(Size.ORIGINAL)
-//            }).build(), imageLoader = imageLoader
-//        ),
-//        contentDescription = null,
-//        modifier = modifier.fillMaxWidth(),
-//    )
-//}
+@Composable
+fun welecomeGif(
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val imageLoader = ImageLoader.Builder(context)
+        .components {
+            if (Build.VERSION.SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
+        .build()
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(context).data(data = R.drawable.ssulmae).apply(block = {
+                size(Size.ORIGINAL)
+            }).build(), imageLoader = imageLoader
+        ),
+        contentDescription = null,
+        modifier = modifier.fillMaxWidth(),
+    )
+}
 
