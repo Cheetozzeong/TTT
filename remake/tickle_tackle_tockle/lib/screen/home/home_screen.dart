@@ -12,7 +12,9 @@ import '../../controller/loading_controller.dart';
 import '../../controller/theme_controller.dart';
 import 'package:http/http.dart' as http;
 
+import '../../model/TickleCategoryRes.dart';
 import '../../model/TickleCountNameRes.dart';
+import '../../model/TickleTodayRes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -37,6 +39,32 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<http.Response> checkDeviceTokenRequest() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String accessToken = pref.getString('accessToken')!;
+    String deviceToken = pref.getString('deviceToken')!;
+    var url = Uri.parse('${ServerUrl}/fcmtoken');
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'accessToken': accessToken,
+      },
+      body: jsonEncode(<String, String>{
+        'fcmToken': deviceToken,
+      }),
+    );
+    return response;
+  }
+
+  Future<void> postDeviceToken() async {
+    final response = await checkDeviceTokenRequest();
+    if (response.statusCode == 200) {
+      print('Token send successFully: ${response.statusCode}');
+    } else {
+      print('Device Token send failed with status: ${response.statusCode}');
+    }
+  }
   buildTickleListTile(String category, DateTime selectedDateTime) {
     List<Widget> tickleList = [];
     tickleList.add(Row(
@@ -53,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if(isSameDay(DateTime.now(), selectedDateTime)) {
       // 오늘 => 달성/미달성 토글이 가능한 일정 위젯을 반환
-
+      getSchedule('20230517'); //여기에 들어왔는데.. 어케하누 ;
       tickleList.add(Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -159,10 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
       tickleList = List<String>.from(data.map((item) => item.toString()));
-      print('${tickleList.length} 몇개임');
-      for(int i=0;i<tickleList.length;i++){
-        print(tickleList[i].toString()+" 투스트링");
-      }
+
     } else if(response.statusCode == 401){
       SharedPreferences pref = await SharedPreferences.getInstance();
       String refreshToken = pref.getString('refreshToken')!;
@@ -185,6 +210,64 @@ class _HomeScreenState extends State<HomeScreen> {
       List<dynamic> data = jsonDecode(response.body);
       tickleList = List<String>.from(data.map((item) => item.toString()));
 
+    } else {
+      print('Login failed with status: ${response.statusCode}');
+    }
+    return tickleList;
+  }
+
+  Future<http.Response> makeSchedule(String strDate) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String accessToken = pref.getString('accessToken')!;
+    var url = Uri.parse('${ServerUrl}/tickle/schedule?targetDate=$strDate');
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'accesstoken' :  accessToken,
+
+      },
+    );
+    return response;
+  }
+
+  Future<List<TickleCategoryRes>> getSchedule(String strDate) async {
+    final response = await makeSchedule(strDate);
+    List<TickleCategoryRes> tickleList = [];
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      tickleList = List<TickleCategoryRes>.from(data.map((item) => TickleCategoryRes.fromJson(item)));
+
+      for(int i=0;i<tickleList.length;i++){
+        List<TickleTodayRes> convertedTickles = tickleList[i].tickles.map((item) => item as TickleTodayRes).toList();
+        for(int j=0;j<convertedTickles.length;j++){
+          convertedTickles[j].habitName = utf8.decode(convertedTickles[j].habitName.runes.toList());
+        }
+      }
+
+
+    } else if(response.statusCode == 401){
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String refreshToken = pref.getString('refreshToken')!;
+      String accessToken = pref.getString('accessToken')!;
+      var url = Uri.parse('${ServerUrl}/tickle/schedule?targetDate=$strDate');
+      var response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accesstoken' : accessToken,
+          'refreshtoken' :  refreshToken,
+        },
+      );
+      final headers = response.headers;
+      final accesstoken = headers['accesstoken'];
+      final refreshtoken = headers['refreshtoken'];
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      sharedPreferences.setString('accessToken', accesstoken!);
+      sharedPreferences.setString('refreshToken', refreshtoken!);
+      List<dynamic> data = jsonDecode(response.body);
+      tickleList = List<TickleCategoryRes>.from(data.map((item) => TickleCategoryRes.fromJson(item)));
 
     } else {
       print('Login failed with status: ${response.statusCode}');
@@ -194,8 +277,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
+
+
   @override
   Widget build(BuildContext context) {
+    postDeviceToken();
     final Size size = MediaQuery.of(context).size;
     final double deviceWidth = size.width;
     final double deviceHeight = size.height;

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
+import 'const/serveraddress.dart';
 import 'const/theme.dart';
 import 'component/main_fram.dart';
 import 'controller/loading_controller.dart';
@@ -11,6 +14,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:http/http.dart' as http;
+
+import 'model/LoginReq.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +59,44 @@ class _MyAppState extends State<MyApp> {
     themeController.refreshTheme();
   }
 
+  Future<int> saveIdToken() async {
+    String str = await FirebaseAuth.instance.currentUser!.getIdToken();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('idToken', str!);
+    await checkIdToken();
+    return 0;
+  }
+
+  Future<http.Response> sendIdToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String idToken = pref.getString('idToken')!;
+    var url = Uri.parse('${ServerUrl}/login');
+    var loginReq = LoginReq(idToken: idToken);
+    var body = json.encode(loginReq.toJson());
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    );
+    return response;
+  }
+
+  Future<void> checkIdToken() async {
+    final response = await sendIdToken();
+    if (response.statusCode == 200) {
+      final headers = response.headers;
+      final accessToken = headers['accesstoken'];
+      final refreshToken = headers['refreshtoken'];
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      sharedPreferences.setString('accessToken', accessToken!);
+      sharedPreferences.setString('refreshToken', refreshToken!);
+    } else {
+      print('Login failed with status: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     LoadingController loadingController = Get.put(LoadingController());
@@ -68,7 +112,22 @@ class _MyAppState extends State<MyApp> {
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return const MainFrame();
+                    return FutureBuilder(
+                      future: saveIdToken(),
+                      builder: (context, snapshot) {
+                        if(!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if(snapshot.hasError) {
+                          return Container();
+                        }
+
+                        return const MainFrame();
+                      },
+                    );
                   }
 
                   return const LoginScreen();
