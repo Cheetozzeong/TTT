@@ -41,7 +41,7 @@ class _CameraScreen extends State<CameraScreen> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json',
-        'authorization': accessToken,
+        'accesstoken': accessToken,
       },
       body: jsonEncode(<String, String>{
         'watchFcmToken': qrCode,

@@ -38,7 +38,7 @@ class SettingScreen extends StatelessWidget {
           url,
           headers: <String, String>{
             'Content-Type': 'application/json',
-            'authorization': accessToken,
+            'accesstoken': accessToken,
           },
         );
         return response;
@@ -47,7 +47,7 @@ class SettingScreen extends StatelessWidget {
           url,
           headers: <String, String>{
             'Content-Type': 'application/json',
-            'authorization': accessToken,
+            'accesstoken': accessToken,
           },
         );
         return response;

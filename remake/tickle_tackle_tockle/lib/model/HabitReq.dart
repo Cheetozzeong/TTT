@@ -1,5 +1,5 @@
 class HabitReq {
-  int id; // 생성 req면 0으로 올거고
+  int id;
   int categoryId;
   String name;
   String emoji;
