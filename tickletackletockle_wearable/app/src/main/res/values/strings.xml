@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">tickle_tackle_tockle</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">From the Square world,\nHello, %1$s!</string>
+    <string name="TickleListTitle">오늘의 티끌</string>
+    <string name="StartMessage">시작하기!</string>
+    <string name="Today">티끌을 모아볼까요?</string>
+</resources>
