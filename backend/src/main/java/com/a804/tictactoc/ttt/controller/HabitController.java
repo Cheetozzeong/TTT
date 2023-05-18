@@ -81,6 +81,9 @@ public class HabitController {
 	public ResponseEntity<?> updateHabit(@RequestBody HabitReq habitReq, HttpServletRequest request) throws Exception{
 		User user = (User) request.getAttribute("USER");
 		long userId = user.getId();
+		System.out.println("habitReq.getStartTime() : " + habitReq.getStartTime());
+		System.out.println("habitReq.getEndTime() : " + habitReq.getEndTime());
+		System.out.println("habitReq.getTerm() : " + habitReq.getTerm());
 		HabitRes habitRes = hService.updateHabit(habitReq);
 		if(habitRes == null)
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
