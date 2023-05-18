@@ -33,6 +33,35 @@ class _HomeScreenState extends State<HomeScreen> {
   ThemeController themeController = Get.put(ThemeController());
   PageChangeController pageChangeController = Get.put(PageChangeController());
 
+  checkInitLogin(BuildContext inputContext) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if(prefs.getBool('initLoginFlag') == null) {
+      prefs.setBool('initLoginFlag', true);
+      return showDialog(
+        barrierDismissible: true,
+        context: inputContext,
+        builder: (_) {
+          return Center(
+            child: Container(
+              width: 50,
+              height: 50,
+              child: Card(
+                color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
@@ -541,6 +570,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return GetBuilder<PageChangeController>(
       builder: (_) {
+
+        checkInitLogin(context);
+
         return SafeArea(
           child: Scaffold(
             appBar: CommonAppBar(appBarType: AppBarType.homePageAppBar, title: '틱택톡'),
