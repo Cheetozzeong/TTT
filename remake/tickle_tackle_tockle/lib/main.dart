@@ -12,7 +12,6 @@ import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:http/http.dart' as http;
 
@@ -147,7 +146,12 @@ class _MyAppState extends State<MyApp> {
                       builder: (context, snapshot) {
                         if(!snapshot.hasData) {
                           return Center(
-                            child: CircularProgressIndicator(),
+                            child: Center(
+                              child: Image.asset('assets/images/tockles/toc_loading.gif',
+                                  width: 250,
+                                  height: 250,
+                              ),
+                            ),
                           );
                         }
 
@@ -170,20 +174,14 @@ class _MyAppState extends State<MyApp> {
                     child: Stack(
                       children: [
                         const Opacity(
-                          opacity: 0.5,
+                          opacity: 0.7,
                           child: ModalBarrier(
                             dismissible: false,
                             color: Colors.black,
                           ),
                         ),
                         Center(
-                          child: SpinKitCubeGrid(
-                            itemBuilder: (context, index) {
-                              return DecoratedBox(
-                                decoration: BoxDecoration(color: themeController.selectedPrimaryColor),
-                              );
-                            },
-                          ),
+                          child: Image.asset('assets/images/tockles/toc_loading.gif', width: 250, height: 250),
                         ),
                       ],
                     ),

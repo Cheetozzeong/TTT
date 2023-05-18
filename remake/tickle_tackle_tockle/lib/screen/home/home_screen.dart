@@ -27,7 +27,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final ValueNotifier<List<Event>> _selectedEvents;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -215,12 +214,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     _selectedDay = _focusedDay;
-    //_selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
   @override
   void dispose() {
-    _selectedEvents.dispose();
     super.dispose();
   }
 
@@ -554,7 +551,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     future: checkAccessToken(_focusedDay.year.toString() + _focusedDay.month.toString().padLeft(2, '0')),
                     builder: (context, snapshot) {
                       if(!snapshot.hasData) {
-                        return CircularProgressIndicator();
+                        return Container();
                       }
 
                       if(snapshot.hasError) {
@@ -671,7 +668,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context, snapshot) {
                       if(!snapshot.hasData) {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: Image.asset('assets/images/tockles/toc_loading.gif', width: 250, height: 250),
                         );
                       }
 
@@ -706,7 +703,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context, snapshot) {
                       if(!snapshot.hasData) {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: Center(
+                            child: Image.asset('assets/images/tockles/toc_loading.gif', width: 250, height: 250),
+                          ),
                         );
                       }
 

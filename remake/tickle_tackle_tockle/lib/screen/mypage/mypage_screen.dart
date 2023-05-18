@@ -4,11 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:switcher_button/switcher_button.dart';
 import 'package:tickle_tackle_tockle/component/common_appbar.dart';
-import 'package:tickle_tackle_tockle/component/custom_switch.dart';
 import 'package:tickle_tackle_tockle/const/theme.dart';
 import 'package:tickle_tackle_tockle/controller/disturb_alarm_controller.dart';
 import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
@@ -350,315 +348,317 @@ class MyPageScreen extends StatelessWidget {
       appBar: CommonAppBar(appBarType: AppBarType.myPageAppBar, title: '마이 페이지',),
       body: Padding(
         padding: EdgeInsets.fromLTRB(deviceWidth * 0.05, deviceHeight * 0.02, deviceWidth * 0.05, 0),
-        child: Column(
-          children: [
-            Container(
-              height: deviceHeight * 0.15,
-              width: deviceWidth * 0.9,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.7),
-                    blurRadius: 5.0,
-                    spreadRadius: 0.0,
-                    offset: const Offset(0, 7),
+        child: FutureBuilder(
+          future: checkAccessToken(true),
+          builder: (context, snapshot) {
+            if(!snapshot.hasData) {
+              return Center(
+                child: Image.asset('assets/images/tockles/toc_loading.gif', width: 250, height: 250),
+              );
+            }
+
+            if(snapshot.hasError) {
+              return Container();
+            }
+
+            return Column(
+              children: [
+                Container(
+                  height: deviceHeight * 0.15,
+                  width: deviceWidth * 0.9,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(deviceHeight * 0.02),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: deviceWidth * 0.085,
-                      backgroundImage: CachedNetworkImageProvider(FirebaseAuth.instance.currentUser!.photoURL.toString()),
+                  child: Padding(
+                    padding: EdgeInsets.all(deviceHeight * 0.02),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: deviceWidth * 0.085,
+                          backgroundImage: CachedNetworkImageProvider(FirebaseAuth.instance.currentUser!.photoURL.toString()),
+                        ),
+                        SizedBox(
+                          width: deviceWidth * 0.05,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: deviceWidth * 0.5,
+                              child: Text(
+                                FirebaseAuth.instance.currentUser!.displayName.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: deviceWidth * 0.06
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: deviceWidth * 0.5,
+                              child: Text(
+                                FirebaseAuth.instance.currentUser!.email.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: deviceWidth * 0.05,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ),
+                ),
+                SizedBox(
+                  height: deviceHeight * 0.02,
+                ),
+                Container(
+                  height: deviceHeight * 0.15,
+                  width: deviceWidth * 0.9,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(deviceHeight * 0.02),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: deviceWidth * 0.5,
-                          child: Text(
-                            FirebaseAuth.instance.currentUser!.displayName.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: deviceWidth * 0.06
-                            ),
+                        Text(
+                          '기본 컬러 설정',
+                          style: TextStyle(
+                            fontSize: deviceWidth * 0.055,
                           ),
                         ),
-                        Container(
-                          width: deviceWidth * 0.5,
-                          child: Text(
-                            FirebaseAuth.instance.currentUser!.email.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                            ),
-                          ),
+                        SizedBox(
+                          height: deviceHeight * 0.02,
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                themeController.selectedPrimaryColor = TTTPrimary1;
+                                themeController.refreshTheme();
+                                setSharedPreferenceTheme(TTTPrimary1);
+                              },
+                              child: GetBuilder<ThemeController>(
+                                  builder: (_) {
+                                    return Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: TTTPrimary1,
+                                          radius: deviceWidth * 0.05,
+                                        ),
+                                        themeController.selectedPrimaryColor == TTTPrimary1 ?
+                                        Icon(
+                                          Icons.check, size: deviceWidth * 0.1,
+                                          color: TTTBlack,
+                                        ) :
+                                        Container(),
+                                      ],
+                                    );
+                                  }
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                themeController.selectedPrimaryColor = TTTPrimary2;
+                                themeController.refreshTheme();
+                                setSharedPreferenceTheme(TTTPrimary2);
+                              },
+                              child: GetBuilder<ThemeController>(
+                                  builder: (_) {
+                                    return Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: TTTPrimary2,
+                                          radius: deviceWidth * 0.05,
+                                        ),
+                                        themeController.selectedPrimaryColor == TTTPrimary2 ?
+                                        Icon(
+                                          Icons.check, size: deviceWidth * 0.1,
+                                          color: TTTBlack,
+                                        ) :
+                                        Container(),
+                                      ],
+                                    );
+                                  }
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                themeController.selectedPrimaryColor = TTTPrimary3;
+                                themeController.refreshTheme();
+                                setSharedPreferenceTheme(TTTPrimary3);
+                              },
+                              child: GetBuilder<ThemeController>(
+                                  builder: (_) {
+                                    return Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: TTTPrimary3,
+                                          radius: deviceWidth * 0.05,
+                                        ),
+                                        themeController.selectedPrimaryColor == TTTPrimary3 ?
+                                        Icon(
+                                          Icons.check, size: deviceWidth * 0.1,
+                                          color: TTTBlack,
+                                        ) :
+                                        Container(),
+                                      ],
+                                    );
+                                  }
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                themeController.selectedPrimaryColor = TTTPrimary4;
+                                themeController.refreshTheme();
+                                setSharedPreferenceTheme(TTTPrimary4);
+                              },
+                              child: GetBuilder<ThemeController>(
+                                  builder: (_) {
+                                    return Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: TTTPrimary4,
+                                          radius: deviceWidth * 0.05,
+                                        ),
+                                        themeController.selectedPrimaryColor == TTTPrimary4 ?
+                                        Icon(
+                                          Icons.check, size: deviceWidth * 0.1,
+                                          color: TTTBlack,
+                                        ) :
+                                        Container(),
+                                      ],
+                                    );
+                                  }
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                themeController.selectedPrimaryColor = TTTPrimary5;
+                                themeController.refreshTheme();
+                                setSharedPreferenceTheme(TTTPrimary5);
+                              },
+                              child: GetBuilder<ThemeController>(
+                                  builder: (_) {
+                                    return Stack(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: TTTPrimary5,
+                                          radius: deviceWidth * 0.05,
+                                        ),
+                                        themeController.selectedPrimaryColor == TTTPrimary5 ?
+                                        Icon(
+                                          Icons.check, size: deviceWidth * 0.1,
+                                          color: TTTWhite,
+                                        ) :
+                                        Container(),
+                                      ],
+                                    );
+                                  }
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: deviceHeight * 0.02,
-            ),
-            Container(
-              height: deviceHeight * 0.15,
-              width: deviceWidth * 0.9,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.7),
-                    blurRadius: 5.0,
-                    spreadRadius: 0.0,
-                    offset: const Offset(0, 7),
                   ),
-                ],
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(deviceHeight * 0.02),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '기본 컬러 설정',
-                      style: TextStyle(
-                        fontSize: deviceWidth * 0.055,
+                ),
+                SizedBox(
+                  height: deviceHeight * 0.02,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
                       ),
-                    ),
-                    SizedBox(
-                      height: deviceHeight * 0.02,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    ],
+                  ),
+                  child: ExpandableNotifier(
+                    initialExpanded: disturbAlarmController.isDisturbAlarm,
+                    child: Stack(
                       children: [
-                        InkWell(
-                          onTap: () {
-                            themeController.selectedPrimaryColor = TTTPrimary1;
-                            themeController.refreshTheme();
-                            setSharedPreferenceTheme(TTTPrimary1);
-                          },
-                          child: GetBuilder<ThemeController>(
-                              builder: (_) {
-                                return Stack(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: TTTPrimary1,
-                                      radius: deviceWidth * 0.05,
-                                    ),
-                                    themeController.selectedPrimaryColor == TTTPrimary1 ?
-                                    Icon(
-                                      Icons.check, size: deviceWidth * 0.1,
-                                      color: TTTBlack,
-                                    ) :
-                                    Container(),
-                                  ],
-                                );
-                              }
-                          ),
+                        Expandable(
+                          collapsed: buildCollapsedAlarm(),
+                          expanded: buildExpandedAlarm(),
                         ),
-                        InkWell(
-                          onTap: () {
-                            themeController.selectedPrimaryColor = TTTPrimary2;
-                            themeController.refreshTheme();
-                            setSharedPreferenceTheme(TTTPrimary2);
-                          },
-                          child: GetBuilder<ThemeController>(
-                              builder: (_) {
-                                return Stack(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: TTTPrimary2,
-                                      radius: deviceWidth * 0.05,
-                                    ),
-                                    themeController.selectedPrimaryColor == TTTPrimary2 ?
-                                    Icon(
-                                      Icons.check, size: deviceWidth * 0.1,
-                                      color: TTTBlack,
-                                    ) :
-                                    Container(),
-                                  ],
-                                );
-                              }
+                        Padding(
+                          padding: EdgeInsets.all(deviceHeight * 0.02),
+                          child: Row(
+                            children: [
+                              Text(
+                                '방해 금지 시간대 설정',
+                                style: TextStyle(
+                                  fontSize: deviceWidth * 0.055,
+                                ),
+                              ),
+                              SizedBox(
+                                width: deviceWidth * 0.13,
+                              ),
+                              Builder(
+                                  builder: (context) {
+                                    return GetBuilder<ThemeController>(
+                                        builder: (_) {
+                                          return SwitcherButton(
+                                            offColor: TTTGrey,
+                                            onColor: themeController.selectedPrimaryColor,
+                                            size: deviceWidth * 0.15,
+                                            value: disturbAlarmController.isDisturbAlarm,
+                                            onChange: (_) {
+                                              var ec = ExpandableController.of(context, required: true)!;
+                                              ec.toggle();
+                                              disturbAlarmController.setIsDisturbAlarmFlag(!disturbAlarmController.isDisturbAlarm);
+
+                                              strSleepStartTime = '0000';
+                                              strSleepEndTime = '0000';
+
+                                              bool check = false;
+                                              checkAccessToken(check).then((value) => themeController.refresh());
+
+                                            },
+                                          );
+                                        }
+                                    );
+                                  }
+                              ),
+                            ],
                           ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            themeController.selectedPrimaryColor = TTTPrimary3;
-                            themeController.refreshTheme();
-                            setSharedPreferenceTheme(TTTPrimary3);
-                          },
-                          child: GetBuilder<ThemeController>(
-                              builder: (_) {
-                                return Stack(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: TTTPrimary3,
-                                      radius: deviceWidth * 0.05,
-                                    ),
-                                    themeController.selectedPrimaryColor == TTTPrimary3 ?
-                                    Icon(
-                                      Icons.check, size: deviceWidth * 0.1,
-                                      color: TTTBlack,
-                                    ) :
-                                    Container(),
-                                  ],
-                                );
-                              }
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            themeController.selectedPrimaryColor = TTTPrimary4;
-                            themeController.refreshTheme();
-                            setSharedPreferenceTheme(TTTPrimary4);
-                          },
-                          child: GetBuilder<ThemeController>(
-                              builder: (_) {
-                                return Stack(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: TTTPrimary4,
-                                      radius: deviceWidth * 0.05,
-                                    ),
-                                    themeController.selectedPrimaryColor == TTTPrimary4 ?
-                                    Icon(
-                                      Icons.check, size: deviceWidth * 0.1,
-                                      color: TTTBlack,
-                                    ) :
-                                    Container(),
-                                  ],
-                                );
-                              }
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            themeController.selectedPrimaryColor = TTTPrimary5;
-                            themeController.refreshTheme();
-                            setSharedPreferenceTheme(TTTPrimary5);
-                          },
-                          child: GetBuilder<ThemeController>(
-                              builder: (_) {
-                                return Stack(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: TTTPrimary5,
-                                      radius: deviceWidth * 0.05,
-                                    ),
-                                    themeController.selectedPrimaryColor == TTTPrimary5 ?
-                                    Icon(
-                                      Icons.check, size: deviceWidth * 0.1,
-                                      color: TTTWhite,
-                                    ) :
-                                    Container(),
-                                  ],
-                                );
-                              }
-                          ),
-                        ),
+                        )
                       ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: deviceHeight * 0.02,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.7),
-                    blurRadius: 5.0,
-                    spreadRadius: 0.0,
-                    offset: const Offset(0, 7),
+                    ),
                   ),
-                ],
-              ),
-              child: FutureBuilder(
-                  future: checkAccessToken(true),
-                  builder: (context, snapshot) {
-                    if(!snapshot.hasData) {
-                      return Container();
-                    }
-
-                    if(snapshot.hasError) {
-                      return Container();
-                    }
-
-                    return ExpandableNotifier(
-                      initialExpanded: disturbAlarmController.isDisturbAlarm,
-                      child: Stack(
-                        children: [
-                          Expandable(
-                            collapsed: buildCollapsedAlarm(),
-                            expanded: buildExpandedAlarm(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(deviceHeight * 0.02),
-                            child: Row(
-                              children: [
-                                Text(
-                                  '방해 금지 시간대 설정',
-                                  style: TextStyle(
-                                    fontSize: deviceWidth * 0.055,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: deviceWidth * 0.13,
-                                ),
-                                Builder(
-                                    builder: (context) {
-                                      return GetBuilder<ThemeController>(
-                                          builder: (_) {
-                                            return SwitcherButton(
-                                              offColor: TTTGrey,
-                                              onColor: themeController.selectedPrimaryColor,
-                                              size: deviceWidth * 0.15,
-                                              value: disturbAlarmController.isDisturbAlarm,
-                                              onChange: (_) {
-                                                var ec = ExpandableController.of(context, required: true)!;
-                                                ec.toggle();
-                                                disturbAlarmController.setIsDisturbAlarmFlag(!disturbAlarmController.isDisturbAlarm);
-
-                                                strSleepStartTime = '0000';
-                                                strSleepEndTime = '0000';
-
-                                                bool check = false;
-                                                checkAccessToken(check).then((value) => themeController.refresh());
-
-                                              },
-                                            );
-                                          }
-                                      );
-                                    }
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  }
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

@@ -947,7 +947,9 @@ class HabitsScreen extends StatelessWidget {
                 future: checkAccessToken(),
                 builder: (context, snapshot) {
                   if(!snapshot.hasData) {
-                    return CircularProgressIndicator();
+                    return Center(
+                      child: Image.asset('assets/images/tockles/toc_loading.gif', width: 250, height: 250),
+                    );
                   }
 
                   if(snapshot.hasError) {

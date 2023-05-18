@@ -11,8 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
 import '../../const/serveraddress.dart';
-import '../../controller/loading_controller.dart';
-import '../../controller/theme_controller.dart';
 
 
 class RewardScreen extends StatelessWidget {
@@ -292,7 +290,9 @@ class RewardScreen extends StatelessWidget {
         future: checkAccessToken(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) {
-            return Container();
+            return Center(
+              child: Image.asset('assets/images/tockles/toc_loading.gif', width: 250, height: 250),
+            );
           }
 
           if(snapshot.hasError) {
