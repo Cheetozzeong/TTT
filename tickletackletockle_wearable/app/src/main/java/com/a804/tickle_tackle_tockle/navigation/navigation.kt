@@ -46,6 +46,5 @@ fun TTTNavHost(sharedPreferences: SharedPreferences, tickles: List<TickleListRes
                 }
             }
         }
-        //TickleListScreen(id = it.arguments?.getString("id")!!)
     }
 }

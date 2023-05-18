@@ -13,7 +13,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d("URL 요청 결과","알람이 왔어용!")
         sharedPreferences = applicationContext.getSharedPreferences("tttToken", Context.MODE_PRIVATE)
         if(sharedPreferences.getString("accessToken",null) == null || sharedPreferences.getString("refreshToken",null) == null ){
             val accessToken = remoteMessage.data["accessToken"]
