@@ -60,14 +60,16 @@ public class HabitServiceImpl implements HabitService{
         habit.setEmoji(habitReq.getEmoji());
         habit.setRepeatDay(habitReq.getRepeatDay());
 
-        if(habit.getStartTime() != habitReq.getStartTime() || habit.getEndTime() != habitReq.getEndTime() ||
-                habit.getTerm() != habitReq.getTerm()){ //알람 시간이 변경됐다면
+        if(habit.getStartTime().equals(habitReq.getStartTime()) == false || habit.getEndTime().equals(habitReq.getEndTime()) == false ||
+                habit.getTerm().equals(habitReq.getTerm()) == false){ //알람 시간이 변경됐다면
             aRepo.deleteByHabitId(habit.getId());//삭제 후
             createAlarm(habitReq.getStartTime(), habitReq.getEndTime(), habitReq.getTerm(), habitReq.getId());//재생성
         }
         habit.setStartTime(habitReq.getStartTime());
         habit.setEndTime((habitReq.getEndTime()));
         habit.setTerm(habitReq.getTerm());
+
+        hRepo.save(habit);
 
         return HabitRes.builder().habit(habit).build();
     }
