@@ -98,30 +98,35 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(todayRes.habitName, style: TextStyle(fontSize: 15,),),
                 SizedBox(height: 5,),
-                Text(todayRes.executionTime, style: TextStyle(fontSize: 10, color: TTTGrey),),
+                Text(todayRes.executionTime.substring(0, 2) + ':' + todayRes.executionTime.substring(2, 4), style: TextStyle(fontSize: 10, color: TTTGrey),),
               ],
             ),
             GetBuilder<ThemeController>(
                 builder: (_) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      TickleReq req = new TickleReq(habitId: todayRes.habitId, executionDay: reqDateTime, executionTime: todayRes.executionTime);
+                  return SizedBox(
+                    height: 40,
+                    width: 100,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        TickleReq req = new TickleReq(habitId: todayRes.habitId, executionDay: reqDateTime, executionTime: todayRes.executionTime);
 
-                      if(todayRes.achieved) {
-                        deleteTickle(req).then((value) => pageChangeController.rebuildPage());
-                      } else {
-                        createTickle(req).then((value) => pageChangeController.rebuildPage());
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(todayRes.achieved ? themeController.selectedPrimaryColor : TTTGrey),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          )
+                        if(todayRes.achieved) {
+                          deleteTickle(req).then((value) => pageChangeController.rebuildPage());
+                        } else {
+                          createTickle(req).then((value) => pageChangeController.rebuildPage());
+                        }
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(todayRes.achieved ? themeController.selectedPrimaryColor : TTTWhite),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: BorderSide(color: Colors.red, width: todayRes.achieved ? 0 : 2),
+                            )
+                        ),
                       ),
+                      child: todayRes.achieved ? Text('달성') : Text('달성하기', style: TextStyle(color: themeController.selectedPrimaryColor),),
                     ),
-                    child: todayRes.achieved ? Text('달성') : Text('미달성'),
                   );
                 }
             ),
@@ -141,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(pastRes.habitName, style: TextStyle(fontSize: 15,),),
                 SizedBox(height: 5,),
-                Text(pastRes.executionTime, style: TextStyle(fontSize: 10, color: TTTGrey),),
+                Text(pastRes.executionTime.substring(0, 2) + ':' + pastRes.executionTime.substring(2, 4), style: TextStyle(fontSize: 10, color: TTTGrey),),
               ],
             ),
             GetBuilder<ThemeController>(
@@ -165,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(futureRes.habitName, style: TextStyle(fontSize: 15,),),
                 SizedBox(height: 5,),
-                Text(futureRes.executionTime, style: TextStyle(fontSize: 10, color: TTTGrey),),
+                Text(futureRes.executionTime.substring(0, 2) + ':' + futureRes.executionTime.substring(2, 4), style: TextStyle(fontSize: 10, color: TTTGrey),),
               ],
             ),
             GetBuilder<ThemeController>(
@@ -290,16 +295,13 @@ class _HomeScreenState extends State<HomeScreen> {
     List<TickleCategoryRes> tickleList = [];
 
     if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
+      var parsed = jsonDecode(utf8.decode(response.bodyBytes)).cast<TickleCategoryRes>();
+
+      parsed = parsed
+          .map<TickleCategoryRes>((json) => TickleCategoryRes.fromJson(json));
+
+      List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
       tickleList = List<TickleCategoryRes>.from(data.map((item) => TickleCategoryRes.fromJson(item)));
-
-      for(int i=0;i<tickleList.length;i++){
-        List<TickleTodayRes> convertedTickles = tickleList[i].tickles.map((item) => item as TickleTodayRes).toList();
-        for(int j=0;j<convertedTickles.length;j++){
-          convertedTickles[j].habitName = utf8.decode(convertedTickles[j].habitName.runes.toList());
-        }
-      }
-
 
     } else if(response.statusCode == 401){
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -320,7 +322,12 @@ class _HomeScreenState extends State<HomeScreen> {
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString('accessToken', accesstoken!);
       sharedPreferences.setString('refreshToken', refreshtoken!);
-      List<dynamic> data = jsonDecode(response.body);
+      var parsed = jsonDecode(utf8.decode(response.bodyBytes)).cast<TickleCategoryRes>();
+
+      parsed = parsed
+          .map<TickleCategoryRes>((json) => TickleCategoryRes.fromJson(json));
+
+      List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
       tickleList = List<TickleCategoryRes>.from(data.map((item) => TickleCategoryRes.fromJson(item)));
 
     } else {
@@ -350,16 +357,8 @@ class _HomeScreenState extends State<HomeScreen> {
     List<TickleCategoryPastRes> tickleList = [];
 
     if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
+      List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
       tickleList = List<TickleCategoryPastRes>.from(data.map((item) => TickleCategoryPastRes.fromJson(item)));
-
-      for(int i=0;i<tickleList.length;i++){
-        List<TicklePastRes> convertedTickles = tickleList[i].tickles.map((item) => item as TicklePastRes).toList();
-        for(int j=0;j<convertedTickles.length;j++){
-          convertedTickles[j].habitName = utf8.decode(convertedTickles[j].habitName.runes.toList());
-        }
-      }
-
 
     } else if(response.statusCode == 401){
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -380,7 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
       SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString('accessToken', accesstoken!);
       sharedPreferences.setString('refreshToken', refreshtoken!);
-      List<dynamic> data = jsonDecode(response.body);
+      List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
       tickleList = List<TickleCategoryPastRes>.from(data.map((item) => TickleCategoryPastRes.fromJson(item)));
 
     } else {

@@ -63,8 +63,8 @@ class _MyAppState extends State<MyApp> {
     String str = await FirebaseAuth.instance.currentUser!.getIdToken();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString('idToken', str!);
-    await postDeviceToken();
     await checkIdToken();
+    await postDeviceToken();
     return 0;
   }
 
