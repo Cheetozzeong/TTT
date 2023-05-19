@@ -172,5 +172,21 @@
 <br/>
 <br/>
 
+## Wear OS 메인
+
+![Wear_Main.png](./rn_image_picker_lib_temp_5e59bda8-1bbd-48d3-be62-8fb47be054da.png)
+<br/>
+<br/>
+
+## Wear OS QR Code
+![Wear_OS_QR.png](./rn_image_picker_lib_temp_ba761f63-b0b1-4018-927b-aded9aca074d.png)
+<br/>
+<br/>
+
+## Wear OS List
+![Wear_list.png](./rn_image_picker_lib_temp_c1700e1e-cd67-43cc-bf26-d4d81f0e1a98.png)
+<br/>
+<br/>
+
 ---
 
