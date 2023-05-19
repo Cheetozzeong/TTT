@@ -3,11 +3,13 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:get/get.dart';
 import 'package:tickle_tackle_tockle/controller/theme_controller.dart';
 import '../const/theme.dart';
+import '../screen/camera/camera_screen.dart';
 import '../screen/mypage/setting_screen.dart';
 
 enum AppBarType {
   normalAppBar,
   myPageAppBar,
+  homePageAppBar,
 }
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -49,7 +51,22 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Icons.settings,
                 color: themeController.selectedPrimaryColor,
               ),
-            ) : Container(),
+            )
+                : appBarType == AppBarType.homePageAppBar ? IconButton(
+              onPressed: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: const CameraScreen(),
+                  withNavBar: false,
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+              },
+              icon: Icon(
+                Icons.watch_outlined,
+                color: themeController.selectedPrimaryColor,
+              ),
+            )
+                : Container(),
           ],
           backgroundColor: Colors.white,
           iconTheme: IconThemeData(

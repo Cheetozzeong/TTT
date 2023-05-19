@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.a804.tickle_tackle_tockle.app-mergeDebugResources-4:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Free\\compose-for-wear-os\\gradle\\wrapper\\caches\\transforms-3\\51eb40ffb36483473d7ce5f9dea88c3c\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "C:\\Free\\compose-for-wear-os\\gradle\\wrapper\\caches\\transforms-3\\440c3d953316d73a5b97a8d5b51f9b26\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}

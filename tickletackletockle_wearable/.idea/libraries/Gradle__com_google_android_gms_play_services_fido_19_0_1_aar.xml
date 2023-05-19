@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.android.gms:play-services-fido:19.0.1@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c4067caadf94713b345ece658316e11d/transformed/jetified-play-services-fido-19.0.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c4067caadf94713b345ece658316e11d/transformed/jetified-play-services-fido-19.0.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../compose-for-wear-os/gradle/wrapper/caches/modules-2/files-2.1/com.google.android.gms/play-services-fido/19.0.1/f47139b88eb38e62585ec100c1ef8a4cb73b5ce5/play-services-fido-19.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

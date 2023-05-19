@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":app:main" external.linked.project.path="$MODULE_DIR$/../../../app" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.type="sourceSet" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="kotlin-language" name="Kotlin">
+      <configuration version="5" platform="JVM 1.8" allPlatforms="JVM [1.8]" useProjectSettings="false">
+        <compilerSettings>
+          <option name="additionalArguments" value="-Xallow-no-source-files -Xallow-unstable-dependencies" />
+        </compilerSettings>
+        <compilerArguments>
+          <flagArguments>
+            <flagArg name="noReflect" arg="true" />
+            <flagArg name="noStdlib" arg="true" />
+          </flagArguments>
+          <stringArguments>
+            <stringArg name="classpath">
+              <args>
+                <arg>$MODULE_DIR$/../../../app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c791e78ba6c4c27ce600ef1413257543/transformed/jetified-composed-barcodes-1.1.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b6b453435e73b3edcb8dec206103394d/transformed/jetified-activity-compose-1.3.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/9d7d76ffe0a7cc4ac15eac7d1cf9c394/transformed/jetified-compose-navigation-1.1.2-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/3058a94063192253e52ee52b52965e08/transformed/navigation-runtime-2.4.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/1a334ed47620ff21f585266deff1e905/transformed/jetified-activity-ktx-1.6.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/ced2ca914941867033eccfc8fb7b12c9/transformed/navigation-common-2.4.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/a83fd81182efd7d1895f950508ea5182/transformed/jetified-lifecycle-runtime-ktx-2.5.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/afe4eb7491e76b5d093ebab098ffbf39/transformed/jetified-ui-tooling-1.2.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c017277e24bc334e70dfa82f1458965d/transformed/jetified-compose-material-1.1.2-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/4be6053b98d6f29df6d7de8ea4f00ece/transformed/jetified-compose-foundation-1.1.2-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/63e75f24700d436aad62e484af7e9084/transformed/jetified-ui-tooling-preview-1.2.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/38d02a8bf6dc39496ca4057dccf148b3/transformed/jetified-ui-tooling-data-1.2.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/1d95fbcab5667f04c1070fdeade19f0f/transformed/jetified-coil-compose-2.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/516cec65c8b36c56545bd48ce510ed68/transformed/jetified-coil-compose-base-2.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/cfa76183dde4ed08e1e5b11355c0401c/transformed/jetified-foundation-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/6537e3c386aee6c55158d84ea9f85881/transformed/jetified-animation-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/71ffc5e0e24e6648faff090100f4ec90/transformed/jetified-foundation-layout-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/a4ff1a1605c611b8af28cb7bc161a277/transformed/jetified-ui-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/e8dca81da302af41819aef9edcc196c5/transformed/jetified-runtime-saveable-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/d2ef0c7edf1b00cf25dc36e4f8c5e3b3/transformed/jetified-runtime-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/200c7967df2a1ea0e6f9a05d1962c07f/transformed/jetified-firebase-auth-21.2.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/3477805033fb3dde5cf89553f955833e/transformed/jetified-recaptcha-18.0.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/3b6b8b98468b9e3b1b847c4dd0494ac7/transformed/jetified-coil-gif-2.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b9f46e4179b4441a81857a68319c91bd/transformed/jetified-coil-2.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/a0dba1e2bdccda1cd1b2bff09a7cc0c7/transformed/jetified-coil-base-2.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c8f2ff40e532c24f7fd576e8f115b0fa/transformed/jetified-ui-test-manifest-1.2.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c5844ef1b9e53ec906ed78c4ae58c686/transformed/appcompat-1.6.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/53b7c3c10b0fc7b5c6f137b511439953/transformed/jetified-zxing-android-embedded-4.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/66d98de29afa8c1cd4ed09b15c19f31d/transformed/legacy-support-v4-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/f962b60032b04aeb957f16948ae9f340/transformed/jetified-play-services-auth-20.4.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/4834e5788b7ab59095bed578c2556ee8/transformed/jetified-play-services-wearable-18.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/ad9a73308adc46a6903c7a98a5aaa38c/transformed/jetified-firebase-firestore-ktx-24.4.5-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/cb788f0516bbc7ae2636a0d878d01278/transformed/jetified-firebase-firestore-24.4.5-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/43a6fe458b38e0a294e0c5a9224018f0/transformed/jetified-firebase-database-20.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/5d1195f8ff5f9077efbdfe0d71823a66/transformed/jetified-firebase-database-collection-18.0.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/36d9686a8ccc14331727506a1b79b35c/transformed/jetified-firebase-appcheck-interop-16.1.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/cd1f48f279436dd9b18d2623ed683b7f/transformed/jetified-play-services-auth-api-phone-18.0.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/6eebfe34637f6d002c89efce951c23b0/transformed/jetified-play-services-safetynet-17.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/1dc7317ca8e8caacd363e118a0c3f7ea/transformed/jetified-play-services-auth-base-18.0.4-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c7b6d301250b6827d32742409fc16aa9/transformed/jetified-play-services-fido-19.0.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/62b0a00f287e21c9c9200f11fb0c322b/transformed/jetified-firebase-messaging-ktx-23.1.2-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/fd71c48b26914e2e2ae8e1fda6645a1a/transformed/jetified-firebase-messaging-23.1.2-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b2efc2e3b25c1e6f05fd5d7c3efdd054/transformed/jetified-play-services-base-18.0.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/37165a0c4181e2cdca196acbdd79f3cd/transformed/jetified-firebase-auth-interop-20.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/4ff813cb11f0b7ab36572da714d0d419/transformed/jetified-firebase-common-ktx-20.3.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/2e38d556218a3d43c34355720043639b/transformed/jetified-firebase-analytics-21.2.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/fa222744ae9ef0b04b2949cacf07d7e8/transformed/jetified-play-services-measurement-api-21.2.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/69447a5fe90610f4000b7180130e72a2/transformed/jetified-firebase-installations-17.1.3-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/f8eed6db20760777156bf454d28a4310/transformed/jetified-firebase-datatransport-18.1.7-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/ade0eac58e0af2b394b34f0349a74f5f/transformed/jetified-firebase-common-20.3.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/f60908e9803da121d7173f553fcc7f5d/transformed/jetified-integrity-1.0.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/6dcc8fce7be6d9a6a50e28ddc93feb1c/transformed/jetified-animation-core-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/968f02e29ce3babe6e181da349913c72/transformed/jetified-kotlinx-coroutines-core-jvm-1.6.4.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/0d509a107444e7a1dba46896d8547358/transformed/jetified-kotlinx-coroutines-play-services-1.6.4.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/201a8512a46050f51b10b9f2bc4e98e3/transformed/jetified-firebase-installations-interop-17.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/59f508a45c6f1eed18756b94bcf23826/transformed/jetified-firebase-iid-interop-17.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/a3a0adef825e3ac4cd40bf7571d1f774/transformed/jetified-play-services-cloud-messaging-17.0.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/d152b0af76b7fde0df0ae349d68d949c/transformed/jetified-play-services-tasks-18.0.2-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b387b6adaaf69341bd2d4d40b82f5f4b/transformed/jetified-play-services-measurement-21.2.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/7804bcb5313a9a746cc7e48225de9452/transformed/jetified-play-services-measurement-sdk-21.2.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/d04f20b20fe8e6b44e85a4ee1534f614/transformed/jetified-play-services-measurement-impl-21.2.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/1779ff17c9378a8fe922c5937492b3e5/transformed/jetified-play-services-ads-identifier-18.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b4fd52930de2c9e93fc9b0e6cf72dccd/transformed/jetified-play-services-measurement-sdk-api-21.2.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/af0fe9d8e8db510004445367a1e0a333/transformed/jetified-play-services-measurement-base-21.2.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/e51e7ca2b363f954ef3f7361a7e596c2/transformed/jetified-play-services-stats-17.0.2-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/acc9d318622c3c24a6b4aec25c4ead3d/transformed/jetified-firebase-measurement-connector-19.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/2f4c872be641f8889798b7381d56a2fd/transformed/jetified-play-services-basement-18.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/ddc0333f5e96e6df14ff471149205daa/transformed/fragment-1.3.6-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/8b033ee5a0dc2c4f7e8b7407a6040245/transformed/jetified-activity-1.6.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/333f4e8e864632d801e5f98a64bf1eb3/transformed/jetified-lifecycle-viewmodel-savedstate-2.5.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/bf5f9f901f23b194c2e5e6415d01ffea/transformed/jetified-lifecycle-viewmodel-ktx-2.5.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/f504b5e9503379a3034051855183f3a8/transformed/jetified-kotlinx-coroutines-android-1.6.4.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c22c91e0b2a98a04cc021bf9098f9a64/transformed/jetified-okhttp-4.9.3.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/f1b0df93be352656870377448651ea68/transformed/jetified-okio-jvm-3.0.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/13fc9fc65006cdc34075142517534992/transformed/jetified-kotlin-stdlib-jdk8-1.7.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/8ad8eab8c9a73ceaaeacd5b8712b974d/transformed/jetified-core-ktx-1.9.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/d277c580caaae998203ebce077d19c25/transformed/jetified-kotlin-stdlib-jdk7-1.7.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/3cc25ec971d41574c0a1165342c8b941/transformed/recyclerview-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/cb5e4ef1c930aef35b76f27e0878adfc/transformed/percentlayout-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/5503e8a1a49034d508a724a79538284a/transformed/media-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/2fa5ad82d305c61910713468bb5f1309/transformed/legacy-support-core-ui-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/ccb0c5bbe54ba0f4669a8ecdec3c3135/transformed/legacy-support-core-utils-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/437b7b0f8fe0fb277851a266e18af886/transformed/drawerlayout-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/95f025fb7d7635d154491eca794990c1/transformed/viewpager-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/e41125ab44b7cff18e8a0a424e753eb7/transformed/coordinatorlayout-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/bbe0bf400d1df08f41fc400b7d980adb/transformed/slidingpanelayout-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/18a05df4a41799dc2193484fafc149a6/transformed/customview-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/a25079feab019118f9092678b87cf621/transformed/jetified-appcompat-resources-1.6.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/65fa2d6265a99ef873871993d5f8b226/transformed/browser-1.4.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/79327d56d3236885591ce23ff04c5dee/transformed/loader-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/bcb05834d3ad1cf5597356719938eed4/transformed/swiperefreshlayout-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/58ddf1a47980ccd02886cd4bccc0ad3a/transformed/asynclayoutinflater-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/886f0a43eb514d6d1ab6c7d7f9b64d32/transformed/vectordrawable-animated-1.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/6d9cda335a1270b4df0158b1c8c997fa/transformed/vectordrawable-1.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/84e6628bd4ed7f4cca9e779a02fa3697/transformed/core-1.9.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/0180e3ef65e748452c17de7d41899a36/transformed/jetified-ui-text-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b3773248cc93a33b5dd828378f4edf2c/transformed/jetified-ui-graphics-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/f21406f5a9a7836ef1ddd8382fcf50b3/transformed/jetified-ui-unit-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b16b37749cc330368dd3e91bb1ba5058/transformed/jetified-ui-geometry-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/e44f6c1441b1ef7ebd1c1c9dbb45dc97/transformed/lifecycle-runtime-2.5.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/1017abae184908212dec83ffed9770fc/transformed/cursoradapter-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b30cdcd6ce846c9a9f00456faf2652ac/transformed/jetified-savedstate-ktx-1.2.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/aad0b8f7f9995cb210edda665fd727cd/transformed/jetified-savedstate-1.2.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/416632c0e00a4cff880e531ae9c31ce8/transformed/jetified-firebase-components-17.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/cadc3a692d76dd55c73ff9fbe79d8381/transformed/versionedparcelable-1.1.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/modules-2/files-2.1/androidx.collection/collection/1.2.0/34dbc21d203cc4d4d623ac572a21acd4ccd716af/collection-1.2.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/3d5649399d49363c0b7d0c50197e9098/transformed/localbroadcastmanager-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/ff6807ec1e0e8e3a09669a5b919a819b/transformed/lifecycle-viewmodel-2.5.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/326b722251a0419c64f727003d6e87f1/transformed/documentfile-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/0e3125b40751e40c3e9e5b4bced0dc4b/transformed/print-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b925442ce788f6eabb14b16e6ebc7768/transformed/interpolator-1.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/dca7f0c69acf8bf2fa3c8d181329b9f1/transformed/lifecycle-livedata-2.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/37de28209b744b9471927aa96a7d1cc5/transformed/core-runtime-2.1.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/modules-2/files-2.1/androidx.arch.core/core-common/2.1.0/b3152fc64428c9354344bd89848ecddc09b6f07e/core-common-2.1.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/5fb82d827379df35e5496edf8c95b404/transformed/lifecycle-livedata-core-2.5.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-common/2.5.1/1fdb7349701e9cf2f0a69fc10642b6fef6bb3e12/lifecycle-common-2.5.1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/58dcae548a78b86e14143338d7414d25/transformed/jetified-concurrent-futures-1.1.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c6cde83880f6a1376df0b546d66df8a4/transformed/jetified-transport-backend-cct-3.1.8-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/9a806c4ac7cc067f606054ee280d6953/transformed/jetified-transport-runtime-3.1.8-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/f5bb70fb4932efbed663f37075428d1a/transformed/jetified-transport-api-3.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/47d33459787ac0f9f3a79c60435bf15c/transformed/jetified-firebase-encoders-json-18.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/a565117d390fac9729dbf8336c4f5a88/transformed/jetified-firebase-encoders-proto-16.0.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/c8670ee3f00b1a67f8bbc887cdf2744a/transformed/jetified-firebase-encoders-17.0.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/modules-2/files-2.1/androidx.annotation/annotation/1.5.0/857678d6b4ca7b28571ef7935c668bdb57e15027/annotation-1.5.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/416dca902e8af6d99439944352423dc0/transformed/jetified-annotation-experimental-1.3.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/e16a8d44d52d41b9f0cfd0264639ce73/transformed/jetified-kotlin-stdlib-1.7.20.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/5933116e335ceed25f5fff1adca768e4/transformed/jetified-kotlin-stdlib-common-1.7.20.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/2236eaf8ac23c5f73943212396aa1c82/transformed/jetified-annotations-13.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/404b35b8f10ca4092546e1632316daf1/transformed/jetified-grpc-stub-1.52.1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b483d82014e6adb93ac2dd30df4ee184/transformed/jetified-guava-31.1-android.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/b001dd685de4ab0ae02b3d2499d281c0/transformed/jetified-listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/4a8d19790f06ea968762bae67f4e348d/transformed/jetified-androidthings-1.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/2e3888e7d9f2411353fcf884cdcace7a/transformed/jetified-firebase-annotations-16.2.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/eddf36e276d8b1ca46b791a33366d47b/transformed/jetified-javax.inject-1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/3e693cee5994d641a26044a9e2295365/transformed/jetified-grpc-protobuf-lite-1.52.1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/d3555fbb1f126decf123140d102e6dd2/transformed/jetified-grpc-okhttp-1.52.1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/8b1ca3168db986dfc1cb8647e573bc75/transformed/jetified-grpc-android-1.52.1-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/19277704b24c93ed403123c2c3382806/transformed/jetified-grpc-core-1.52.1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/51ea66446608a4d510f4cedcf38653cd/transformed/jetified-grpc-api-1.52.1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/eb6a39177a5eedb1afdf49e92f6db484/transformed/jetified-error_prone_annotations-2.14.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/2e91ff3377baab4262e9a73bf240c6fd/transformed/jetified-protolite-well-known-types-18.0.0-api.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/6835f53cb02703d2b48c483570b48a62/transformed/jetified-protobuf-javalite-3.21.7.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/187c267f646bbe553dab939b53edbd24/transformed/jetified-grpc-context-1.52.1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/ba37923e31886e82b826872c62916f34/transformed/jetified-jsr305-3.0.2.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/1e3b23854afad6c13fab39a9e327c7f3/transformed/jetified-failureaccess-1.0.1.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/008435a83714c5ff546b7e9768a94901/transformed/jetified-checker-qual-3.12.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/e42bc9da45e38be38c70f5e06451023a/transformed/jetified-j2objc-annotations-1.3.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/323047c79bc7113d073f05c579d14456/transformed/jetified-gson-2.9.0.jar</arg>
+                <arg>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/transforms-3/a805132f425b8766401719b0384276cc/transformed/jetified-core-3.4.1.jar</arg>
+                <arg>$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-33/android.jar</arg>
+                <arg>$USER_HOME$/AppData/Local/Android/Sdk/build-tools/30.0.3/core-lambda-stubs.jar</arg>
+              </args>
+            </stringArg>
+            <stringArg name="destination" arg="$MODULE_DIR$/../../../app/build/tmp/kotlin-classes/debug" />
+            <stringArg name="jvmTarget" arg="1.8" />
+            <stringArg name="moduleName" arg="app_debug" />
+            <stringArg name="apiVersion" arg="1.7" />
+            <stringArg name="languageVersion" arg="1.7" />
+          </stringArguments>
+          <arrayArguments>
+            <arrayArg name="friendPaths" />
+            <arrayArg name="pluginClasspaths">
+              <args>$MODULE_DIR$/../../../../../compose-for-wear-os/gradle/wrapper/caches/modules-2/files-2.1/androidx.compose.compiler/compiler/1.2.0/2fdcb137dbe4bc969cbff2c00ed9b74d2a432644/compiler-1.2.0.jar</args>
+            </arrayArg>
+            <arrayArg name="pluginOptions">
+              <args>
+                <arg>plugin:androidx.compose.plugins.idea:enabled=true</arg>
+                <arg>plugin:androidx.compose.compiler.plugins.kotlin:sourceInformation=true</arg>
+                <arg>plugin:androidx.compose.compiler.plugins.kotlin:liveLiterals=true</arg>
+              </args>
+            </arrayArg>
+          </arrayArguments>
+        </compilerArguments>
+      </configuration>
+    </facet>
+    <facet type="android" name="Android">
+      <configuration>
+        <option name="SELECTED_BUILD_VARIANT" value="debug" />
+        <option name="ALLOW_USER_CONFIGURATION" value="false" />
+        <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
+        <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../app/src/main/res;file://$MODULE_DIR$/../../../app/src/debug/res;file://$MODULE_DIR$/../../../app/build/generated/res/google-services/debug;file://$MODULE_DIR$/../../../app/build/generated/res/rs/debug;file://$MODULE_DIR$/../../../app/build/generated/res/resValues/debug" />
+        <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/../../../app/src/androidTest/res;file://$MODULE_DIR$/../../../app/src/androidTestDebug/res;file://$MODULE_DIR$/../../../app/build/generated/res/rs/androidTest/debug;file://$MODULE_DIR$/../../../app/build/generated/res/resValues/androidTest/debug" />
+        <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/../../../app/build/intermediates/javac/debug/classes" />
+    <output-test url="file://$MODULE_DIR$/../../../app/build/intermediates/javac/debugUnitTest/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../app/build/generated/aidl_source_output_dir/debug/out" />
+    <content url="file://$MODULE_DIR$/../../../app/build/generated/ap_generated_sources/debug/out">
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../app/build/generated/renderscript_source_output_dir/debug/out" />
+    <content url="file://$MODULE_DIR$/../../../app/build/generated/res/google-services/debug">
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/res/google-services/debug" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../app/build/generated/res/resValues/debug">
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/res/resValues/debug" type="java-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../app/build/generated/res/rs/debug" />
+    <content url="file://$MODULE_DIR$/../../../app/build/generated/source/buildConfig/debug">
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../app/src/debug" />
+    <content url="file://$MODULE_DIR$/../../../app/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../app/src/main/res" type="java-resource" />
+    </content>
+    <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.7.20" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.7.20" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.annotation:annotation:1.5.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.arch.core:core-common:2.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-common:2.5.1" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.collection:collection:1.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.things:androidthings:1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-annotations:16.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.errorprone:error_prone_annotations:2.14.0" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.concurrent:concurrent-futures:1.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.protobuf:protobuf-javalite:3.21.7" level="project" />
+    <orderEntry type="library" name="Gradle: io.grpc:grpc-stub:1.52.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.grpc:grpc-api:1.52.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.grpc:grpc-context:1.52.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:guava:31.1-android" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.guava:failureaccess:1.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.checkerframework:checker-qual:3.12.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.j2objc:j2objc-annotations:1.3" level="project" />
+    <orderEntry type="library" name="Gradle: io.grpc:grpc-protobuf-lite:1.52.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.grpc:grpc-okhttp:1.52.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.grpc:grpc-core:1.52.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-encoders:17.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-encoders-proto:16.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.zxing:core:3.4.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:4.9.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.squareup.okio:okio-jvm:3.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-tooling:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.runtime:runtime:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.runtime:runtime-saveable:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-geometry:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-graphics:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-unit:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-text:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-tooling-data:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-tooling-preview:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.ui:ui-test-manifest:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.activity:activity:1.6.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.core:core:1.9.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.annotation:annotation-experimental:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-runtime:2.5.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.versionedparcelable:versionedparcelable:1.1.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.5.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.core:core-ktx:1.9.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.5.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.savedstate:savedstate:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-wearable:18.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-base:18.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.fragment:fragment:1.3.6@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.viewpager:viewpager:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.customview:customview:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.loader:loader:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata:2.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.arch.core:core-runtime:2.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement:18.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-tasks:18.0.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.percentlayout:percentlayout:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-v4:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.media:media:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-core-utils:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.documentfile:documentfile:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.localbroadcastmanager:localbroadcastmanager:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.print:print:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-core-ui:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.coordinatorlayout:coordinatorlayout:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.drawerlayout:drawerlayout:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.slidingpanelayout:slidingpanelayout:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.interpolator:interpolator:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.swiperefreshlayout:swiperefreshlayout:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.asynclayoutinflater:asynclayoutinflater:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.cursoradapter:cursoradapter:1.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.recyclerview:recyclerview:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.wear.compose:compose-material:1.1.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.foundation:foundation:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.animation:animation:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.animation:animation-core:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.compose.foundation:foundation-layout:1.3.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.wear.compose:compose-foundation:1.1.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-runtime-ktx:2.5.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.activity:activity-compose:1.3.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.activity:activity-ktx:1.6.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.savedstate:savedstate-ktx:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.6.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat-resources:1.6.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.vectordrawable:vectordrawable:1.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.vectordrawable:vectordrawable-animated:1.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.wear.compose:compose-navigation:1.1.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.navigation:navigation-runtime:2.4.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.navigation:navigation-common:2.4.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-firestore:24.4.5@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-common:20.3.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-components:17.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:protolite-well-known-types:18.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-database-collection:18.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-appcheck-interop:16.1.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: io.grpc:grpc-android:1.52.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-auth-interop:20.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-firestore-ktx:24.4.5@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-common-ktx:20.3.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics:21.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement:21.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-ads-identifier:18.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-base:21.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-impl:21.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-stats:17.0.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-api:21.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-sdk-api:21.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-installations:17.1.3@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-installations-interop:17.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-measurement-connector:19.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-sdk:21.2.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-database:20.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-auth:21.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.browser:browser:1.4.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-api-phone:18.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-safetynet:17.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.play:integrity:1.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.recaptcha:recaptcha:18.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth:20.4.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-base:18.0.4@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-fido:19.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-messaging-ktx:23.1.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-messaging:23.1.2@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-datatransport:18.1.7@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-api:3.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-backend-cct:3.1.8@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-runtime:3.1.8@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-encoders-json:18.0.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-interop:17.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-cloud-messaging:17.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.journeyapps:zxing-android-embedded:4.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.simonsickle:composed-barcodes:1.1.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: io.coil-kt:coil-compose:2.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: io.coil-kt:coil-compose-base:2.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: io.coil-kt:coil-base:2.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: io.coil-kt:coil:2.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: io.coil-kt:coil-gif:2.1.0@aar" level="project" />
+  </component>
+</module>
