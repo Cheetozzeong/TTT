@@ -4,8 +4,8 @@
 
 # 🖥️ 프로젝트 소개
 
----
-![Image Pasted at 2023-5-16 10-21.png](output/application/Image Pasted at 2023-5-16 10-21.png)
+--- ![틱택톡!](https://github.com/Cheetozzeong/TTT/assets/81691407/89fb9072-0178-48de-9968-d5e839028d4c)
+
 
 ### *좋은 습관을 만들고 싶다…!*
 
